@@ -571,20 +571,6 @@
 
       html += '</div></div>';
 
-      // 스케줄 카드
-      html += '<div class="section-title">수업 일정</div>';
-      html += '<div class="schedule-cards">';
-      data.students.forEach(function(s) {
-        var nextDate = getNextScheduled(s.schedule.days);
-        html += '<div class="schedule-card" style="border-top-color:' + s.color + '">'
-          + '<div class="sch-name">' + s.name + '</div>'
-          + '<span class="sch-grade" style="background:' + s.color + '">' + s.grade + '</span>'
-          + '<div class="sch-day">매주 ' + s.schedule.days.join(', ') + ' ' + s.schedule.time + '</div>'
-          + (nextDate ? '<div class="sch-next">다음: ' + fmtShort(nextDate) + '</div>' : '')
-          + '</div>';
-      });
-      html += '</div>';
-
       // 시험 D-day
       var exams = [];
       data.students.forEach(function(s) {

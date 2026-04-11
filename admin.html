@@ -270,6 +270,61 @@
       justify-content: center;
       margin-bottom: 16px;
     }
+    /* ── 요일 선택 ── */
+    .day-picker {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .day-chip {
+      cursor: pointer;
+      user-select: none;
+    }
+    .day-chip input { display: none; }
+    .day-chip span {
+      display: block;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: 600;
+      background: var(--bg);
+      color: var(--light-text);
+      border: 1.5px solid var(--border);
+      transition: all 0.15s;
+    }
+    .day-chip input:checked + span {
+      background: var(--dark);
+      color: var(--accent);
+      border-color: var(--dark);
+    }
+
+    /* ── 시험 아이템 ── */
+    .exam-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+    .exam-item-info { flex: 1; }
+    .exam-item-name { font-weight: 600; }
+    .exam-item-date { font-size: 11px; color: var(--light-text); }
+    .btn-exam-delete {
+      background: none;
+      border: none;
+      color: var(--danger);
+      font-size: 16px;
+      cursor: pointer;
+      padding: 4px 8px;
+      font-weight: 700;
+    }
+
     /* ── 수업 리스트 ── */
     .session-list-item {
       display: flex;
@@ -387,6 +442,41 @@
     <div class="card" id="sessionListCard" style="display:none">
       <div class="card-title"><span class="dot" style="background:var(--danger)"></span>기존 수업 관리</div>
       <div id="sessionListContent"></div>
+    </div>
+
+    <!-- 일정 관리 -->
+    <div class="card" id="scheduleCard" style="display:none">
+      <div class="card-title"><span class="dot" style="background:var(--accent2)"></span>일정 관리</div>
+
+      <div class="form-group">
+        <label class="form-label">수업 요일</label>
+        <div class="day-picker" id="dayPicker">
+          <label class="day-chip"><input type="checkbox" value="월"><span>월</span></label>
+          <label class="day-chip"><input type="checkbox" value="화"><span>화</span></label>
+          <label class="day-chip"><input type="checkbox" value="수"><span>수</span></label>
+          <label class="day-chip"><input type="checkbox" value="목"><span>목</span></label>
+          <label class="day-chip"><input type="checkbox" value="금"><span>금</span></label>
+          <label class="day-chip"><input type="checkbox" value="토"><span>토</span></label>
+          <label class="day-chip"><input type="checkbox" value="일"><span>일</span></label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">수업 시간</label>
+        <input type="text" class="form-input" id="schTime" placeholder="19:00 - 21:00">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">시험 일정</label>
+        <div id="examList"></div>
+        <div class="form-row" style="margin-top:8px">
+          <input type="text" class="form-input" id="newExamName" placeholder="시험 이름">
+          <input type="date" class="form-input" id="newExamDate">
+        </div>
+        <button class="btn btn-secondary" style="margin-top:8px;padding:10px" onclick="addExam()">시험 추가</button>
+      </div>
+
+      <button class="btn btn-primary" onclick="saveSchedule()">일정 저장</button>
     </div>
 
     <!-- 이전 숙제 체크 -->
@@ -523,6 +613,7 @@
 
       SELECTED_STUDENT = DATA.students.filter(function(s) { return s.id === id; })[0];
       showSessionList();
+      showSchedule();
       showPrevHomework();
       showSessionForm();
     }
@@ -592,6 +683,108 @@
           showResult(true, num + '회차가 삭제되었습니다!<br><br>1~2분 후 반영됩니다.');
         })
         .catch(function(err) {
+          showCopyMode(jsonStr);
+        });
+      } else {
+        showCopyMode(jsonStr);
+      }
+    }
+
+    // ── 일정 관리 ──
+    function showSchedule() {
+      var card = document.getElementById('scheduleCard');
+      if (!SELECTED_STUDENT) { card.style.display = 'none'; return; }
+      card.style.display = 'block';
+
+      // 요일 체크박스 설정
+      var checks = document.querySelectorAll('#dayPicker input');
+      for (var i = 0; i < checks.length; i++) {
+        checks[i].checked = SELECTED_STUDENT.schedule.days.indexOf(checks[i].value) >= 0;
+      }
+
+      // 시간
+      document.getElementById('schTime').value = SELECTED_STUDENT.schedule.time || '';
+
+      // 시험 목록
+      renderExams();
+    }
+
+    function renderExams() {
+      var list = document.getElementById('examList');
+      var exams = SELECTED_STUDENT.exams || [];
+      if (exams.length === 0) {
+        list.innerHTML = '<div style="font-size:12px;color:var(--light-text);padding:8px 0">등록된 시험 없음</div>';
+        return;
+      }
+      var html = '';
+      exams.forEach(function(e, i) {
+        html += '<div class="exam-item">'
+          + '<div class="exam-item-info">'
+          + '<div class="exam-item-name">' + e.name + '</div>'
+          + '<div class="exam-item-date">' + e.date + '</div>'
+          + '</div>'
+          + '<button class="btn-exam-delete" onclick="deleteExam(' + i + ')">&#10005;</button>'
+          + '</div>';
+      });
+      list.innerHTML = html;
+    }
+
+    function addExam() {
+      var name = document.getElementById('newExamName').value.trim();
+      var date = document.getElementById('newExamDate').value;
+      if (!name || !date) { alert('시험 이름과 날짜를 입력해주세요.'); return; }
+      if (!SELECTED_STUDENT.exams) SELECTED_STUDENT.exams = [];
+      SELECTED_STUDENT.exams.push({ name: name, date: date });
+      document.getElementById('newExamName').value = '';
+      document.getElementById('newExamDate').value = '';
+      renderExams();
+    }
+
+    function deleteExam(idx) {
+      SELECTED_STUDENT.exams.splice(idx, 1);
+      renderExams();
+    }
+
+    function saveSchedule() {
+      // 요일 수집
+      var days = [];
+      var checks = document.querySelectorAll('#dayPicker input');
+      for (var i = 0; i < checks.length; i++) {
+        if (checks[i].checked) days.push(checks[i].value);
+      }
+      if (days.length === 0) { alert('수업 요일을 하나 이상 선택해주세요.'); return; }
+
+      SELECTED_STUDENT.schedule.days = days;
+      SELECTED_STUDENT.schedule.time = document.getElementById('schTime').value.trim();
+
+      var jsonStr = JSON.stringify(DATA, null, 2);
+      var token = localStorage.getItem('math_github_token');
+
+      if (token) {
+        fetch('https://api.github.com/repos/' + REPO + '/contents/data.json', {
+          headers: { 'Authorization': 'token ' + token }
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(meta) {
+          if (!meta.sha) throw new Error('토큰 오류');
+          return fetch('https://api.github.com/repos/' + REPO + '/contents/data.json', {
+            method: 'PUT',
+            headers: {
+              'Authorization': 'token ' + token,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              message: SELECTED_STUDENT.name + ' 일정 변경',
+              content: utf8ToBase64(jsonStr),
+              sha: meta.sha
+            })
+          });
+        })
+        .then(function(r) {
+          if (!r.ok) throw new Error('커밋 실패');
+          showResult(true, '일정이 저장되었습니다!<br><br>1~2분 후 캘린더에 반영됩니다.');
+        })
+        .catch(function() {
           showCopyMode(jsonStr);
         });
       } else {
@@ -793,6 +986,7 @@
       btn.textContent = '수업 기록 추가';
       document.getElementById('studentSelect').value = '';
       document.getElementById('sessionListCard').style.display = 'none';
+      document.getElementById('scheduleCard').style.display = 'none';
       document.getElementById('prevHwCard').style.display = 'none';
       document.getElementById('sessionForm').style.display = 'none';
       SELECTED_STUDENT = null;
