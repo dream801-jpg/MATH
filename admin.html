@@ -270,6 +270,63 @@
       justify-content: center;
       margin-bottom: 16px;
     }
+    /* ── 수업 리스트 ── */
+    .session-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+    .session-list-item:last-child { margin-bottom: 0; }
+    .session-list-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .session-list-num {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--dark);
+      padding: 2px 8px;
+      border-radius: 5px;
+      display: inline-block;
+      margin-bottom: 3px;
+    }
+    .session-list-topic {
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .session-list-date {
+      font-size: 11px;
+      color: var(--light-text);
+    }
+    .btn-delete {
+      background: none;
+      border: 1.5px solid var(--danger);
+      color: var(--danger);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-left: 10px;
+      font-family: inherit;
+    }
+    .btn-delete:active { background: var(--danger); color: white; }
+    .session-list-empty {
+      text-align: center;
+      color: var(--light-text);
+      font-size: 13px;
+      padding: 12px;
+    }
+
     .nav-links a {
       font-size: 13px;
       color: var(--accent);
@@ -324,6 +381,12 @@
       <select class="form-select" id="studentSelect" onchange="onStudentChange()">
         <option value="">불러오는 중...</option>
       </select>
+    </div>
+
+    <!-- 기존 수업 관리 -->
+    <div class="card" id="sessionListCard" style="display:none">
+      <div class="card-title"><span class="dot" style="background:var(--danger)"></span>기존 수업 관리</div>
+      <div id="sessionListContent"></div>
     </div>
 
     <!-- 이전 숙제 체크 -->
@@ -455,8 +518,81 @@
       }
 
       SELECTED_STUDENT = DATA.students.filter(function(s) { return s.id === id; })[0];
+      showSessionList();
       showPrevHomework();
       showSessionForm();
+    }
+
+    // ── 기존 수업 리스트 ──
+    function showSessionList() {
+      var card = document.getElementById('sessionListCard');
+      var content = document.getElementById('sessionListContent');
+
+      if (!SELECTED_STUDENT || SELECTED_STUDENT.sessions.length === 0) {
+        card.style.display = 'none';
+        return;
+      }
+
+      card.style.display = 'block';
+      var html = '';
+      var sorted = SELECTED_STUDENT.sessions.slice().sort(function(a, b) { return b.number - a.number; });
+
+      sorted.forEach(function(s, i) {
+        html += '<div class="session-list-item">'
+          + '<div class="session-list-info">'
+          + '<span class="session-list-num">' + s.number + '회차</span>'
+          + '<div class="session-list-topic">' + s.topic + '</div>'
+          + '<div class="session-list-date">' + s.date + '</div>'
+          + '</div>'
+          + '<button class="btn-delete" onclick="deleteSession(' + s.number + ')">삭제</button>'
+          + '</div>';
+      });
+
+      content.innerHTML = html;
+    }
+
+    function deleteSession(num) {
+      if (!confirm(num + '회차 수업을 삭제하시겠습니까?')) return;
+
+      // 세션 제거
+      SELECTED_STUDENT.sessions = SELECTED_STUDENT.sessions.filter(function(s) {
+        return s.number !== num;
+      });
+
+      var jsonStr = JSON.stringify(DATA, null, 2);
+      var token = localStorage.getItem('math_github_token');
+
+      if (token) {
+        // 직접 커밋
+        fetch('https://api.github.com/repos/' + REPO + '/contents/data.json', {
+          headers: { 'Authorization': 'token ' + token }
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(meta) {
+          if (!meta.sha) throw new Error('토큰 오류');
+          return fetch('https://api.github.com/repos/' + REPO + '/contents/data.json', {
+            method: 'PUT',
+            headers: {
+              'Authorization': 'token ' + token,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              message: SELECTED_STUDENT.name + ' ' + num + '회차 삭제',
+              content: utf8ToBase64(jsonStr),
+              sha: meta.sha
+            })
+          });
+        })
+        .then(function(r) {
+          if (!r.ok) throw new Error('커밋 실패');
+          showResult(true, num + '회차가 삭제되었습니다!<br><br>1~2분 후 반영됩니다.');
+        })
+        .catch(function(err) {
+          showCopyMode(jsonStr);
+        });
+      } else {
+        showCopyMode(jsonStr);
+      }
     }
 
     // ── 이전 숙제 ──
@@ -651,6 +787,7 @@
       btn.disabled = false;
       btn.textContent = '수업 기록 추가';
       document.getElementById('studentSelect').value = '';
+      document.getElementById('sessionListCard').style.display = 'none';
       document.getElementById('prevHwCard').style.display = 'none';
       document.getElementById('sessionForm').style.display = 'none';
       SELECTED_STUDENT = null;
