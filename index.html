@@ -472,7 +472,7 @@
       not_done: { text: '미완료',   cls: 'not_done' }
     };
 
-    fetch('data.json')
+    fetch('data.json?v=' + Date.now())
       .then(function(r) { return r.json(); })
       .then(function(d) { DATA = d; init(d); })
       .catch(function() {
