@@ -449,7 +449,12 @@
       <div class="card-title"><span class="dot" style="background:var(--accent2)"></span>일정 관리</div>
 
       <div class="form-group">
-        <label class="form-label">수업 요일</label>
+        <label class="form-label">다음 수업 날짜</label>
+        <input type="date" class="form-input" id="nextSession">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">수업 요일 (캘린더 참고용)</label>
         <div class="day-picker" id="dayPicker">
           <label class="day-chip"><input type="checkbox" value="월"><span>월</span></label>
           <label class="day-chip"><input type="checkbox" value="화"><span>화</span></label>
@@ -696,6 +701,9 @@
       if (!SELECTED_STUDENT) { card.style.display = 'none'; return; }
       card.style.display = 'block';
 
+      // 다음 수업 날짜
+      document.getElementById('nextSession').value = SELECTED_STUDENT.next_session || '';
+
       // 요일 체크박스 설정
       var checks = document.querySelectorAll('#dayPicker input');
       for (var i = 0; i < checks.length; i++) {
@@ -756,6 +764,13 @@
 
       SELECTED_STUDENT.schedule.days = days;
       SELECTED_STUDENT.schedule.time = document.getElementById('schTime').value.trim();
+
+      var nextSession = document.getElementById('nextSession').value;
+      if (nextSession) {
+        SELECTED_STUDENT.next_session = nextSession;
+      } else {
+        delete SELECTED_STUDENT.next_session;
+      }
 
       var jsonStr = JSON.stringify(DATA, null, 2);
       var token = localStorage.getItem('math_github_token');

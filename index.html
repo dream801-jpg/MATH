@@ -563,9 +563,10 @@
         + '<div class="student-counts">';
 
       data.students.forEach(function(s) {
+        var nextInfo = s.next_session ? ' | 다음: ' + fmtShort(new Date(s.next_session)) : '';
         html += '<div class="student-count-item">'
           + '<div class="student-dot" style="background:' + s.color + '"></div>'
-          + '<span>' + s.name + ' <strong>' + s.sessions.length + '</strong>회</span>'
+          + '<span>' + s.name + ' <strong>' + s.sessions.length + '</strong>회' + nextInfo + '</span>'
           + '</div>';
       });
 
@@ -636,10 +637,11 @@
           for (var j = 0; j < s.schedule.days.length; j++) {
             if (DAY_MAP[s.schedule.days[j]] === dow) { isSch = true; break; }
           }
+          var isNext = s.next_session && s.next_session === ds;
           if (has) {
             dots += '<div class="cal-dot" style="background:' + s.color + '"></div>';
-          } else if (isSch && new Date(ds) > TODAY) {
-            dots += '<div class="cal-dot future" style="background:' + s.color + '"></div>';
+          } else if (isNext) {
+            dots += '<div class="cal-dot future" style="background:' + s.color + ';border:2px solid ' + s.color + '"></div>';
           }
         });
 
