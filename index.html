@@ -659,9 +659,14 @@
             dots += '<div class="cal-dot" style="background:' + s.color + '"></div>';
           }
           if (isNext) {
-            cls += ' next-session';
             tags += '<span class="cal-next-tag" style="background:' + s.color + '">' + s.name.charAt(2) + '</span>';
           }
+          // 시험 날짜 체크
+          (s.exams || []).forEach(function(e) {
+            if (e.date === ds) {
+              tags += '<span class="cal-next-tag" style="background:var(--danger)">시험</span>';
+            }
+          });
         });
 
         html += '<div class="' + cls + '"><span>' + d + '</span>'
