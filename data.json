@@ -22,20 +22,7 @@
           "date": "2026-05-06"
         }
       ],
-      "sessions": [
-        {
-          "number": 1,
-          "date": "2026-04-08",
-          "topic": "이차방정식 활용",
-          "content": "근의 공식, 판별식을 이용한 활용 문제",
-          "homework": "교재 p.50 1~15번",
-          "homework_status": "partial",
-          "homework_note": "10번까지만 풀어옴",
-          "feedback": "근의 공식은 완벽해요. 문장제 문제에서 식 세우는 연습이 더 필요합니다.",
-          "understanding": 3,
-          "next_preview": "이차함수 그래프"
-        }
-      ]
+      "sessions": []
     },
     {
       "id": "seojun",
