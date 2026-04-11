@@ -21,7 +21,21 @@
           "date": "2026-05-06"
         }
       ],
-      "sessions": []
+      "sessions": [
+        {
+          "number": 1,
+          "date": "2026-04-05",
+          "hours": 1,
+          "topic": "샘플",
+          "content": "중3 쎈수학",
+          "homework": "샘플",
+          "homework_status": "not_done",
+          "homework_note": "",
+          "feedback": "수업태도 이해도 보완할점 등",
+          "understanding": 2,
+          "next_preview": "중3 내신"
+        }
+      ]
     },
     {
       "id": "seojun",
