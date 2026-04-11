@@ -14,8 +14,10 @@
       --border: #e5e7eb;
       --accent1: #FFD369;
       --accent2: #77B5FE;
-      --success: #22c55e;
-      --warning: #f59e0b;
+      --success: #16a34a;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --orange: #ea580c;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -74,17 +76,14 @@
       border-bottom-color: var(--accent1);
     }
 
-    /* ── 섹션 공통 ── */
+    /* ── 공통 ── */
     .section-title {
       font-size: 13px;
       font-weight: 700;
       color: var(--light-text);
-      text-transform: uppercase;
       letter-spacing: 1px;
       padding: 20px 20px 8px;
     }
-
-    /* ── 카드 공통 ── */
     .card {
       background: var(--card);
       border-radius: 14px;
@@ -92,79 +91,118 @@
       padding: 18px;
       box-shadow: 0 1px 4px rgba(0,0,0,0.06);
     }
-
-    /* ── 탭 콘텐츠 ── */
     .tab-content { display: none; padding-bottom: 20px; }
     .tab-content.active { display: block; }
 
     /* ══════════════════════════════════════
-       대시보드 - 진도 카드
+       공유 진도 카드
        ══════════════════════════════════════ */
-    .progress-card {
+    .shared-progress {
       position: relative;
-      overflow: hidden;
     }
-    .progress-top {
+    .shared-top {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       margin-bottom: 14px;
     }
-    .progress-name {
-      font-size: 18px;
+    .shared-label {
+      font-size: 16px;
       font-weight: 700;
     }
-    .progress-grade {
-      font-size: 11px;
+    .shared-months {
+      background: var(--dark);
+      color: var(--accent1);
+      font-size: 12px;
       font-weight: 700;
-      padding: 3px 10px;
+      padding: 4px 12px;
       border-radius: 12px;
-      color: var(--dark);
-    }
-    .progress-stats {
-      display: flex;
-      gap: 16px;
-      margin-bottom: 12px;
-      font-size: 13px;
-      color: var(--light-text);
-    }
-    .progress-stats strong {
-      color: var(--dark);
     }
     .progress-bar-wrap {
       background: var(--bg);
       border-radius: 8px;
-      height: 10px;
+      height: 12px;
       overflow: hidden;
     }
     .progress-bar-fill {
       height: 100%;
       border-radius: 8px;
       transition: width 0.6s ease;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
     }
     .progress-hours {
       display: flex;
       justify-content: space-between;
       margin-top: 6px;
-      font-size: 12px;
+      font-size: 13px;
+    }
+    .progress-hours .hours-text {
+      font-weight: 700;
+    }
+    .progress-hours .pct-text {
       color: var(--light-text);
     }
-    .progress-schedule {
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid var(--border);
-      font-size: 12px;
-      color: var(--light-text);
+    .student-counts {
       display: flex;
-      justify-content: space-between;
+      gap: 12px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
     }
-    .next-session {
-      font-weight: 600;
-      color: var(--dark);
+    .student-count-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+    }
+    .student-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
     }
 
     /* ══════════════════════════════════════
-       대시보드 - 시험 D-day
+       스케줄 미니 카드
+       ══════════════════════════════════════ */
+    .schedule-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 0 16px;
+    }
+    .schedule-card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border-top: 3px solid var(--border);
+    }
+    .schedule-card .sch-name {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .schedule-card .sch-grade {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+    .schedule-card .sch-day {
+      font-size: 13px;
+      color: var(--light-text);
+    }
+    .schedule-card .sch-next {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--dark);
+      margin-top: 6px;
+    }
+
+    /* ══════════════════════════════════════
+       시험 D-day
        ══════════════════════════════════════ */
     .exam-cards {
       display: flex;
@@ -196,13 +234,12 @@
     }
 
     /* ══════════════════════════════════════
-       대시보드 - 캘린더
+       캘린더
        ══════════════════════════════════════ */
     .cal-nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 4px;
       margin-bottom: 16px;
     }
     .cal-nav button {
@@ -216,13 +253,8 @@
       color: var(--dark);
       font-weight: 700;
     }
-    .cal-nav button:active {
-      background: var(--border);
-    }
-    .cal-month {
-      font-size: 16px;
-      font-weight: 700;
-    }
+    .cal-nav button:active { background: var(--border); }
+    .cal-month { font-size: 16px; font-weight: 700; }
     .cal-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
@@ -245,8 +277,6 @@
       justify-content: center;
       border-radius: 10px;
       font-size: 13px;
-      position: relative;
-      cursor: default;
     }
     .cal-cell.today {
       background: var(--dark);
@@ -255,20 +285,9 @@
     }
     .cal-cell.sunday { color: #ef4444; }
     .cal-cell.saturday { color: #3b82f6; }
-    .cal-dots {
-      display: flex;
-      gap: 3px;
-      margin-top: 2px;
-      height: 5px;
-    }
-    .cal-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-    }
-    .cal-dot.future {
-      opacity: 0.3;
-    }
+    .cal-dots { display: flex; gap: 3px; margin-top: 2px; height: 5px; }
+    .cal-dot { width: 5px; height: 5px; border-radius: 50%; }
+    .cal-dot.future { opacity: 0.3; }
     .cal-legend {
       display: flex;
       gap: 16px;
@@ -277,26 +296,14 @@
       font-size: 11px;
       color: var(--light-text);
     }
-    .cal-legend-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .cal-legend-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
+    .cal-legend-item { display: flex; align-items: center; gap: 5px; }
+    .cal-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 
     /* ══════════════════════════════════════
        수업 기록 카드
        ══════════════════════════════════════ */
-    .session-card {
-      border-left: 4px solid var(--border);
-    }
-    .session-card.latest {
-      border-left-color: var(--accent1);
-    }
+    .session-card { border-left: 4px solid var(--border); }
+    .session-card.latest { border-left-color: var(--accent1); }
     .session-header {
       display: flex;
       justify-content: space-between;
@@ -321,9 +328,7 @@
       border-radius: 6px;
       flex-shrink: 0;
     }
-    .session-meta {
-      min-width: 0;
-    }
+    .session-meta { min-width: 0; }
     .session-topic {
       font-size: 15px;
       font-weight: 600;
@@ -343,9 +348,7 @@
       flex-shrink: 0;
       margin-left: 8px;
     }
-    .session-card.open .session-arrow {
-      transform: rotate(180deg);
-    }
+    .session-card.open .session-arrow { transform: rotate(180deg); }
     .session-detail {
       display: none;
       margin-top: 14px;
@@ -354,52 +357,59 @@
     }
     .session-card.open .session-detail { display: block; }
 
-    .detail-section {
-      margin-bottom: 14px;
-    }
+    .detail-section { margin-bottom: 14px; }
     .detail-section:last-child { margin-bottom: 0; }
     .detail-label {
       font-size: 11px;
       font-weight: 700;
       color: var(--light-text);
-      text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-bottom: 4px;
     }
-    .detail-text {
-      font-size: 14px;
-      line-height: 1.6;
-    }
+    .detail-text { font-size: 14px; line-height: 1.6; }
 
     /* 숙제 */
-    .homework-row {
+    .homework-header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
     }
-    .homework-status {
-      font-size: 12px;
-      font-weight: 600;
-      padding: 2px 10px;
+    .homework-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
       border-radius: 10px;
       flex-shrink: 0;
-      margin-left: 8px;
     }
-    .homework-status.done {
-      background: #dcfce7;
-      color: #16a34a;
+    .homework-badge.done { background: #dcfce7; color: var(--success); }
+    .homework-badge.partial { background: #fef3c7; color: var(--warning); }
+    .homework-badge.wrong { background: #ffedd5; color: var(--orange); }
+    .homework-badge.not_done { background: #f3f4f6; color: #6b7280; }
+    .homework-note {
+      margin-top: 6px;
+      padding: 8px 12px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--gray);
+      border-left: 3px solid var(--border);
     }
-    .homework-status.pending {
-      background: #fef3c7;
-      color: #d97706;
+    .homework-note.partial { border-left-color: var(--warning); }
+    .homework-note.wrong { border-left-color: var(--orange); }
+
+    /* 피드백 (학부모 전용) */
+    .feedback-box {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--gray);
+      border-left: 3px solid var(--accent1);
     }
 
     /* 이해도 */
-    .understanding {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
+    .understanding { display: flex; align-items: center; gap: 3px; }
     .star { font-size: 16px; color: var(--border); }
     .star.filled { color: var(--accent1); }
 
@@ -413,32 +423,11 @@
       align-items: center;
       gap: 8px;
     }
-    .next-preview-box .arrow-icon {
-      color: var(--accent1);
-      font-weight: 700;
-    }
+    .next-preview-box .arrow-icon { color: var(--accent1); font-weight: 700; }
 
-    /* 피드백 (학부모 전용) */
-    .feedback-box {
-      background: #f8f9fa;
-      border-radius: 8px;
-      padding: 12px 14px;
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--gray);
-      border-left: 3px solid var(--accent1);
-    }
-
-    /* 학부모 전용 뱃지 */
-    .parent-only {
-      display: none;
-    }
-    body.parent-mode .parent-only {
-      display: block;
-    }
-    body.parent-mode .parent-only-inline {
-      display: flex;
-    }
+    /* 학부모 전용 */
+    .parent-only { display: none; }
+    body.parent-mode .parent-only { display: block; }
 
     /* ── 푸터 ── */
     .footer {
@@ -447,23 +436,7 @@
       font-size: 11px;
       color: #9ca3af;
     }
-    .footer span {
-      color: var(--accent1);
-      font-weight: 600;
-    }
-
-    /* ── 반응형 ── */
-    @media (min-width: 600px) {
-      .progress-cards-wrap {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        padding: 0 16px;
-      }
-      .progress-cards-wrap .card {
-        margin: 0;
-      }
-    }
+    .footer span { color: var(--accent1); font-weight: 600; }
   </style>
 </head>
 <body>
@@ -481,23 +454,28 @@
   </div>
 
   <script>
-    // ── 모드 감지 ──
-    const IS_PARENT = location.search.includes('parent');
+    var IS_PARENT = location.search.indexOf('parent') >= 0;
     if (IS_PARENT) document.body.classList.add('parent-mode');
 
-    const DAY_NAMES = ['일','월','화','수','목','금','토'];
-    const DAY_MAP = {'일':0,'월':1,'화':2,'수':3,'목':4,'금':5,'토':6};
-    const TODAY = new Date();
-    const TODAY_STR = formatDateISO(TODAY);
+    var DAY_NAMES = ['일','월','화','수','목','금','토'];
+    var DAY_MAP = {'일':0,'월':1,'화':2,'수':3,'목':4,'금':5,'토':6};
+    var TODAY = new Date();
+    var TODAY_STR = fmtISO(TODAY);
+    var calYear = TODAY.getFullYear();
+    var calMonth = TODAY.getMonth();
+    var DATA = null;
 
-    let calYear = TODAY.getFullYear();
-    let calMonth = TODAY.getMonth();
-    let DATA = null;
+    var HW_LABELS = {
+      done:     { text: '완료',     cls: 'done' },
+      partial:  { text: '일부 완료', cls: 'partial' },
+      wrong:    { text: '오답 있음', cls: 'wrong' },
+      not_done: { text: '미완료',   cls: 'not_done' }
+    };
 
     fetch('data.json')
-      .then(r => r.json())
-      .then(data => { DATA = data; init(data); })
-      .catch(() => {
+      .then(function(r) { return r.json(); })
+      .then(function(d) { DATA = d; init(d); })
+      .catch(function() {
         document.getElementById('app').innerHTML =
           '<div style="text-align:center;padding:60px 20px;color:#6b7280">데이터를 불러올 수 없습니다.</div>';
       });
@@ -508,52 +486,42 @@
       switchTab('dashboard');
     }
 
-    // ══════════════════════════════════════
-    //  탭 빌드
-    // ══════════════════════════════════════
+    // ── 탭 ──
     function buildTabs(data) {
-      const nav = document.getElementById('tabNav');
-      // 대시보드 탭
-      const dashBtn = mkBtn('대시보드', 'dashboard');
-      nav.appendChild(dashBtn);
-      // 학생 탭
-      data.students.forEach(s => {
-        nav.appendChild(mkBtn(s.name, s.id));
-      });
+      var nav = document.getElementById('tabNav');
+      nav.appendChild(mkBtn('대시보드', 'dashboard'));
+      data.students.forEach(function(s) { nav.appendChild(mkBtn(s.name, s.id)); });
     }
-
     function mkBtn(label, id) {
-      const btn = document.createElement('button');
+      var btn = document.createElement('button');
       btn.className = 'tab-btn';
       btn.textContent = label;
       btn.dataset.id = id;
-      btn.onclick = () => switchTab(id);
+      btn.onclick = function() { switchTab(id); };
       return btn;
     }
-
     function switchTab(id) {
-      document.querySelectorAll('.tab-btn').forEach(b =>
-        b.classList.toggle('active', b.dataset.id === id));
-      document.querySelectorAll('.tab-content').forEach(c =>
-        c.classList.toggle('active', c.id === 'tab-' + id));
+      var btns = document.querySelectorAll('.tab-btn');
+      var tabs = document.querySelectorAll('.tab-content');
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.toggle('active', btns[i].dataset.id === id);
+      }
+      for (var i = 0; i < tabs.length; i++) {
+        tabs[i].classList.toggle('active', tabs[i].id === 'tab-' + id);
+      }
     }
 
-    // ══════════════════════════════════════
-    //  콘텐츠 빌드
-    // ══════════════════════════════════════
+    // ── 콘텐츠 ──
     function buildContent(data) {
-      const app = document.getElementById('app');
+      var app = document.getElementById('app');
+      var dash = document.createElement('div');
+      dash.className = 'tab-content';
+      dash.id = 'tab-dashboard';
+      dash.innerHTML = renderDashboard(data);
+      app.appendChild(dash);
 
-      // 대시보드
-      const dashDiv = document.createElement('div');
-      dashDiv.className = 'tab-content';
-      dashDiv.id = 'tab-dashboard';
-      dashDiv.innerHTML = renderDashboard(data);
-      app.appendChild(dashDiv);
-
-      // 학생별 탭
-      data.students.forEach(s => {
-        const div = document.createElement('div');
+      data.students.forEach(function(s) {
+        var div = document.createElement('div');
         div.className = 'tab-content';
         div.id = 'tab-' + s.id;
         div.innerHTML = renderStudentTab(s);
@@ -565,62 +533,75 @@
     //  대시보드
     // ══════════════════════════════════════
     function renderDashboard(data) {
-      let html = '';
+      var html = '';
+      var plan = data.plan;
 
-      // 진도 카드
+      // 전체 세션 수 합산
+      var totalSessions = 0;
+      data.students.forEach(function(s) { totalSessions += s.sessions.length; });
+      var totalHours = totalSessions * plan.hours_per_session;
+      var cycleHours = totalHours % plan.total_hours;
+      var cycleNum = Math.floor(totalHours / plan.total_hours) + 1;
+      var pct = Math.min((cycleHours / plan.total_hours) * 100, 100);
+      var months = getMonthsDiff(plan.start_date);
+
+      // 공유 진도 카드
       html += '<div class="section-title">진도 현황</div>';
-      html += '<div class="progress-cards-wrap">';
-      data.students.forEach(s => {
-        const totalHours = s.sessions.length * s.plan.hours_per_session;
-        const cycleHours = totalHours % s.plan.total_hours;
-        const cycleNum = Math.floor(totalHours / s.plan.total_hours) + 1;
-        const pct = Math.min((cycleHours / s.plan.total_hours) * 100, 100);
-        const months = getMonthsDiff(s.plan.start_date);
-        const nextDate = getNextScheduledDate(s.schedule.days);
+      html += '<div class="card shared-progress">'
+        + '<div class="shared-top">'
+        + '<span class="shared-label">공유 진도</span>'
+        + '<span class="shared-months">' + months + '개월차</span>'
+        + '</div>'
+        + '<div class="progress-bar-wrap">'
+        + '<div class="progress-bar-fill" style="width:' + pct + '%"></div>'
+        + '</div>'
+        + '<div class="progress-hours">'
+        + '<span class="hours-text">' + cycleHours + ' / ' + plan.total_hours + '시간</span>'
+        + '<span class="pct-text">' + Math.round(pct) + '%</span>'
+        + '</div>'
+        + '<div class="student-counts">';
 
-        html += '<div class="card progress-card">'
-          + '<div class="progress-top">'
-          + '<span class="progress-name">' + s.name + '</span>'
-          + '<span class="progress-grade" style="background:' + s.color + '">' + s.grade + '</span>'
-          + '</div>'
-          + '<div class="progress-stats">'
-          + '<span><strong>' + cycleNum + '기</strong></span>'
-          + '<span><strong>' + months + '</strong>개월차</span>'
-          + '<span>총 <strong>' + totalHours + '</strong>시간</span>'
-          + '</div>'
-          + '<div class="progress-bar-wrap">'
-          + '<div class="progress-bar-fill" style="width:' + pct + '%;background:' + s.color + '"></div>'
-          + '</div>'
-          + '<div class="progress-hours">'
-          + '<span>' + cycleHours + ' / ' + s.plan.total_hours + '시간</span>'
-          + '<span>' + Math.round(pct) + '%</span>'
-          + '</div>'
-          + '<div class="progress-schedule">'
-          + '<span>매주 ' + s.schedule.days.join(', ') + ' ' + s.schedule.time + '</span>'
-          + (nextDate ? '<span class="next-session">다음: ' + formatDateShort(nextDate) + '</span>' : '')
-          + '</div>'
+      data.students.forEach(function(s) {
+        html += '<div class="student-count-item">'
+          + '<div class="student-dot" style="background:' + s.color + '"></div>'
+          + '<span>' + s.name + ' <strong>' + s.sessions.length + '</strong>회</span>'
+          + '</div>';
+      });
+
+      html += '</div></div>';
+
+      // 스케줄 카드
+      html += '<div class="section-title">수업 일정</div>';
+      html += '<div class="schedule-cards">';
+      data.students.forEach(function(s) {
+        var nextDate = getNextScheduled(s.schedule.days);
+        html += '<div class="schedule-card" style="border-top-color:' + s.color + '">'
+          + '<div class="sch-name">' + s.name + '</div>'
+          + '<span class="sch-grade" style="background:' + s.color + '">' + s.grade + '</span>'
+          + '<div class="sch-day">매주 ' + s.schedule.days.join(', ') + ' ' + s.schedule.time + '</div>'
+          + (nextDate ? '<div class="sch-next">다음: ' + fmtShort(nextDate) + '</div>' : '')
           + '</div>';
       });
       html += '</div>';
 
       // 시험 D-day
-      const allExams = [];
-      data.students.forEach(s => {
-        (s.exams || []).forEach(e => {
-          allExams.push({ ...e, student: s.name, color: s.color });
+      var exams = [];
+      data.students.forEach(function(s) {
+        (s.exams || []).forEach(function(e) {
+          exams.push({ name: e.name, date: e.date, student: s.name, color: s.color });
         });
       });
-      if (allExams.length > 0) {
+      if (exams.length > 0) {
         html += '<div class="section-title">시험 일정</div>';
         html += '<div class="exam-cards">';
-        allExams.forEach(e => {
-          const dday = getDday(e.date);
-          const ddayText = dday === 0 ? 'D-Day' : (dday > 0 ? 'D-' + dday : 'D+' + Math.abs(dday));
+        exams.forEach(function(e) {
+          var d = getDday(e.date);
+          var txt = d === 0 ? 'D-Day' : (d > 0 ? 'D-' + d : 'D+' + Math.abs(d));
           html += '<div class="exam-chip">'
-            + '<span class="exam-dday">' + ddayText + '</span>'
+            + '<span class="exam-dday">' + txt + '</span>'
             + '<div class="exam-info">'
             + '<div class="exam-name">' + e.name + '</div>'
-            + '<div>' + formatDateShort(new Date(e.date)) + '</div>'
+            + '<div>' + e.student + ' | ' + fmtShort(new Date(e.date)) + '</div>'
             + '</div></div>';
         });
         html += '</div>';
@@ -628,9 +609,7 @@
 
       // 캘린더
       html += '<div class="section-title">수업 캘린더</div>';
-      html += '<div class="card" id="calendarCard">';
-      html += renderCalendar(data);
-      html += '</div>';
+      html += '<div class="card" id="calendarCard">' + renderCalendar(data) + '</div>';
 
       return html;
     }
@@ -639,106 +618,78 @@
     //  캘린더
     // ══════════════════════════════════════
     function renderCalendar(data) {
-      const year = calYear;
-      const month = calMonth;
-      const firstDay = new Date(year, month, 1).getDay();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      var y = calYear, m = calMonth;
+      var firstDay = new Date(y, m, 1).getDay();
+      var days = new Date(y, m + 1, 0).getDate();
 
-      let html = '<div class="cal-nav">'
+      var html = '<div class="cal-nav">'
         + '<button onclick="calPrev()">&#8249;</button>'
-        + '<span class="cal-month">' + year + '년 ' + (month + 1) + '월</span>'
-        + '<button onclick="calNext()">&#8250;</button>'
-        + '</div>';
+        + '<span class="cal-month">' + y + '년 ' + (m + 1) + '월</span>'
+        + '<button onclick="calNext()">&#8250;</button></div>';
 
       html += '<div class="cal-grid">';
-      // 요일 헤더
-      DAY_NAMES.forEach((d, i) => {
-        html += '<div class="cal-header">' + d + '</div>';
-      });
+      DAY_NAMES.forEach(function(d) { html += '<div class="cal-header">' + d + '</div>'; });
+      for (var i = 0; i < firstDay; i++) html += '<div class="cal-cell"></div>';
 
-      // 빈 셀
-      for (let i = 0; i < firstDay; i++) {
-        html += '<div class="cal-cell"></div>';
-      }
+      for (var d = 1; d <= days; d++) {
+        var ds = y + '-' + pad(m + 1) + '-' + pad(d);
+        var dow = new Date(y, m, d).getDay();
+        var cls = 'cal-cell';
+        if (ds === TODAY_STR) cls += ' today';
+        else if (dow === 0) cls += ' sunday';
+        else if (dow === 6) cls += ' saturday';
 
-      // 날짜
-      for (let d = 1; d <= daysInMonth; d++) {
-        const dateStr = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
-        const dayOfWeek = new Date(year, month, d).getDay();
-        const isToday = dateStr === TODAY_STR;
-        let cls = 'cal-cell';
-        if (isToday) cls += ' today';
-        else if (dayOfWeek === 0) cls += ' sunday';
-        else if (dayOfWeek === 6) cls += ' saturday';
-
-        let dots = '';
-        data.students.forEach(s => {
-          const hasSession = s.sessions.some(ss => ss.date === dateStr);
-          const isScheduled = s.schedule.days.some(sd => DAY_MAP[sd] === dayOfWeek);
-          const isFuture = new Date(dateStr) > TODAY;
-
-          if (hasSession) {
+        var dots = '';
+        data.students.forEach(function(s) {
+          var has = false;
+          for (var j = 0; j < s.sessions.length; j++) {
+            if (s.sessions[j].date === ds) { has = true; break; }
+          }
+          var isSch = false;
+          for (var j = 0; j < s.schedule.days.length; j++) {
+            if (DAY_MAP[s.schedule.days[j]] === dow) { isSch = true; break; }
+          }
+          if (has) {
             dots += '<div class="cal-dot" style="background:' + s.color + '"></div>';
-          } else if (isScheduled && isFuture) {
+          } else if (isSch && new Date(ds) > TODAY) {
             dots += '<div class="cal-dot future" style="background:' + s.color + '"></div>';
           }
         });
 
-        html += '<div class="' + cls + '">'
-          + '<span>' + d + '</span>'
-          + '<div class="cal-dots">' + dots + '</div>'
-          + '</div>';
+        html += '<div class="' + cls + '"><span>' + d + '</span>'
+          + '<div class="cal-dots">' + dots + '</div></div>';
       }
-
       html += '</div>';
 
-      // 범례
       html += '<div class="cal-legend">';
-      data.students.forEach(s => {
+      data.students.forEach(function(s) {
         html += '<div class="cal-legend-item">'
           + '<div class="cal-legend-dot" style="background:' + s.color + '"></div>'
           + '<span>' + s.name + '</span></div>';
       });
       html += '</div>';
-
       return html;
     }
 
-    function calPrev() {
-      calMonth--;
-      if (calMonth < 0) { calMonth = 11; calYear--; }
-      document.getElementById('calendarCard').innerHTML = renderCalendar(DATA);
-    }
-    function calNext() {
-      calMonth++;
-      if (calMonth > 11) { calMonth = 0; calYear++; }
-      document.getElementById('calendarCard').innerHTML = renderCalendar(DATA);
-    }
+    function calPrev() { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } document.getElementById('calendarCard').innerHTML = renderCalendar(DATA); }
+    function calNext() { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } document.getElementById('calendarCard').innerHTML = renderCalendar(DATA); }
 
     // ══════════════════════════════════════
     //  학생 탭
     // ══════════════════════════════════════
     function renderStudentTab(student) {
-      let html = '';
-
-      // 학생 요약
-      const totalHours = student.sessions.length * student.plan.hours_per_session;
-      const cycleHours = totalHours % student.plan.total_hours;
-      const cycleNum = Math.floor(totalHours / student.plan.total_hours) + 1;
-
-      html += '<div class="section-title">' + student.name + ' 수업 기록</div>';
-
-      // 세션 카드 (최신순)
-      const sorted = [...student.sessions].sort((a, b) => b.number - a.number);
+      var html = '<div class="section-title">' + student.name + ' 수업 기록</div>';
+      var sorted = student.sessions.slice().sort(function(a, b) { return b.number - a.number; });
 
       if (sorted.length === 0) {
         html += '<div class="card" style="text-align:center;color:#6b7280;padding:40px">아직 수업 기록이 없습니다.</div>';
         return html;
       }
 
-      sorted.forEach((s, i) => {
-        const isLatest = i === 0;
-        html += '<div class="card session-card' + (isLatest ? ' latest open' : '') + '" style="border-left-color:' + (isLatest ? student.color : 'var(--border)') + '">';
+      sorted.forEach(function(s, i) {
+        var isLatest = i === 0;
+        html += '<div class="card session-card' + (isLatest ? ' latest open' : '') + '" '
+          + 'style="border-left-color:' + (isLatest ? student.color : 'var(--border)') + '">';
 
         // 헤더
         html += '<div class="session-header" onclick="toggleCard(this)">'
@@ -746,10 +697,9 @@
           + '<span class="session-num">' + s.number + '회차</span>'
           + '<div class="session-meta">'
           + '<div class="session-topic">' + s.topic + '</div>'
-          + '<div class="session-date">' + formatDateFull(s.date) + '</div>'
+          + '<div class="session-date">' + fmtFull(s.date) + '</div>'
           + '</div></div>'
-          + '<span class="session-arrow">&#9662;</span>'
-          + '</div>';
+          + '<span class="session-arrow">&#9662;</span></div>';
 
         // 디테일
         html += '<div class="session-detail">';
@@ -757,35 +707,38 @@
         // 수업 내용
         html += '<div class="detail-section">'
           + '<div class="detail-label">수업 내용</div>'
-          + '<div class="detail-text">' + s.content + '</div>'
-          + '</div>';
+          + '<div class="detail-text">' + s.content + '</div></div>';
 
         // 피드백 (학부모 전용)
         if (s.feedback) {
           html += '<div class="detail-section parent-only">'
             + '<div class="detail-label">선생님 피드백</div>'
-            + '<div class="feedback-box">' + s.feedback + '</div>'
-            + '</div>';
+            + '<div class="feedback-box">' + s.feedback + '</div></div>';
         }
 
         // 숙제
         if (s.homework) {
-          const doneClass = s.homework_done ? 'done' : 'pending';
-          const doneText = s.homework_done ? '완료' : '진행 중';
+          var st = s.homework_status || 'not_done';
+          var label = HW_LABELS[st] || HW_LABELS.not_done;
+
           html += '<div class="detail-section">'
             + '<div class="detail-label">숙제</div>'
-            + '<div class="homework-row">'
+            + '<div class="homework-header">'
             + '<div class="detail-text">' + s.homework + '</div>'
-            + '<span class="homework-status ' + doneClass + '">' + doneText + '</span>'
-            + '</div></div>';
+            + '<span class="homework-badge ' + label.cls + '">' + label.text + '</span>'
+            + '</div>';
+
+          if (s.homework_note) {
+            html += '<div class="homework-note ' + label.cls + '">' + s.homework_note + '</div>';
+          }
+          html += '</div>';
         }
 
         // 이해도 (학부모 전용)
         if (s.understanding) {
           html += '<div class="detail-section parent-only">'
             + '<div class="detail-label">이해도</div>'
-            + '<div class="understanding">' + renderStars(s.understanding) + '</div>'
-            + '</div>';
+            + '<div class="understanding">' + renderStars(s.understanding) + '</div></div>';
         }
 
         // 다음 수업 예고
@@ -794,12 +747,10 @@
             + '<div class="detail-label">다음 수업 예고</div>'
             + '<div class="next-preview-box">'
             + '<span class="arrow-icon">&#10148;</span>'
-            + '<span>' + s.next_preview + '</span>'
-            + '</div></div>';
+            + '<span>' + s.next_preview + '</span></div></div>';
         }
 
-        html += '</div>'; // session-detail
-        html += '</div>'; // session-card
+        html += '</div></div>';
       });
 
       return html;
@@ -808,53 +759,37 @@
     // ══════════════════════════════════════
     //  유틸리티
     // ══════════════════════════════════════
-    function toggleCard(header) {
-      header.parentElement.classList.toggle('open');
+    function toggleCard(h) { h.parentElement.classList.toggle('open'); }
+
+    function renderStars(n) {
+      var h = '';
+      for (var i = 1; i <= 5; i++) h += '<span class="star' + (i <= n ? ' filled' : '') + '">&#9733;</span>';
+      return h;
     }
 
-    function renderStars(level) {
-      let html = '';
-      for (let i = 1; i <= 5; i++) {
-        html += '<span class="star ' + (i <= level ? 'filled' : '') + '">&#9733;</span>';
-      }
-      return html;
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+    function fmtISO(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+    function fmtFull(s) { var d = new Date(s); return (d.getMonth()+1) + '월 ' + d.getDate() + '일 (' + DAY_NAMES[d.getDay()] + ')'; }
+    function fmtShort(d) { if (typeof d === 'string') d = new Date(d); return (d.getMonth()+1) + '/' + d.getDate() + '(' + DAY_NAMES[d.getDay()] + ')'; }
+
+    function getDday(s) {
+      var t = new Date(s), n = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate());
+      return Math.ceil((t - n) / 86400000);
     }
 
-    function formatDateISO(d) {
-      return d.getFullYear() + '-'
-        + String(d.getMonth() + 1).padStart(2, '0') + '-'
-        + String(d.getDate()).padStart(2, '0');
+    function getMonthsDiff(s) {
+      var d = new Date(s);
+      return (TODAY.getFullYear() - d.getFullYear()) * 12 + (TODAY.getMonth() - d.getMonth()) + 1;
     }
 
-    function formatDateFull(dateStr) {
-      var d = new Date(dateStr);
-      return (d.getMonth() + 1) + '월 ' + d.getDate() + '일 (' + DAY_NAMES[d.getDay()] + ')';
-    }
-
-    function formatDateShort(d) {
-      if (typeof d === 'string') d = new Date(d);
-      return (d.getMonth() + 1) + '/' + d.getDate() + '(' + DAY_NAMES[d.getDay()] + ')';
-    }
-
-    function getDday(dateStr) {
-      var target = new Date(dateStr);
-      var today = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate());
-      var diff = target.getTime() - today.getTime();
-      return Math.ceil(diff / (1000 * 60 * 60 * 24));
-    }
-
-    function getMonthsDiff(startStr) {
-      var start = new Date(startStr);
-      return (TODAY.getFullYear() - start.getFullYear()) * 12
-        + (TODAY.getMonth() - start.getMonth()) + 1;
-    }
-
-    function getNextScheduledDate(days) {
+    function getNextScheduled(days) {
       var d = new Date(TODAY);
       for (var i = 1; i <= 7; i++) {
         d.setDate(d.getDate() + 1);
-        var dayName = DAY_NAMES[d.getDay()];
-        if (days.indexOf(dayName) >= 0) return new Date(d);
+        var name = DAY_NAMES[d.getDay()];
+        for (var j = 0; j < days.length; j++) {
+          if (days[j] === name) return new Date(d);
+        }
       }
       return null;
     }

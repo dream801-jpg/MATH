@@ -1,4 +1,9 @@
 {
+  "plan": {
+    "total_hours": 24,
+    "hours_per_session": 1,
+    "start_date": "2025-06-01"
+  },
   "students": [
     {
       "id": "seoyun",
@@ -9,33 +14,18 @@
         "days": ["화"],
         "time": "19:00 - 21:00"
       },
-      "plan": {
-        "total_hours": 48,
-        "hours_per_session": 2,
-        "start_date": "2025-09-01"
-      },
       "exams": [
         { "name": "1학기 중간고사", "date": "2026-05-06" }
       ],
       "sessions": [
         {
           "number": 1,
-          "date": "2026-04-01",
-          "topic": "이차방정식 복습",
-          "content": "일차방정식에서 이차방정식으로 확장, 인수분해 풀이",
-          "homework": "교재 p.32 1~10번",
-          "homework_done": true,
-          "feedback": "기초 개념이 잘 잡혀있어요. 인수분해 속도를 높이면 좋겠습니다.",
-          "understanding": 4,
-          "next_preview": "이차방정식 활용"
-        },
-        {
-          "number": 2,
           "date": "2026-04-08",
           "topic": "이차방정식 활용",
           "content": "근의 공식, 판별식을 이용한 활용 문제",
           "homework": "교재 p.50 1~15번",
-          "homework_done": false,
+          "homework_status": "partial",
+          "homework_note": "10번까지만 풀어옴",
           "feedback": "근의 공식은 완벽해요. 문장제 문제에서 식 세우는 연습이 더 필요합니다.",
           "understanding": 3,
           "next_preview": "이차함수 그래프"
@@ -51,33 +41,18 @@
         "days": ["목"],
         "time": "19:00 - 21:00"
       },
-      "plan": {
-        "total_hours": 48,
-        "hours_per_session": 2,
-        "start_date": "2025-09-01"
-      },
       "exams": [
         { "name": "1학기 중간고사", "date": "2026-05-06" }
       ],
       "sessions": [
         {
           "number": 1,
-          "date": "2026-04-03",
-          "topic": "소인수분해",
-          "content": "소수의 개념, 소인수분해 방법, 거듭제곱 표현",
-          "homework": "교재 p.15 1~8번",
-          "homework_done": true,
-          "feedback": "소수 개념을 잘 이해했어요. 큰 수의 소인수분해 연습을 더 하면 좋겠습니다.",
-          "understanding": 4,
-          "next_preview": "최대공약수와 최소공배수"
-        },
-        {
-          "number": 2,
           "date": "2026-04-10",
           "topic": "최대공약수와 최소공배수",
           "content": "소인수분해를 이용한 최대공약수, 최소공배수 구하기",
           "homework": "교재 p.24 1~12번",
-          "homework_done": false,
+          "homework_status": "wrong",
+          "homework_note": "5번, 9번 오답 — 최소공배수 구할 때 지수 선택 실수",
           "feedback": "최대공약수는 잘 구해요. 최소공배수에서 지수 선택을 헷갈려해서 반복 연습이 필요합니다.",
           "understanding": 3,
           "next_preview": "정수와 유리수"
