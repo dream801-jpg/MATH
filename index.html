@@ -448,6 +448,16 @@
     /* 학부모 전용 */
     .parent-only { display: none; }
     body.parent-mode .parent-only { display: block; }
+    .parent-banner {
+      display: none;
+      background: var(--accent1);
+      color: var(--dark);
+      text-align: center;
+      padding: 6px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    body.parent-mode .parent-banner { display: block; }
 
     /* ── 푸터 ── */
     .footer {
@@ -466,6 +476,7 @@
     <p>수학 과외 수업 기록</p>
   </div>
 
+  <div class="parent-banner">학부모 전용 페이지</div>
   <div class="tab-nav" id="tabNav"></div>
   <div id="app"></div>
 

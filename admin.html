@@ -375,6 +375,20 @@
       font-family: inherit;
     }
     .btn-delete:active { background: var(--danger); color: white; }
+    .btn-edit {
+      background: none;
+      border: 1.5px solid var(--accent);
+      color: var(--dark);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-left: 6px;
+      font-family: inherit;
+    }
+    .btn-edit:active { background: var(--accent); }
     .session-list-empty {
       text-align: center;
       color: var(--light-text);
@@ -393,6 +407,18 @@
   </style>
 </head>
 <body>
+
+  <!-- PIN 잠금 화면 -->
+  <div id="pinOverlay" style="position:fixed;top:0;left:0;right:0;bottom:0;background:var(--dark);z-index:999;display:flex;align-items:center;justify-content:center">
+    <div style="text-align:center;padding:20px">
+      <h1 style="color:var(--accent);font-size:26px;letter-spacing:4px;margin-bottom:8px">MATH</h1>
+      <p style="color:#9ca3af;font-size:13px;margin-bottom:24px">관리자 PIN을 입력하세요</p>
+      <input type="password" id="pinInput" inputmode="numeric" maxlength="4" placeholder="****"
+        style="width:140px;padding:14px;text-align:center;font-size:24px;letter-spacing:12px;border:2px solid var(--gray);border-radius:12px;background:transparent;color:white;font-family:inherit"
+        onkeyup="checkPin(event)">
+      <p id="pinError" style="color:var(--danger);font-size:12px;margin-top:10px;opacity:0">PIN이 틀렸습니다</p>
+    </div>
+  </div>
 
   <div class="header">
     <h1>MATH</h1>
@@ -555,10 +581,35 @@
   </div>
 
   <script>
+    // ── PIN 잠금 ──
+    var PIN = '0801';
+    var pinUnlocked = sessionStorage.getItem('math_pin_ok') === '1';
+
+    if (pinUnlocked) {
+      document.getElementById('pinOverlay').style.display = 'none';
+    } else {
+      document.getElementById('pinInput').focus();
+    }
+
+    function checkPin(e) {
+      var val = document.getElementById('pinInput').value;
+      if (val.length === 4) {
+        if (val === PIN) {
+          sessionStorage.setItem('math_pin_ok', '1');
+          document.getElementById('pinOverlay').style.display = 'none';
+        } else {
+          document.getElementById('pinError').style.opacity = '1';
+          document.getElementById('pinInput').value = '';
+          setTimeout(function() { document.getElementById('pinError').style.opacity = '0'; }, 2000);
+        }
+      }
+    }
+
     var DATA = null;
     var SELECTED_STUDENT = null;
     var UNDERSTANDING = 3;
     var REPO = 'dream801-jpg/MATH';
+    var EDIT_MODE = null; // null이면 추가, 숫자면 해당 회차 수정 중
 
     // ── 초기화 ──
     fetch('data.json?v=' + Date.now())
@@ -644,6 +695,7 @@
           + '<div class="session-list-topic">' + s.topic + '</div>'
           + '<div class="session-list-date">' + s.date + '</div>'
           + '</div>'
+          + '<button class="btn-edit" onclick="editSession(' + s.number + ')">수정</button>'
           + '<button class="btn-delete" onclick="deleteSession(' + s.number + ')">삭제</button>'
           + '</div>';
       });
@@ -693,6 +745,35 @@
       } else {
         showCopyMode(jsonStr);
       }
+    }
+
+    // ── 수업 수정 ──
+    function editSession(num) {
+      var session = null;
+      for (var i = 0; i < SELECTED_STUDENT.sessions.length; i++) {
+        if (SELECTED_STUDENT.sessions[i].number === num) { session = SELECTED_STUDENT.sessions[i]; break; }
+      }
+      if (!session) return;
+
+      EDIT_MODE = num;
+      document.getElementById('sessionForm').style.display = 'block';
+      document.getElementById('fNumber').value = session.number;
+      document.getElementById('fNumber').readOnly = true;
+      document.getElementById('fDate').value = session.date || '';
+      document.getElementById('fHours').value = session.hours || 1;
+      document.getElementById('fTopic').value = session.topic || '';
+      document.getElementById('fContent').value = session.content || '';
+      document.getElementById('fHomework').value = session.homework || '';
+      document.getElementById('fFeedback').value = session.feedback || '';
+      document.getElementById('fNextPreview').value = session.next_preview || '';
+      UNDERSTANDING = session.understanding || 3;
+      updateStars();
+
+      var btn = document.getElementById('submitBtn');
+      btn.textContent = num + '회차 수정 저장';
+
+      // 폼으로 스크롤
+      document.getElementById('sessionForm').scrollIntoView({ behavior: 'smooth' });
     }
 
     // ── 일정 관리 ──
@@ -851,8 +932,13 @@
 
     // ── 수업 폼 ──
     function showSessionForm() {
+      EDIT_MODE = null;
+      document.getElementById('fNumber').readOnly = false;
+      document.getElementById('submitBtn').textContent = '수업 기록 추가';
       document.getElementById('sessionForm').style.display = 'block';
-      var nextNum = SELECTED_STUDENT.sessions.length + 1;
+      var maxNum = 0;
+      SELECTED_STUDENT.sessions.forEach(function(s) { if (s.number > maxNum) maxNum = s.number; });
+      var nextNum = maxNum + 1;
       document.getElementById('fNumber').value = nextNum;
       document.getElementById('fDate').value = todayStr;
       document.getElementById('fTopic').value = '';
@@ -870,8 +956,18 @@
 
       var topic = document.getElementById('fTopic').value.trim();
       var content = document.getElementById('fContent').value.trim();
+      var hours = parseFloat(document.getElementById('fHours').value);
+      var num = parseInt(document.getElementById('fNumber').value);
+
       if (!topic) { alert('단원/주제를 입력해주세요.'); return; }
       if (!content) { alert('수업 내용을 입력해주세요.'); return; }
+      if (!hours || hours <= 0) { alert('시간은 0보다 커야 합니다.'); return; }
+
+      // 회차 중복 체크 (수정 모드가 아닐 때만)
+      if (!EDIT_MODE) {
+        var dup = SELECTED_STUDENT.sessions.some(function(s) { return s.number === num; });
+        if (dup) { alert(num + '회차가 이미 존재합니다.'); return; }
+      }
 
       var btn = document.getElementById('submitBtn');
       btn.disabled = true;
@@ -904,20 +1000,36 @@
       if (!newSession.feedback) delete newSession.feedback;
       if (!newSession.next_preview) delete newSession.next_preview;
 
-      SELECTED_STUDENT.sessions.push(newSession);
+      if (EDIT_MODE) {
+        // 수정 모드: 기존 세션 교체
+        for (var i = 0; i < SELECTED_STUDENT.sessions.length; i++) {
+          if (SELECTED_STUDENT.sessions[i].number === EDIT_MODE) {
+            SELECTED_STUDENT.sessions[i] = newSession;
+            break;
+          }
+        }
+      } else {
+        SELECTED_STUDENT.sessions.push(newSession);
+      }
 
       var jsonStr = JSON.stringify(DATA, null, 2);
       var token = localStorage.getItem('math_github_token');
+      var commitMsg = EDIT_MODE
+        ? SELECTED_STUDENT.name + ' ' + newSession.number + '회차 수정'
+        : SELECTED_STUDENT.name + ' ' + newSession.number + '회차 수업 기록';
+
+      EDIT_MODE = null;
+      document.getElementById('fNumber').readOnly = false;
 
       if (token) {
-        commitToGithub(token, jsonStr, newSession);
+        commitToGithub(token, jsonStr, newSession, commitMsg);
       } else {
         showCopyMode(jsonStr);
       }
     }
 
     // ── GitHub 직접 커밋 ──
-    function commitToGithub(token, content, session) {
+    function commitToGithub(token, content, session, commitMsg) {
       fetch('https://api.github.com/repos/' + REPO + '/contents/data.json', {
         headers: { 'Authorization': 'token ' + token }
       })
@@ -925,8 +1037,7 @@
       .then(function(meta) {
         if (!meta.sha) throw new Error('SHA를 가져올 수 없습니다. 토큰을 확인해주세요.');
 
-        var studentName = SELECTED_STUDENT.name;
-        var msg = studentName + ' ' + session.number + '회차 수업 기록';
+        var msg = commitMsg || (SELECTED_STUDENT.name + ' ' + session.number + '회차 수업 기록');
 
         return fetch('https://api.github.com/repos/' + REPO + '/contents/data.json', {
           method: 'PUT',
@@ -949,11 +1060,8 @@
         showResult(true, '수업 기록이 추가되었습니다!<br><br>1~2분 후 페이지에 자동 반영됩니다.');
       })
       .catch(function(err) {
-        // 실패 시 복사 모드로 전환
-        SELECTED_STUDENT.sessions.pop();
-        showResult(false, '직접 커밋에 실패했습니다.<br>' + err.message + '<br><br>아래 JSON을 복사해서 GitHub에 붙여넣기 해주세요.');
+        // 실패 시 세션은 유지한 채 복사 모드로 전환
         var jsonStr = JSON.stringify(DATA, null, 2);
-        SELECTED_STUDENT.sessions.push(arguments[0]);
         showCopyMode(jsonStr);
       });
     }
