@@ -3,221 +3,466 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>수학 과외 기록</title>
+  <title>MATH - 수학 과외</title>
   <style>
+    :root {
+      --bg: #f0f2f5;
+      --card: #ffffff;
+      --dark: #222831;
+      --gray: #393E46;
+      --light-text: #6b7280;
+      --border: #e5e7eb;
+      --accent1: #FFD369;
+      --accent2: #77B5FE;
+      --success: #22c55e;
+      --warning: #f59e0b;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
-      background: #EEEEEE;
-      color: #222831;
+      font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--dark);
       min-height: 100vh;
+      -webkit-tap-highlight-color: transparent;
     }
 
     /* ── 헤더 ── */
     .header {
-      background: #222831;
-      color: #FFD369;
-      padding: 28px 20px 22px;
+      background: var(--dark);
+      padding: 24px 20px 18px;
       text-align: center;
     }
     .header h1 {
-      font-size: 24px;
-      letter-spacing: 2px;
-      margin-bottom: 4px;
+      color: var(--accent1);
+      font-size: 26px;
+      letter-spacing: 4px;
+      font-weight: 800;
     }
     .header p {
-      font-size: 13px;
-      color: #EEEEEE;
-      opacity: 0.7;
+      color: #9ca3af;
+      font-size: 12px;
+      margin-top: 4px;
     }
 
     /* ── 탭 네비게이션 ── */
     .tab-nav {
       display: flex;
-      background: #393E46;
+      background: var(--gray);
       position: sticky;
       top: 0;
       z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
     .tab-btn {
       flex: 1;
-      padding: 14px 8px;
+      padding: 13px 4px;
       text-align: center;
-      color: #EEEEEE;
-      font-size: 15px;
+      color: #9ca3af;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       border: none;
       background: transparent;
       transition: all 0.2s;
       border-bottom: 3px solid transparent;
+      white-space: nowrap;
     }
     .tab-btn.active {
-      color: #FFD369;
-      border-bottom-color: #FFD369;
-      background: rgba(255, 211, 105, 0.08);
-    }
-    .tab-btn .badge {
-      display: inline-block;
-      background: #FFD369;
-      color: #222831;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 1px 7px;
-      border-radius: 10px;
-      margin-left: 6px;
-      vertical-align: middle;
+      color: white;
+      border-bottom-color: var(--accent1);
     }
 
-    /* ── 학생 정보 카드 ── */
-    .student-info {
-      background: white;
-      margin: 16px;
-      border-radius: 12px;
-      padding: 18px 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    /* ── 섹션 공통 ── */
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--light-text);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 20px 20px 8px;
     }
-    .student-info .name-row {
+
+    /* ── 카드 공통 ── */
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      margin: 0 16px 12px;
+      padding: 18px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    /* ── 탭 콘텐츠 ── */
+    .tab-content { display: none; padding-bottom: 20px; }
+    .tab-content.active { display: block; }
+
+    /* ══════════════════════════════════════
+       대시보드 - 진도 카드
+       ══════════════════════════════════════ */
+    .progress-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .progress-top {
       display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 6px;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 14px;
     }
-    .student-info .name {
-      font-size: 20px;
+    .progress-name {
+      font-size: 18px;
       font-weight: 700;
     }
-    .student-info .grade {
-      background: #FFD369;
-      color: #222831;
-      font-size: 12px;
+    .progress-grade {
+      font-size: 11px;
       font-weight: 700;
       padding: 3px 10px;
       border-radius: 12px;
+      color: var(--dark);
     }
-    .student-info .summary {
+    .progress-stats {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 12px;
       font-size: 13px;
-      color: #393E46;
+      color: var(--light-text);
     }
-
-    /* ── 수업 내용 영역 ── */
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-
-    .sessions {
-      padding: 0 16px 24px;
+    .progress-stats strong {
+      color: var(--dark);
     }
-
-    /* ── 수업 카드 ── */
-    .session-card {
-      background: white;
-      border-radius: 12px;
-      margin-bottom: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    .progress-bar-wrap {
+      background: var(--bg);
+      border-radius: 8px;
+      height: 10px;
       overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 8px;
+      transition: width 0.6s ease;
+    }
+    .progress-hours {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--light-text);
+    }
+    .progress-schedule {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--light-text);
+      display: flex;
+      justify-content: space-between;
+    }
+    .next-session {
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    /* ══════════════════════════════════════
+       대시보드 - 시험 D-day
+       ══════════════════════════════════════ */
+    .exam-cards {
+      display: flex;
+      gap: 10px;
+      padding: 0 16px;
+      overflow-x: auto;
+    }
+    .exam-chip {
+      flex-shrink: 0;
+      background: var(--dark);
+      color: white;
+      border-radius: 12px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .exam-dday {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent1);
+    }
+    .exam-info {
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    .exam-info .exam-name {
+      font-weight: 600;
+    }
+
+    /* ══════════════════════════════════════
+       대시보드 - 캘린더
+       ══════════════════════════════════════ */
+    .cal-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+      margin-bottom: 16px;
+    }
+    .cal-nav button {
+      background: var(--bg);
+      border: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    .cal-nav button:active {
+      background: var(--border);
+    }
+    .cal-month {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+      text-align: center;
+    }
+    .cal-header {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--light-text);
+      padding: 6px 0;
+    }
+    .cal-header:first-child { color: #ef4444; }
+    .cal-header:last-child { color: #3b82f6; }
+    .cal-cell {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      font-size: 13px;
+      position: relative;
+      cursor: default;
+    }
+    .cal-cell.today {
+      background: var(--dark);
+      color: white;
+      font-weight: 700;
+    }
+    .cal-cell.sunday { color: #ef4444; }
+    .cal-cell.saturday { color: #3b82f6; }
+    .cal-dots {
+      display: flex;
+      gap: 3px;
+      margin-top: 2px;
+      height: 5px;
+    }
+    .cal-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+    }
+    .cal-dot.future {
+      opacity: 0.3;
+    }
+    .cal-legend {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 14px;
+      font-size: 11px;
+      color: var(--light-text);
+    }
+    .cal-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .cal-legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* ══════════════════════════════════════
+       수업 기록 카드
+       ══════════════════════════════════════ */
+    .session-card {
+      border-left: 4px solid var(--border);
+    }
+    .session-card.latest {
+      border-left-color: var(--accent1);
     }
     .session-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 14px 18px;
       cursor: pointer;
       user-select: none;
     }
-    .session-header:active {
-      background: #f5f5f5;
+    .session-header:active { opacity: 0.7; }
+    .session-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 0;
     }
     .session-num {
-      background: #222831;
-      color: #FFD369;
-      font-size: 13px;
+      background: var(--dark);
+      color: var(--accent1);
+      font-size: 12px;
       font-weight: 700;
-      padding: 4px 12px;
-      border-radius: 8px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      flex-shrink: 0;
     }
-    .session-title {
-      flex: 1;
-      margin-left: 12px;
+    .session-meta {
+      min-width: 0;
     }
-    .session-title .topic {
+    .session-topic {
       font-size: 15px;
       font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    .session-title .date {
+    .session-date {
       font-size: 12px;
-      color: #393E46;
-      margin-top: 2px;
+      color: var(--light-text);
+      margin-top: 1px;
     }
     .session-arrow {
-      font-size: 14px;
-      color: #393E46;
+      font-size: 12px;
+      color: var(--light-text);
       transition: transform 0.2s;
+      flex-shrink: 0;
+      margin-left: 8px;
     }
     .session-card.open .session-arrow {
       transform: rotate(180deg);
     }
-
-    /* ── 수업 상세 ── */
     .session-detail {
       display: none;
-      padding: 0 18px 16px;
-      border-top: 1px solid #EEEEEE;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
     }
-    .session-card.open .session-detail {
-      display: block;
+    .session-card.open .session-detail { display: block; }
+
+    .detail-section {
+      margin-bottom: 14px;
     }
-    .detail-row {
-      display: flex;
-      padding: 10px 0;
-      border-bottom: 1px solid #f5f5f5;
-    }
-    .detail-row:last-child {
-      border-bottom: none;
-    }
+    .detail-section:last-child { margin-bottom: 0; }
     .detail-label {
-      min-width: 60px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      color: #393E46;
-      padding-top: 1px;
+      color: var(--light-text);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
     }
-    .detail-value {
+    .detail-text {
       font-size: 14px;
-      line-height: 1.5;
-      color: #222831;
-    }
-    .detail-row.homework .detail-label {
-      color: #222831;
-    }
-    .detail-row.homework .detail-value {
-      font-weight: 600;
-      color: #222831;
+      line-height: 1.6;
     }
 
-    /* ── 빈 상태 ── */
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      color: #393E46;
+    /* 숙제 */
+    .homework-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
     }
-    .empty-state .icon {
-      font-size: 48px;
-      margin-bottom: 12px;
+    .homework-status {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+    .homework-status.done {
+      background: #dcfce7;
+      color: #16a34a;
+    }
+    .homework-status.pending {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    /* 이해도 */
+    .understanding {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .star { font-size: 16px; color: var(--border); }
+    .star.filled { color: var(--accent1); }
+
+    /* 다음 예고 */
+    .next-preview-box {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .next-preview-box .arrow-icon {
+      color: var(--accent1);
+      font-weight: 700;
+    }
+
+    /* 피드백 (학부모 전용) */
+    .feedback-box {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--gray);
+      border-left: 3px solid var(--accent1);
+    }
+
+    /* 학부모 전용 뱃지 */
+    .parent-only {
+      display: none;
+    }
+    body.parent-mode .parent-only {
+      display: block;
+    }
+    body.parent-mode .parent-only-inline {
+      display: flex;
     }
 
     /* ── 푸터 ── */
     .footer {
       text-align: center;
-      padding: 20px;
-      font-size: 12px;
-      color: #393E46;
-      opacity: 0.5;
+      padding: 24px 20px;
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .footer span {
+      color: var(--accent1);
+      font-weight: 600;
     }
 
-    /* ── 최신 수업 하이라이트 ── */
-    .session-card.latest {
-      border-left: 4px solid #FFD369;
+    /* ── 반응형 ── */
+    @media (min-width: 600px) {
+      .progress-cards-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 0 16px;
+      }
+      .progress-cards-wrap .card {
+        margin: 0;
+      }
     }
   </style>
 </head>
@@ -228,107 +473,390 @@
     <p>수학 과외 수업 기록</p>
   </div>
 
-  <div class="tab-nav" id="tabNav">
-    <!-- 탭 버튼이 JS로 생성됩니다 -->
-  </div>
-
-  <div id="contentArea">
-    <!-- 학생별 콘텐츠가 JS로 생성됩니다 -->
-  </div>
+  <div class="tab-nav" id="tabNav"></div>
+  <div id="app"></div>
 
   <div class="footer">
-    Managed by Yoon Dream
+    Managed by <span>Yoon Dream</span>
   </div>
 
   <script>
-    // ── data.json 로드 ──
+    // ── 모드 감지 ──
+    const IS_PARENT = location.search.includes('parent');
+    if (IS_PARENT) document.body.classList.add('parent-mode');
+
+    const DAY_NAMES = ['일','월','화','수','목','금','토'];
+    const DAY_MAP = {'일':0,'월':1,'화':2,'수':3,'목':4,'금':5,'토':6};
+    const TODAY = new Date();
+    const TODAY_STR = formatDateISO(TODAY);
+
+    let calYear = TODAY.getFullYear();
+    let calMonth = TODAY.getMonth();
+    let DATA = null;
+
     fetch('data.json')
-      .then(res => res.json())
-      .then(data => render(data))
-      .catch(err => {
-        document.getElementById('contentArea').innerHTML =
-          '<div class="empty-state"><div class="icon">!</div><p>데이터를 불러올 수 없습니다.</p></div>';
+      .then(r => r.json())
+      .then(data => { DATA = data; init(data); })
+      .catch(() => {
+        document.getElementById('app').innerHTML =
+          '<div style="text-align:center;padding:60px 20px;color:#6b7280">데이터를 불러올 수 없습니다.</div>';
       });
 
-    function render(data) {
-      const tabNav = document.getElementById('tabNav');
-      const contentArea = document.getElementById('contentArea');
+    function init(data) {
+      buildTabs(data);
+      buildContent(data);
+      switchTab('dashboard');
+    }
 
-      // 탭 버튼 생성
-      data.students.forEach((student, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'tab-btn' + (idx === 0 ? ' active' : '');
-        btn.innerHTML = student.name +
-          '<span class="badge">' + student.grade + '</span>';
-        btn.onclick = () => switchTab(student.id);
-        btn.dataset.id = student.id;
-        tabNav.appendChild(btn);
+    // ══════════════════════════════════════
+    //  탭 빌드
+    // ══════════════════════════════════════
+    function buildTabs(data) {
+      const nav = document.getElementById('tabNav');
+      // 대시보드 탭
+      const dashBtn = mkBtn('대시보드', 'dashboard');
+      nav.appendChild(dashBtn);
+      // 학생 탭
+      data.students.forEach(s => {
+        nav.appendChild(mkBtn(s.name, s.id));
       });
+    }
 
-      // 콘텐츠 생성
-      data.students.forEach((student, idx) => {
-        const div = document.createElement('div');
-        div.className = 'tab-content' + (idx === 0 ? ' active' : '');
-        div.id = 'tab-' + student.id;
-
-        // 학생 정보 카드
-        let html = '<div class="student-info">' +
-          '<div class="name-row">' +
-          '<span class="name">' + student.name + '</span>' +
-          '<span class="grade">' + student.grade + '</span>' +
-          '</div>' +
-          '<div class="summary">총 ' + student.sessions.length + '회 수업 완료</div>' +
-          '</div>';
-
-        // 수업 목록 (최신순)
-        html += '<div class="sessions">';
-        const sorted = [...student.sessions].sort((a, b) => b.number - a.number);
-
-        if (sorted.length === 0) {
-          html += '<div class="empty-state"><div class="icon">-</div><p>아직 수업 기록이 없습니다.</p></div>';
-        } else {
-          sorted.forEach((s, i) => {
-            const isLatest = i === 0;
-            html += '<div class="session-card' + (isLatest ? ' latest open' : '') + '">' +
-              '<div class="session-header" onclick="toggleCard(this)">' +
-              '<span class="session-num">' + s.number + '회차</span>' +
-              '<div class="session-title">' +
-              '<div class="topic">' + s.topic + '</div>' +
-              '<div class="date">' + formatDate(s.date) + '</div>' +
-              '</div>' +
-              '<span class="session-arrow">▼</span>' +
-              '</div>' +
-              '<div class="session-detail">' +
-              '<div class="detail-row"><div class="detail-label">수업</div><div class="detail-value">' + s.content + '</div></div>' +
-              (s.homework ? '<div class="detail-row homework"><div class="detail-label">숙제</div><div class="detail-value">' + s.homework + '</div></div>' : '') +
-              (s.note ? '<div class="detail-row"><div class="detail-label">메모</div><div class="detail-value">' + s.note + '</div></div>' : '') +
-              '</div></div>';
-          });
-        }
-
-        html += '</div>';
-        div.innerHTML = html;
-        contentArea.appendChild(div);
-      });
+    function mkBtn(label, id) {
+      const btn = document.createElement('button');
+      btn.className = 'tab-btn';
+      btn.textContent = label;
+      btn.dataset.id = id;
+      btn.onclick = () => switchTab(id);
+      return btn;
     }
 
     function switchTab(id) {
-      document.querySelectorAll('.tab-btn').forEach(b => {
-        b.classList.toggle('active', b.dataset.id === id);
-      });
-      document.querySelectorAll('.tab-content').forEach(c => {
-        c.classList.toggle('active', c.id === 'tab-' + id);
+      document.querySelectorAll('.tab-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.id === id));
+      document.querySelectorAll('.tab-content').forEach(c =>
+        c.classList.toggle('active', c.id === 'tab-' + id));
+    }
+
+    // ══════════════════════════════════════
+    //  콘텐츠 빌드
+    // ══════════════════════════════════════
+    function buildContent(data) {
+      const app = document.getElementById('app');
+
+      // 대시보드
+      const dashDiv = document.createElement('div');
+      dashDiv.className = 'tab-content';
+      dashDiv.id = 'tab-dashboard';
+      dashDiv.innerHTML = renderDashboard(data);
+      app.appendChild(dashDiv);
+
+      // 학생별 탭
+      data.students.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'tab-content';
+        div.id = 'tab-' + s.id;
+        div.innerHTML = renderStudentTab(s);
+        app.appendChild(div);
       });
     }
 
+    // ══════════════════════════════════════
+    //  대시보드
+    // ══════════════════════════════════════
+    function renderDashboard(data) {
+      let html = '';
+
+      // 진도 카드
+      html += '<div class="section-title">진도 현황</div>';
+      html += '<div class="progress-cards-wrap">';
+      data.students.forEach(s => {
+        const totalHours = s.sessions.length * s.plan.hours_per_session;
+        const cycleHours = totalHours % s.plan.total_hours;
+        const cycleNum = Math.floor(totalHours / s.plan.total_hours) + 1;
+        const pct = Math.min((cycleHours / s.plan.total_hours) * 100, 100);
+        const months = getMonthsDiff(s.plan.start_date);
+        const nextDate = getNextScheduledDate(s.schedule.days);
+
+        html += '<div class="card progress-card">'
+          + '<div class="progress-top">'
+          + '<span class="progress-name">' + s.name + '</span>'
+          + '<span class="progress-grade" style="background:' + s.color + '">' + s.grade + '</span>'
+          + '</div>'
+          + '<div class="progress-stats">'
+          + '<span><strong>' + cycleNum + '기</strong></span>'
+          + '<span><strong>' + months + '</strong>개월차</span>'
+          + '<span>총 <strong>' + totalHours + '</strong>시간</span>'
+          + '</div>'
+          + '<div class="progress-bar-wrap">'
+          + '<div class="progress-bar-fill" style="width:' + pct + '%;background:' + s.color + '"></div>'
+          + '</div>'
+          + '<div class="progress-hours">'
+          + '<span>' + cycleHours + ' / ' + s.plan.total_hours + '시간</span>'
+          + '<span>' + Math.round(pct) + '%</span>'
+          + '</div>'
+          + '<div class="progress-schedule">'
+          + '<span>매주 ' + s.schedule.days.join(', ') + ' ' + s.schedule.time + '</span>'
+          + (nextDate ? '<span class="next-session">다음: ' + formatDateShort(nextDate) + '</span>' : '')
+          + '</div>'
+          + '</div>';
+      });
+      html += '</div>';
+
+      // 시험 D-day
+      const allExams = [];
+      data.students.forEach(s => {
+        (s.exams || []).forEach(e => {
+          allExams.push({ ...e, student: s.name, color: s.color });
+        });
+      });
+      if (allExams.length > 0) {
+        html += '<div class="section-title">시험 일정</div>';
+        html += '<div class="exam-cards">';
+        allExams.forEach(e => {
+          const dday = getDday(e.date);
+          const ddayText = dday === 0 ? 'D-Day' : (dday > 0 ? 'D-' + dday : 'D+' + Math.abs(dday));
+          html += '<div class="exam-chip">'
+            + '<span class="exam-dday">' + ddayText + '</span>'
+            + '<div class="exam-info">'
+            + '<div class="exam-name">' + e.name + '</div>'
+            + '<div>' + formatDateShort(new Date(e.date)) + '</div>'
+            + '</div></div>';
+        });
+        html += '</div>';
+      }
+
+      // 캘린더
+      html += '<div class="section-title">수업 캘린더</div>';
+      html += '<div class="card" id="calendarCard">';
+      html += renderCalendar(data);
+      html += '</div>';
+
+      return html;
+    }
+
+    // ══════════════════════════════════════
+    //  캘린더
+    // ══════════════════════════════════════
+    function renderCalendar(data) {
+      const year = calYear;
+      const month = calMonth;
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      let html = '<div class="cal-nav">'
+        + '<button onclick="calPrev()">&#8249;</button>'
+        + '<span class="cal-month">' + year + '년 ' + (month + 1) + '월</span>'
+        + '<button onclick="calNext()">&#8250;</button>'
+        + '</div>';
+
+      html += '<div class="cal-grid">';
+      // 요일 헤더
+      DAY_NAMES.forEach((d, i) => {
+        html += '<div class="cal-header">' + d + '</div>';
+      });
+
+      // 빈 셀
+      for (let i = 0; i < firstDay; i++) {
+        html += '<div class="cal-cell"></div>';
+      }
+
+      // 날짜
+      for (let d = 1; d <= daysInMonth; d++) {
+        const dateStr = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+        const dayOfWeek = new Date(year, month, d).getDay();
+        const isToday = dateStr === TODAY_STR;
+        let cls = 'cal-cell';
+        if (isToday) cls += ' today';
+        else if (dayOfWeek === 0) cls += ' sunday';
+        else if (dayOfWeek === 6) cls += ' saturday';
+
+        let dots = '';
+        data.students.forEach(s => {
+          const hasSession = s.sessions.some(ss => ss.date === dateStr);
+          const isScheduled = s.schedule.days.some(sd => DAY_MAP[sd] === dayOfWeek);
+          const isFuture = new Date(dateStr) > TODAY;
+
+          if (hasSession) {
+            dots += '<div class="cal-dot" style="background:' + s.color + '"></div>';
+          } else if (isScheduled && isFuture) {
+            dots += '<div class="cal-dot future" style="background:' + s.color + '"></div>';
+          }
+        });
+
+        html += '<div class="' + cls + '">'
+          + '<span>' + d + '</span>'
+          + '<div class="cal-dots">' + dots + '</div>'
+          + '</div>';
+      }
+
+      html += '</div>';
+
+      // 범례
+      html += '<div class="cal-legend">';
+      data.students.forEach(s => {
+        html += '<div class="cal-legend-item">'
+          + '<div class="cal-legend-dot" style="background:' + s.color + '"></div>'
+          + '<span>' + s.name + '</span></div>';
+      });
+      html += '</div>';
+
+      return html;
+    }
+
+    function calPrev() {
+      calMonth--;
+      if (calMonth < 0) { calMonth = 11; calYear--; }
+      document.getElementById('calendarCard').innerHTML = renderCalendar(DATA);
+    }
+    function calNext() {
+      calMonth++;
+      if (calMonth > 11) { calMonth = 0; calYear++; }
+      document.getElementById('calendarCard').innerHTML = renderCalendar(DATA);
+    }
+
+    // ══════════════════════════════════════
+    //  학생 탭
+    // ══════════════════════════════════════
+    function renderStudentTab(student) {
+      let html = '';
+
+      // 학생 요약
+      const totalHours = student.sessions.length * student.plan.hours_per_session;
+      const cycleHours = totalHours % student.plan.total_hours;
+      const cycleNum = Math.floor(totalHours / student.plan.total_hours) + 1;
+
+      html += '<div class="section-title">' + student.name + ' 수업 기록</div>';
+
+      // 세션 카드 (최신순)
+      const sorted = [...student.sessions].sort((a, b) => b.number - a.number);
+
+      if (sorted.length === 0) {
+        html += '<div class="card" style="text-align:center;color:#6b7280;padding:40px">아직 수업 기록이 없습니다.</div>';
+        return html;
+      }
+
+      sorted.forEach((s, i) => {
+        const isLatest = i === 0;
+        html += '<div class="card session-card' + (isLatest ? ' latest open' : '') + '" style="border-left-color:' + (isLatest ? student.color : 'var(--border)') + '">';
+
+        // 헤더
+        html += '<div class="session-header" onclick="toggleCard(this)">'
+          + '<div class="session-left">'
+          + '<span class="session-num">' + s.number + '회차</span>'
+          + '<div class="session-meta">'
+          + '<div class="session-topic">' + s.topic + '</div>'
+          + '<div class="session-date">' + formatDateFull(s.date) + '</div>'
+          + '</div></div>'
+          + '<span class="session-arrow">&#9662;</span>'
+          + '</div>';
+
+        // 디테일
+        html += '<div class="session-detail">';
+
+        // 수업 내용
+        html += '<div class="detail-section">'
+          + '<div class="detail-label">수업 내용</div>'
+          + '<div class="detail-text">' + s.content + '</div>'
+          + '</div>';
+
+        // 피드백 (학부모 전용)
+        if (s.feedback) {
+          html += '<div class="detail-section parent-only">'
+            + '<div class="detail-label">선생님 피드백</div>'
+            + '<div class="feedback-box">' + s.feedback + '</div>'
+            + '</div>';
+        }
+
+        // 숙제
+        if (s.homework) {
+          const doneClass = s.homework_done ? 'done' : 'pending';
+          const doneText = s.homework_done ? '완료' : '진행 중';
+          html += '<div class="detail-section">'
+            + '<div class="detail-label">숙제</div>'
+            + '<div class="homework-row">'
+            + '<div class="detail-text">' + s.homework + '</div>'
+            + '<span class="homework-status ' + doneClass + '">' + doneText + '</span>'
+            + '</div></div>';
+        }
+
+        // 이해도 (학부모 전용)
+        if (s.understanding) {
+          html += '<div class="detail-section parent-only">'
+            + '<div class="detail-label">이해도</div>'
+            + '<div class="understanding">' + renderStars(s.understanding) + '</div>'
+            + '</div>';
+        }
+
+        // 다음 수업 예고
+        if (s.next_preview) {
+          html += '<div class="detail-section">'
+            + '<div class="detail-label">다음 수업 예고</div>'
+            + '<div class="next-preview-box">'
+            + '<span class="arrow-icon">&#10148;</span>'
+            + '<span>' + s.next_preview + '</span>'
+            + '</div></div>';
+        }
+
+        html += '</div>'; // session-detail
+        html += '</div>'; // session-card
+      });
+
+      return html;
+    }
+
+    // ══════════════════════════════════════
+    //  유틸리티
+    // ══════════════════════════════════════
     function toggleCard(header) {
       header.parentElement.classList.toggle('open');
     }
 
-    function formatDate(dateStr) {
-      const d = new Date(dateStr);
-      const days = ['일', '월', '화', '수', '목', '금', '토'];
-      return (d.getMonth() + 1) + '월 ' + d.getDate() + '일 (' + days[d.getDay()] + ')';
+    function renderStars(level) {
+      let html = '';
+      for (let i = 1; i <= 5; i++) {
+        html += '<span class="star ' + (i <= level ? 'filled' : '') + '">&#9733;</span>';
+      }
+      return html;
+    }
+
+    function formatDateISO(d) {
+      return d.getFullYear() + '-'
+        + String(d.getMonth() + 1).padStart(2, '0') + '-'
+        + String(d.getDate()).padStart(2, '0');
+    }
+
+    function formatDateFull(dateStr) {
+      var d = new Date(dateStr);
+      return (d.getMonth() + 1) + '월 ' + d.getDate() + '일 (' + DAY_NAMES[d.getDay()] + ')';
+    }
+
+    function formatDateShort(d) {
+      if (typeof d === 'string') d = new Date(d);
+      return (d.getMonth() + 1) + '/' + d.getDate() + '(' + DAY_NAMES[d.getDay()] + ')';
+    }
+
+    function getDday(dateStr) {
+      var target = new Date(dateStr);
+      var today = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate());
+      var diff = target.getTime() - today.getTime();
+      return Math.ceil(diff / (1000 * 60 * 60 * 24));
+    }
+
+    function getMonthsDiff(startStr) {
+      var start = new Date(startStr);
+      return (TODAY.getFullYear() - start.getFullYear()) * 12
+        + (TODAY.getMonth() - start.getMonth()) + 1;
+    }
+
+    function getNextScheduledDate(days) {
+      var d = new Date(TODAY);
+      for (var i = 1; i <= 7; i++) {
+        d.setDate(d.getDate() + 1);
+        var dayName = DAY_NAMES[d.getDay()];
+        if (days.indexOf(dayName) >= 0) return new Date(d);
+      }
+      return null;
     }
   </script>
 </body>
