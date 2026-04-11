@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>수학 과외 기록</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+      background: #EEEEEE;
+      color: #222831;
+      min-height: 100vh;
+    }
+
+    /* ── 헤더 ── */
+    .header {
+      background: #222831;
+      color: #FFD369;
+      padding: 28px 20px 22px;
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 24px;
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+    }
+    .header p {
+      font-size: 13px;
+      color: #EEEEEE;
+      opacity: 0.7;
+    }
+
+    /* ── 탭 네비게이션 ── */
+    .tab-nav {
+      display: flex;
+      background: #393E46;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 14px 8px;
+      text-align: center;
+      color: #EEEEEE;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      transition: all 0.2s;
+      border-bottom: 3px solid transparent;
+    }
+    .tab-btn.active {
+      color: #FFD369;
+      border-bottom-color: #FFD369;
+      background: rgba(255, 211, 105, 0.08);
+    }
+    .tab-btn .badge {
+      display: inline-block;
+      background: #FFD369;
+      color: #222831;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 10px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* ── 학생 정보 카드 ── */
+    .student-info {
+      background: white;
+      margin: 16px;
+      border-radius: 12px;
+      padding: 18px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .student-info .name-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .student-info .name {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .student-info .grade {
+      background: #FFD369;
+      color: #222831;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+    }
+    .student-info .summary {
+      font-size: 13px;
+      color: #393E46;
+    }
+
+    /* ── 수업 내용 영역 ── */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .sessions {
+      padding: 0 16px 24px;
+    }
+
+    /* ── 수업 카드 ── */
+    .session-card {
+      background: white;
+      border-radius: 12px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+    .session-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .session-header:active {
+      background: #f5f5f5;
+    }
+    .session-num {
+      background: #222831;
+      color: #FFD369;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 8px;
+    }
+    .session-title {
+      flex: 1;
+      margin-left: 12px;
+    }
+    .session-title .topic {
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .session-title .date {
+      font-size: 12px;
+      color: #393E46;
+      margin-top: 2px;
+    }
+    .session-arrow {
+      font-size: 14px;
+      color: #393E46;
+      transition: transform 0.2s;
+    }
+    .session-card.open .session-arrow {
+      transform: rotate(180deg);
+    }
+
+    /* ── 수업 상세 ── */
+    .session-detail {
+      display: none;
+      padding: 0 18px 16px;
+      border-top: 1px solid #EEEEEE;
+    }
+    .session-card.open .session-detail {
+      display: block;
+    }
+    .detail-row {
+      display: flex;
+      padding: 10px 0;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+    .detail-label {
+      min-width: 60px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #393E46;
+      padding-top: 1px;
+    }
+    .detail-value {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #222831;
+    }
+    .detail-row.homework .detail-label {
+      color: #222831;
+    }
+    .detail-row.homework .detail-value {
+      font-weight: 600;
+      color: #222831;
+    }
+
+    /* ── 빈 상태 ── */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #393E46;
+    }
+    .empty-state .icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    /* ── 푸터 ── */
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: #393E46;
+      opacity: 0.5;
+    }
+
+    /* ── 최신 수업 하이라이트 ── */
+    .session-card.latest {
+      border-left: 4px solid #FFD369;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>MATH</h1>
+    <p>수학 과외 수업 기록</p>
+  </div>
+
+  <div class="tab-nav" id="tabNav">
+    <!-- 탭 버튼이 JS로 생성됩니다 -->
+  </div>
+
+  <div id="contentArea">
+    <!-- 학생별 콘텐츠가 JS로 생성됩니다 -->
+  </div>
+
+  <div class="footer">
+    Managed by Yoon Dream
+  </div>
+
+  <script>
+    // ── data.json 로드 ──
+    fetch('data.json')
+      .then(res => res.json())
+      .then(data => render(data))
+      .catch(err => {
+        document.getElementById('contentArea').innerHTML =
+          '<div class="empty-state"><div class="icon">!</div><p>데이터를 불러올 수 없습니다.</p></div>';
+      });
+
+    function render(data) {
+      const tabNav = document.getElementById('tabNav');
+      const contentArea = document.getElementById('contentArea');
+
+      // 탭 버튼 생성
+      data.students.forEach((student, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'tab-btn' + (idx === 0 ? ' active' : '');
+        btn.innerHTML = student.name +
+          '<span class="badge">' + student.grade + '</span>';
+        btn.onclick = () => switchTab(student.id);
+        btn.dataset.id = student.id;
+        tabNav.appendChild(btn);
+      });
+
+      // 콘텐츠 생성
+      data.students.forEach((student, idx) => {
+        const div = document.createElement('div');
+        div.className = 'tab-content' + (idx === 0 ? ' active' : '');
+        div.id = 'tab-' + student.id;
+
+        // 학생 정보 카드
+        let html = '<div class="student-info">' +
+          '<div class="name-row">' +
+          '<span class="name">' + student.name + '</span>' +
+          '<span class="grade">' + student.grade + '</span>' +
+          '</div>' +
+          '<div class="summary">총 ' + student.sessions.length + '회 수업 완료</div>' +
+          '</div>';
+
+        // 수업 목록 (최신순)
+        html += '<div class="sessions">';
+        const sorted = [...student.sessions].sort((a, b) => b.number - a.number);
+
+        if (sorted.length === 0) {
+          html += '<div class="empty-state"><div class="icon">-</div><p>아직 수업 기록이 없습니다.</p></div>';
+        } else {
+          sorted.forEach((s, i) => {
+            const isLatest = i === 0;
+            html += '<div class="session-card' + (isLatest ? ' latest open' : '') + '">' +
+              '<div class="session-header" onclick="toggleCard(this)">' +
+              '<span class="session-num">' + s.number + '회차</span>' +
+              '<div class="session-title">' +
+              '<div class="topic">' + s.topic + '</div>' +
+              '<div class="date">' + formatDate(s.date) + '</div>' +
+              '</div>' +
+              '<span class="session-arrow">▼</span>' +
+              '</div>' +
+              '<div class="session-detail">' +
+              '<div class="detail-row"><div class="detail-label">수업</div><div class="detail-value">' + s.content + '</div></div>' +
+              (s.homework ? '<div class="detail-row homework"><div class="detail-label">숙제</div><div class="detail-value">' + s.homework + '</div></div>' : '') +
+              (s.note ? '<div class="detail-row"><div class="detail-label">메모</div><div class="detail-value">' + s.note + '</div></div>' : '') +
+              '</div></div>';
+          });
+        }
+
+        html += '</div>';
+        div.innerHTML = html;
+        contentArea.appendChild(div);
+      });
+    }
+
+    function switchTab(id) {
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.id === id);
+      });
+      document.querySelectorAll('.tab-content').forEach(c => {
+        c.classList.toggle('active', c.id === 'tab-' + id);
+      });
+    }
+
+    function toggleCard(header) {
+      header.parentElement.classList.toggle('open');
+    }
+
+    function formatDate(dateStr) {
+      const d = new Date(dateStr);
+      const days = ['일', '월', '화', '수', '목', '금', '토'];
+      return (d.getMonth() + 1) + '월 ' + d.getDate() + '일 (' + days[d.getDay()] + ')';
+    }
+  </script>
+</body>
+</html>

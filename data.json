@@ -1,0 +1,34 @@
+{
+  "students": [
+    {
+      "id": "seojun",
+      "name": "양서준",
+      "grade": "중3",
+      "sessions": [
+        {
+          "number": 1,
+          "date": "2026-04-11",
+          "topic": "일차방정식 복습",
+          "content": "일차방정식 풀이법, 활용 문제",
+          "homework": "교재 p.32 1~10번",
+          "note": "기본 개념 잘 잡혀있음"
+        }
+      ]
+    },
+    {
+      "id": "seoyun",
+      "name": "양서윤",
+      "grade": "중1",
+      "sessions": [
+        {
+          "number": 1,
+          "date": "2026-04-11",
+          "topic": "자연수의 성질",
+          "content": "소인수분해, 최대공약수",
+          "homework": "교재 p.15 1~8번",
+          "note": "소인수분해 연습 더 필요"
+        }
+      ]
+    }
+  ]
+}
