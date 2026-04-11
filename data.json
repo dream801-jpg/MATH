@@ -66,6 +66,15 @@
           "feedback": "최대공약수는 잘 구해요. 최소공배수에서 지수 선택을 헷갈려해서 반복 연습이 필요합니다.",
           "understanding": 3,
           "next_preview": "정수와 유리수"
+        },
+        {
+          "number": 1,
+          "date": "2026-04-11",
+          "topic": "공통수학 1 C단계 쎈수학 풀이",
+          "content": "고난도 문제 풀이",
+          "feedback": "태도는 좋았습니다",
+          "understanding": 5,
+          "next_preview": "공통수학 1 C단계 계속"
         }
       ]
     }
