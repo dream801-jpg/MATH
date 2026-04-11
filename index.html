@@ -537,9 +537,10 @@
       var plan = data.plan;
 
       // 전체 세션 수 합산
-      var totalSessions = 0;
-      data.students.forEach(function(s) { totalSessions += s.sessions.length; });
-      var totalHours = totalSessions * plan.hours_per_session;
+      var totalHours = 0;
+      data.students.forEach(function(s) {
+        s.sessions.forEach(function(ss) { totalHours += (ss.hours || 1); });
+      });
       var cycleHours = totalHours % plan.total_hours;
       var cycleNum = Math.floor(totalHours / plan.total_hours) + 1;
       var pct = Math.min((cycleHours / plan.total_hours) * 100, 100);
