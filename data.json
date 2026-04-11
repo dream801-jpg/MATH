@@ -60,11 +60,23 @@
           "topic": "샘플",
           "content": "샘플",
           "homework": "쎈수학 65~124",
-          "homework_status": "not_done",
+          "homework_status": "done",
           "homework_note": "",
           "feedback": "수업태도 보완점 등",
           "understanding": 3,
           "next_preview": "샘플"
+        },
+        {
+          "number": 2,
+          "date": "2026-04-11",
+          "hours": 2,
+          "topic": "쎈수학 공통수학 이차방정식까지",
+          "content": "공통수학 틀린것 문제풀이 및조언",
+          "homework": "내일 풀문제 한번 보기",
+          "homework_status": "not_done",
+          "homework_note": "",
+          "feedback": "서준이가 오늘 학원숙제인지 같이 공통수학 쎈수학을 풀었습니다. 나머지정리 인수분해 단원부터 이차방정식까지 풀었는데 b단계 정도는 많이 이해하고 있다고 느껴졌습니다. 다만 서준이가 계산이 좀 급하게 하다보니 실수하는것들이 있는데 계산이 빠른편이라 조금 천천히하더라도 정확하게 하라고 수업했습니다. 오늘 다른 관심사이야기도 했지만 그래도 오늘 수학컨디션이 좋아보였습니다 대부분의 문제를 잘 풀었습니다.\n\n내일도 남은부분 할 예정입니다",
+          "understanding": 5
         }
       ]
     }
