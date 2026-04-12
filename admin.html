@@ -706,30 +706,34 @@
     function deleteSession(num) {
       if (!confirm(num + '회차 수업을 삭제하시겠습니까?')) return;
 
-      // 세션 제거
-      SELECTED_STUDENT.sessions = SELECTED_STUDENT.sessions.filter(function(s) {
-        return s.number !== num;
-      });
-
-      var jsonStr = JSON.stringify(DATA, null, 2);
+      var selectedId = SELECTED_STUDENT.id;
+      var studentName = SELECTED_STUDENT.name;
       var token = localStorage.getItem('math_github_token');
 
       if (token) {
-        // 직접 커밋
         fetch('https://api.github.com/repos/' + REPO + '/contents/data.json', {
           headers: { 'Authorization': 'token ' + token }
         })
         .then(function(r) { return r.json(); })
         .then(function(meta) {
           if (!meta.sha) throw new Error('토큰 오류');
+          var latestData = JSON.parse(atob(meta.content.replace(/\n/g, '')));
+          var student = null;
+          for (var i = 0; i < latestData.students.length; i++) {
+            if (latestData.students[i].id === selectedId) { student = latestData.students[i]; break; }
+          }
+          if (!student) throw new Error('학생 데이터 없음');
+
+          student.sessions = student.sessions.filter(function(s) { return s.number !== num; });
+          DATA = latestData;
+          SELECTED_STUDENT = student;
+          var jsonStr = JSON.stringify(latestData, null, 2);
+
           return fetch('https://api.github.com/repos/' + REPO + '/contents/data.json', {
             method: 'PUT',
-            headers: {
-              'Authorization': 'token ' + token,
-              'Content-Type': 'application/json'
-            },
+            headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              message: SELECTED_STUDENT.name + ' ' + num + '회차 삭제',
+              message: studentName + ' ' + num + '회차 삭제',
               content: utf8ToBase64(jsonStr),
               sha: meta.sha
             })
@@ -740,10 +744,12 @@
           showResult(true, num + '회차가 삭제되었습니다!<br><br>1~2분 후 반영됩니다.');
         })
         .catch(function(err) {
-          showCopyMode(jsonStr);
+          SELECTED_STUDENT.sessions = SELECTED_STUDENT.sessions.filter(function(s) { return s.number !== num; });
+          showCopyMode(JSON.stringify(DATA, null, 2));
         });
       } else {
-        showCopyMode(jsonStr);
+        SELECTED_STUDENT.sessions = SELECTED_STUDENT.sessions.filter(function(s) { return s.number !== num; });
+        showCopyMode(JSON.stringify(DATA, null, 2));
       }
     }
 
@@ -843,34 +849,43 @@
       }
       if (days.length === 0) { alert('수업 요일을 하나 이상 선택해주세요.'); return; }
 
-      SELECTED_STUDENT.schedule.days = days;
-      SELECTED_STUDENT.schedule.time = document.getElementById('schTime').value.trim();
-
-      var nextSession = document.getElementById('nextSession').value;
-      if (nextSession) {
-        SELECTED_STUDENT.next_session = nextSession;
-      } else {
-        delete SELECTED_STUDENT.next_session;
-      }
-
-      var jsonStr = JSON.stringify(DATA, null, 2);
+      // 변경사항을 미리 수집
+      var selectedId = SELECTED_STUDENT.id;
+      var newTime = document.getElementById('schTime').value.trim();
+      var newNextSession = document.getElementById('nextSession').value;
+      var newExams = JSON.parse(JSON.stringify(SELECTED_STUDENT.exams || []));
       var token = localStorage.getItem('math_github_token');
 
       if (token) {
+        // GitHub API에서 최신 데이터를 가져와서 일정만 수정 후 커밋
         fetch('https://api.github.com/repos/' + REPO + '/contents/data.json', {
           headers: { 'Authorization': 'token ' + token }
         })
         .then(function(r) { return r.json(); })
         .then(function(meta) {
           if (!meta.sha) throw new Error('토큰 오류');
+          var latestData = JSON.parse(atob(meta.content.replace(/\n/g, '')));
+          var student = null;
+          for (var i = 0; i < latestData.students.length; i++) {
+            if (latestData.students[i].id === selectedId) { student = latestData.students[i]; break; }
+          }
+          if (!student) throw new Error('학생 데이터 없음');
+
+          student.schedule.days = days;
+          student.schedule.time = newTime;
+          student.exams = newExams;
+          if (newNextSession) { student.next_session = newNextSession; }
+          else { delete student.next_session; }
+
+          DATA = latestData;
+          SELECTED_STUDENT = student;
+          var jsonStr = JSON.stringify(latestData, null, 2);
+
           return fetch('https://api.github.com/repos/' + REPO + '/contents/data.json', {
             method: 'PUT',
-            headers: {
-              'Authorization': 'token ' + token,
-              'Content-Type': 'application/json'
-            },
+            headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              message: SELECTED_STUDENT.name + ' 일정 변경',
+              message: student.name + ' 일정 변경',
               content: utf8ToBase64(jsonStr),
               sha: meta.sha
             })
@@ -881,10 +896,20 @@
           showResult(true, '일정이 저장되었습니다!<br><br>1~2분 후 캘린더에 반영됩니다.');
         })
         .catch(function() {
-          showCopyMode(jsonStr);
+          SELECTED_STUDENT.schedule.days = days;
+          SELECTED_STUDENT.schedule.time = newTime;
+          SELECTED_STUDENT.exams = newExams;
+          if (newNextSession) { SELECTED_STUDENT.next_session = newNextSession; }
+          else { delete SELECTED_STUDENT.next_session; }
+          showCopyMode(JSON.stringify(DATA, null, 2));
         });
       } else {
-        showCopyMode(jsonStr);
+        SELECTED_STUDENT.schedule.days = days;
+        SELECTED_STUDENT.schedule.time = newTime;
+        SELECTED_STUDENT.exams = newExams;
+        if (newNextSession) { SELECTED_STUDENT.next_session = newNextSession; }
+        else { delete SELECTED_STUDENT.next_session; }
+        showCopyMode(JSON.stringify(DATA, null, 2));
       }
     }
 
@@ -973,11 +998,13 @@
       btn.disabled = true;
       btn.textContent = '처리 중...';
 
-      // 이전 숙제 업데이트
+      // 숙제 상태 수집
+      var hwUpdate = null;
       if (SELECTED_STUDENT.sessions.length > 0 && document.getElementById('prevHwStatus')) {
-        var last = SELECTED_STUDENT.sessions[SELECTED_STUDENT.sessions.length - 1];
-        last.homework_status = document.getElementById('prevHwStatus').value;
-        last.homework_note = document.getElementById('prevHwNote').value.trim();
+        hwUpdate = {
+          status: document.getElementById('prevHwStatus').value,
+          note: document.getElementById('prevHwNote').value.trim()
+        };
       }
 
       // 새 세션 생성
@@ -1000,36 +1027,41 @@
       if (!newSession.feedback) delete newSession.feedback;
       if (!newSession.next_preview) delete newSession.next_preview;
 
-      if (EDIT_MODE) {
-        // 수정 모드: 기존 세션 교체
-        for (var i = 0; i < SELECTED_STUDENT.sessions.length; i++) {
-          if (SELECTED_STUDENT.sessions[i].number === EDIT_MODE) {
-            SELECTED_STUDENT.sessions[i] = newSession;
-            break;
-          }
-        }
-      } else {
-        SELECTED_STUDENT.sessions.push(newSession);
-      }
-
-      var jsonStr = JSON.stringify(DATA, null, 2);
-      var token = localStorage.getItem('math_github_token');
-      var commitMsg = EDIT_MODE
+      var selectedId = SELECTED_STUDENT.id;
+      var editMode = EDIT_MODE;
+      var commitMsg = editMode
         ? SELECTED_STUDENT.name + ' ' + newSession.number + '회차 수정'
         : SELECTED_STUDENT.name + ' ' + newSession.number + '회차 수업 기록';
 
       EDIT_MODE = null;
       document.getElementById('fNumber').readOnly = false;
 
+      var token = localStorage.getItem('math_github_token');
+
       if (token) {
-        commitToGithub(token, jsonStr, newSession, commitMsg);
+        commitToGithub(token, selectedId, newSession, editMode, hwUpdate, commitMsg);
       } else {
-        showCopyMode(jsonStr);
+        // 토큰 없을 때는 메모리에서 직접 수정
+        if (hwUpdate && SELECTED_STUDENT.sessions.length > 0) {
+          var last = SELECTED_STUDENT.sessions[SELECTED_STUDENT.sessions.length - 1];
+          last.homework_status = hwUpdate.status;
+          last.homework_note = hwUpdate.note;
+        }
+        if (editMode) {
+          for (var i = 0; i < SELECTED_STUDENT.sessions.length; i++) {
+            if (SELECTED_STUDENT.sessions[i].number === editMode) {
+              SELECTED_STUDENT.sessions[i] = newSession; break;
+            }
+          }
+        } else {
+          SELECTED_STUDENT.sessions.push(newSession);
+        }
+        showCopyMode(JSON.stringify(DATA, null, 2));
       }
     }
 
-    // ── GitHub 직접 커밋 ──
-    function commitToGithub(token, content, session, commitMsg) {
+    // ── GitHub 직접 커밋 (최신 데이터 기반) ──
+    function commitToGithub(token, studentId, newSession, editMode, hwUpdate, commitMsg) {
       fetch('https://api.github.com/repos/' + REPO + '/contents/data.json', {
         headers: { 'Authorization': 'token ' + token }
       })
@@ -1037,17 +1069,42 @@
       .then(function(meta) {
         if (!meta.sha) throw new Error('SHA를 가져올 수 없습니다. 토큰을 확인해주세요.');
 
-        var msg = commitMsg || (SELECTED_STUDENT.name + ' ' + session.number + '회차 수업 기록');
+        // 최신 데이터 디코딩
+        var latestData = JSON.parse(atob(meta.content.replace(/\n/g, '')));
+        var student = null;
+        for (var i = 0; i < latestData.students.length; i++) {
+          if (latestData.students[i].id === studentId) { student = latestData.students[i]; break; }
+        }
+        if (!student) throw new Error('학생 데이터 없음');
+
+        // 숙제 상태 업데이트
+        if (hwUpdate && student.sessions.length > 0) {
+          var last = student.sessions[student.sessions.length - 1];
+          last.homework_status = hwUpdate.status;
+          last.homework_note = hwUpdate.note;
+        }
+
+        // 세션 추가/수정
+        if (editMode) {
+          for (var i = 0; i < student.sessions.length; i++) {
+            if (student.sessions[i].number === editMode) {
+              student.sessions[i] = newSession; break;
+            }
+          }
+        } else {
+          student.sessions.push(newSession);
+        }
+
+        DATA = latestData;
+        SELECTED_STUDENT = student;
+        var jsonStr = JSON.stringify(latestData, null, 2);
 
         return fetch('https://api.github.com/repos/' + REPO + '/contents/data.json', {
           method: 'PUT',
-          headers: {
-            'Authorization': 'token ' + token,
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            message: msg,
-            content: utf8ToBase64(content),
+            message: commitMsg,
+            content: utf8ToBase64(jsonStr),
             sha: meta.sha
           })
         });
@@ -1060,7 +1117,6 @@
         showResult(true, '수업 기록이 추가되었습니다!<br><br>1~2분 후 페이지에 자동 반영됩니다.');
       })
       .catch(function(err) {
-        // 실패 시 세션은 유지한 채 복사 모드로 전환
         var jsonStr = JSON.stringify(DATA, null, 2);
         showCopyMode(jsonStr);
       });
@@ -1114,10 +1170,29 @@
       document.getElementById('sessionForm').style.display = 'none';
       SELECTED_STUDENT = null;
 
-      // 데이터 다시 로드
-      fetch('data.json?v=' + Date.now())
+      // GitHub API에서 최신 데이터 로드 (CDN 캐시 지연 방지)
+      var token = localStorage.getItem('math_github_token');
+      if (token) {
+        fetch('https://api.github.com/repos/' + REPO + '/contents/data.json', {
+          headers: { 'Authorization': 'token ' + token }
+        })
         .then(function(r) { return r.json(); })
-        .then(function(d) { DATA = d; populateStudents(d); });
+        .then(function(meta) {
+          if (meta.content) {
+            DATA = JSON.parse(atob(meta.content.replace(/\n/g, '')));
+            populateStudents(DATA);
+          }
+        })
+        .catch(function() {
+          fetch('data.json?v=' + Date.now())
+            .then(function(r) { return r.json(); })
+            .then(function(d) { DATA = d; populateStudents(d); });
+        });
+      } else {
+        fetch('data.json?v=' + Date.now())
+          .then(function(r) { return r.json(); })
+          .then(function(d) { DATA = d; populateStudents(d); });
+      }
     }
 
     // ── 토큰 관리 ──
