@@ -17,12 +17,12 @@
       },
       "exams": [
         {
-          "name": "1학기 중간고사",
-          "date": "2026-04-30"
-        },
-        {
           "name": "1학기 수행평가",
           "date": "2026-04-14"
+        },
+        {
+          "name": "1학기 중간고사",
+          "date": "2026-04-27"
         }
       ],
       "sessions": [
@@ -38,6 +38,17 @@
           "feedback": "수업태도 이해도 보완할점 등",
           "understanding": 2,
           "next_preview": "중3 내신"
+        },
+        {
+          "number": 2,
+          "date": "2026-04-12",
+          "hours": 2,
+          "topic": "제곱근 수행평가",
+          "content": "진행중",
+          "homework": "쎈수학 c단계 108쪽까지",
+          "homework_status": "not_done",
+          "homework_note": "",
+          "understanding": 3
         }
       ]
     },
