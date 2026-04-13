@@ -717,7 +717,7 @@
         .then(function(r) { return r.json(); })
         .then(function(meta) {
           if (!meta.sha) throw new Error('토큰 오류');
-          var latestData = JSON.parse(atob(meta.content.replace(/\n/g, '')));
+          var latestData = JSON.parse(base64ToUtf8(meta.content));
           var student = null;
           for (var i = 0; i < latestData.students.length; i++) {
             if (latestData.students[i].id === selectedId) { student = latestData.students[i]; break; }
@@ -864,7 +864,7 @@
         .then(function(r) { return r.json(); })
         .then(function(meta) {
           if (!meta.sha) throw new Error('토큰 오류');
-          var latestData = JSON.parse(atob(meta.content.replace(/\n/g, '')));
+          var latestData = JSON.parse(base64ToUtf8(meta.content));
           var student = null;
           for (var i = 0; i < latestData.students.length; i++) {
             if (latestData.students[i].id === selectedId) { student = latestData.students[i]; break; }
@@ -1070,7 +1070,7 @@
         if (!meta.sha) throw new Error('SHA를 가져올 수 없습니다. 토큰을 확인해주세요.');
 
         // 최신 데이터 디코딩
-        var latestData = JSON.parse(atob(meta.content.replace(/\n/g, '')));
+        var latestData = JSON.parse(base64ToUtf8(meta.content));
         var student = null;
         for (var i = 0; i < latestData.students.length; i++) {
           if (latestData.students[i].id === studentId) { student = latestData.students[i]; break; }
@@ -1179,7 +1179,7 @@
         .then(function(r) { return r.json(); })
         .then(function(meta) {
           if (meta.content) {
-            DATA = JSON.parse(atob(meta.content.replace(/\n/g, '')));
+            DATA = JSON.parse(base64ToUtf8(meta.content));
             populateStudents(DATA);
           }
         })
@@ -1242,6 +1242,10 @@
 
     function utf8ToBase64(str) {
       return btoa(unescape(encodeURIComponent(str)));
+    }
+
+    function base64ToUtf8(b64) {
+      return decodeURIComponent(escape(atob(b64.replace(/\n/g, ''))));
     }
 
     function escapeHtml(s) {
