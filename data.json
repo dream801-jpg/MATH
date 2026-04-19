@@ -13,7 +13,7 @@
         "days": [
           "일"
         ],
-        "time": "14:30~16:30"
+        "time": "21:30~23:30"
       },
       "exams": [
         {
@@ -65,7 +65,8 @@
           "understanding": 2,
           "next_preview": "프린트위주 수업 및 쎈수학 c단계마무리"
         }
-      ]
+      ],
+      "next_session": "2026-04-29"
     },
     {
       "id": "seojun",
