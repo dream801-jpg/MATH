@@ -89,7 +89,7 @@
         "days": [
           "목"
         ],
-        "time": "19:00 - 21:00"
+        "time": "19:00 - 22:00"
       },
       "exams": [],
       "sessions": [
@@ -156,7 +156,8 @@
           "understanding": 5,
           "next_preview": "C단계, 쎈수학 남은부분"
         }
-      ]
+      ],
+      "next_session": "2026-05-09"
     }
   ]
 }
