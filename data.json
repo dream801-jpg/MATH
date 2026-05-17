@@ -85,11 +85,24 @@
           "topic": "공통수학 1 이차방정식",
           "content": "rpm 이차방정식",
           "homework": "431번까지",
-          "homework_status": "not_done",
+          "homework_status": "wrong",
           "homework_note": "",
           "feedback": "서윤이가 오늘은 평소보다 집중도가 낮았습니다. 자꾸 멍한표정이고 다른생각도 많이 했던거같습니다. 제가 설명해준거인데도 계속 물어보고 축구한다는생각에 살짝 들떠있엇던 거 같습니다.",
           "understanding": 2,
           "next_preview": "다음에 이어서 이차방정식 마무리 예정입니다"
+        },
+        {
+          "number": 6,
+          "date": "2026-05-17",
+          "hours": 2.5,
+          "topic": "이차함수",
+          "content": "공통수학 1 rpm 이차방정식  이차함수",
+          "homework": "522번까지",
+          "homework_status": "not_done",
+          "homework_note": "",
+          "feedback": "서윤이가 수업에 오늘은 크게 집중을 하지못하고 문제를 풀때도 이차함수 기초적인부분도 아쉬웠습니다. 어떻게 하면 개념을 보충할수있을지 고민해봐야 겠습니다.",
+          "understanding": 2,
+          "next_preview": "이차함수 이어서"
         }
       ]
     },
