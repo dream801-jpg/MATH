@@ -1076,6 +1076,13 @@
             }
           }
         } else {
+          // 최신 데이터 기준 중복 재검사 — 화면이 낡은 상태여도 같은 회차 이중 저장 방지 (2026-06-16 사고 재발 방지)
+          var dup = student.sessions.some(function(s) { return s.number === newSession.number; });
+          if (dup) {
+            var e = new Error(newSession.number + '회차가 이미 저장되어 있습니다. 페이지를 새로고침해서 기존 기록을 확인해주세요.');
+            e.isDuplicate = true;
+            throw e;
+          }
           student.sessions.push(newSession);
         }
       }
@@ -1091,6 +1098,11 @@
         showResult(true, '수업 기록이 추가되었습니다!<br><br>1~2분 후 페이지에 자동 반영됩니다.');
       })
       .catch(function(err) {
+        // 중복 회차는 저장하면 안 되는 경우라 복사 모드 대신 안내만
+        if (err.isDuplicate) {
+          showResult(false, escapeHtml(err.message));
+          return;
+        }
         // 최신 데이터 fetch 단계에서 실패하면 새 기록이 반영 전이므로 로컬에라도 넣어준다
         if (SELECTED_STUDENT.sessions.indexOf(newSession) < 0) {
           applySession(SELECTED_STUDENT);
@@ -1130,6 +1142,12 @@
       if (success) {
         html += '<a href="index.html?parent"><button class="btn btn-primary">학부모 페이지 확인</button></a>'
           + '<button class="btn btn-secondary" onclick="closeResult()" style="margin-top:8px">계속 입력</button>';
+      } else {
+        html += '<button class="btn btn-secondary" onclick="closeResult()" style="margin-top:8px">닫기</button>';
+        // 실패 시 저장 버튼 잠금 해제 (입력 내용은 유지)
+        var btn = document.getElementById('submitBtn');
+        btn.disabled = false;
+        btn.textContent = '수업 기록 추가';
       }
 
       document.getElementById('resultBox').innerHTML = html;
