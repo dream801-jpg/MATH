@@ -386,7 +386,7 @@
       letter-spacing: 0.5px;
       margin-bottom: 4px;
     }
-    .detail-text { font-size: 14px; line-height: 1.6; }
+    .detail-text { font-size: 14px; line-height: 1.6; white-space: pre-line; }
 
     /* 숙제 */
     .homework-header {
@@ -426,6 +426,7 @@
       line-height: 1.7;
       color: var(--gray);
       border-left: 3px solid var(--accent1);
+      white-space: pre-line;
     }
 
     /* 이해도 */
@@ -617,7 +618,7 @@
         html += '<div class="exam-cards">';
         exams.forEach(function(e) {
           var d = getDday(e.date);
-          var txt = d === 0 ? 'D-Day' : (d > 0 ? 'D-' + d : 'D+' + Math.abs(d));
+          var txt = d === 0 ? 'D-Day' : 'D-' + d;
           html += '<div class="exam-chip">'
             + '<span class="exam-dday">' + txt + '</span>'
             + '<div class="exam-info">'
@@ -672,7 +673,7 @@
             dots += '<div class="cal-dot" style="background:' + s.color + '"></div>';
           }
           if (isNext) {
-            tags += '<span class="cal-next-tag" style="background:' + s.color + '">' + s.name.charAt(2) + '</span>';
+            tags += '<span class="cal-next-tag" style="background:' + s.color + '">' + s.name.charAt(s.name.length - 1) + '</span>';
           }
           // 시험 날짜 체크
           (s.exams || []).forEach(function(e) {
