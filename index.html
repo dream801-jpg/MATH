@@ -607,6 +607,8 @@
       var exams = [];
       data.students.forEach(function(s) {
         (s.exams || []).forEach(function(e) {
+          // 지난 시험은 표시하지 않음 (시험 당일까지는 표시)
+          if (getDday(e.date) < 0) return;
           exams.push({ name: e.name, date: e.date, student: s.name, color: s.color });
         });
       });
