@@ -178,15 +178,15 @@
         {
           "number": 12,
           "date": "2026-07-12",
-          "hours": 1,
-          "topic": "1",
-          "content": "23",
-          "homework": "123213",
+          "hours": 2.5,
+          "topic": "이차방정식 공통수학1",
+          "content": "rpm 이차방정식  풀이",
+          "homework": "이차함수 기본문제까지",
           "homework_status": "not_done",
           "homework_note": "",
-          "feedback": "123",
+          "feedback": "전반적으로 서윤이가 오늘은 많이 졸려해서 실수도많고 아쉬웠습니다. 이차방정식 단원의 경우 서윤이가 잘 해줘야 고등학교에서 편한데 뭔가 공부가 많이 안되어있는거같습니다. 같이 열심히 해야할거같아요 다음시간에는 잘 할수있도록 노력하겟습니다",
           "understanding": 2,
-          "next_preview": "123"
+          "next_preview": "이차방정식과 이차함수"
         }
       ]
     },
