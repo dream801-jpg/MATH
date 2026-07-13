@@ -568,22 +568,22 @@
       var html = '';
       var plan = data.plan;
 
-      // 전체 세션 수 합산
-      var totalHours = 0;
+      // 전체 세션 수 합산 (base_hours = 기록 시작 전에 채운 시간)
+      var totalHours = plan.base_hours || 0;
       data.students.forEach(function(s) {
         s.sessions.forEach(function(ss) { totalHours += (ss.hours || 1); });
       });
       var cycleHours = totalHours % plan.total_hours;
+      // 개월차 = 달력이 아니라 24시간을 채운 횟수 기준 (10번 채웠으면 11개월차)
       var cycleNum = Math.floor(totalHours / plan.total_hours) + 1;
       var pct = Math.min((cycleHours / plan.total_hours) * 100, 100);
-      var months = getMonthsDiff(plan.start_date);
 
       // 공유 진도 카드
       html += '<div class="section-title">진도 현황</div>';
       html += '<div class="card shared-progress">'
         + '<div class="shared-top">'
         + '<span class="shared-label">진도</span>'
-        + '<span class="shared-months">' + months + '개월차</span>'
+        + '<span class="shared-months">' + cycleNum + '개월차</span>'
         + '</div>'
         + '<div class="progress-bar-wrap">'
         + '<div class="progress-bar-fill" style="width:' + pct + '%"></div>'
@@ -804,11 +804,6 @@
     function getDday(s) {
       var t = new Date(s), n = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate());
       return Math.ceil((t - n) / 86400000);
-    }
-
-    function getMonthsDiff(s) {
-      var d = new Date(s);
-      return (TODAY.getFullYear() - d.getFullYear()) * 12 + (TODAY.getMonth() - d.getMonth()) + 1;
     }
 
     function getNextScheduled(days) {

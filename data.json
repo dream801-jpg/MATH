@@ -1,7 +1,8 @@
 {
   "plan": {
     "total_hours": 24,
-    "start_date": "2025-06-01"
+    "start_date": "2025-06-01",
+    "base_hours": 240
   },
   "students": [
     {
