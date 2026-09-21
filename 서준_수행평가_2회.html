@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>중1 1학기 수학 논술형 수행평가 예상문제 2회</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters:[
+    {left:'$$', right:'$$', display:true},
+    {left:'$',  right:'$',  display:false}
+  ], throwOnError:false});"></script>
+<style>
+  @page { size: A4 portrait; margin: 10mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+    font-size: 10.8pt;
+    line-height: 1.6;
+    color: #111;
+  }
+
+  .cover {
+    text-align: center;
+    padding: 4mm 0 3mm;
+    border-bottom: 2px solid #8b0000;
+    margin-bottom: 4mm;
+  }
+  .cover h1 { font-size: 15pt; margin: 0 0 2mm; letter-spacing: 0.5pt; }
+  .cover .sub { font-size: 10pt; color: #444; margin-top: 2mm; }
+
+  .info-box {
+    border: 1px solid #666;
+    padding: 2.5mm 5mm;
+    margin: 0 0 4mm;
+    font-size: 9.5pt;
+    background: #fafafa;
+  }
+  .info-box b { color: #8b0000; }
+  .info-box ul { margin: 1.5mm 0 0 5mm; padding: 0; }
+  .info-box li { margin-bottom: 0.5mm; }
+
+  .name-line {
+    display: flex;
+    justify-content: space-between;
+    margin: 3mm 0 4mm;
+    font-size: 10pt;
+  }
+  .name-line span { border-bottom: 1px solid #333; min-width: 50mm; padding: 0 4mm; }
+
+  .problem {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin: 0 0 6mm;
+    padding: 4mm 5mm;
+    border: 1.2px solid #333;
+    border-left: 5px solid #8b0000;
+    background: #fcfcfc;
+  }
+  .q-head {
+    font-weight: bold;
+    color: #8b0000;
+    font-size: 12pt;
+    margin-bottom: 2mm;
+    border-bottom: 1px dashed #aaa;
+    padding-bottom: 2mm;
+  }
+  .points {
+    float: right;
+    font-weight: normal;
+    color: #888;
+    font-size: 10pt;
+  }
+  .q-body { margin: 2mm 0 3mm; }
+  .q-body ul { margin: 1mm 0 1mm 5mm; padding: 0; }
+  .q-body li { margin-bottom: 0.5mm; }
+  .sub-q {
+    margin: 4mm 0 1mm;
+    font-weight: 600;
+  }
+  .ans-area {
+    min-height: 15mm;
+    border: 1px dashed #bbb;
+    background: repeating-linear-gradient(
+      transparent, transparent 7mm,
+      #eee 7mm, #eee 7.3mm
+    );
+    margin: 1.5mm 0 2mm;
+    border-radius: 2px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  table.cipher {
+    border-collapse: collapse;
+    margin: 2mm 0;
+    font-size: 10pt;
+  }
+  table.cipher td, table.cipher th {
+    border: 1px solid #555;
+    padding: 1.5mm 3mm;
+    text-align: center;
+    min-width: 8mm;
+  }
+  table.cipher th { background: #fce8e8; font-weight: bold; }
+
+  table.magic {
+    border-collapse: collapse;
+    margin: 3mm auto;
+    font-size: 11pt;
+  }
+  table.magic td {
+    border: 1.5px solid #333;
+    width: 22mm;
+    height: 16mm;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 500;
+  }
+  table.magic td.q { color: #c0392b; font-weight: bold; font-size: 14pt; }
+
+  .page-break { break-after: page; page-break-after: always; }
+
+  .ans-cover { text-align: center; margin: 8mm 0 5mm; padding-top: 5mm; }
+  .ans-cover h2 { font-size: 16pt; margin: 0 0 3mm; color: #8b0000; }
+  .ans-cover .sub { color: #666; font-size: 10.5pt; }
+
+  .solution {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin: 0 0 6mm;
+    padding: 4mm 5mm;
+    border-left: 4px solid #2196f3;
+    background: #f8fbff;
+  }
+  .solution h3 {
+    margin: 0 0 3mm;
+    color: #1a4d8f;
+    font-size: 12pt;
+    border-bottom: 1px solid #aaa;
+    padding-bottom: 1.5mm;
+  }
+  .sol-step {
+    margin: 2mm 0;
+    padding-left: 3mm;
+  }
+  .sol-step b { color: #1a4d8f; }
+  .sol-final {
+    background: #fff3cd;
+    padding: 1mm 3mm;
+    border-radius: 3px;
+    font-weight: bold;
+    color: #b8860b;
+  }
+  .grading-tip {
+    margin: 3mm 0 0;
+    padding: 2mm 4mm;
+    background: #e8f5e9;
+    border-left: 3px solid #4caf50;
+    font-size: 10pt;
+  }
+  .grading-tip b { color: #2e7d32; }
+
+  table.sol-table {
+    border-collapse: collapse;
+    margin: 2mm 0;
+    width: 100%;
+    font-size: 10pt;
+  }
+  table.sol-table th, table.sol-table td {
+    border: 1px solid #888;
+    padding: 1.5mm 3mm;
+    text-align: center;
+  }
+  table.sol-table th { background: #e8eff7; font-weight: bold; }
+
+  .footer {
+    text-align: center;
+    color: #888;
+    font-size: 9pt;
+    margin-top: 4mm;
+    border-top: 1px solid #ccc;
+    padding-top: 2mm;
+  }
+
+  @media print { .no-print { display: none; } }
+</style>
+</head>
+<body>
+
+<!-- ============== 표지 ============== -->
+<div class="cover">
+  <h1>중1 1학기 수학 논술형 수행평가 예상문제</h1>
+  <div class="sub">2회 · 분당내정중 1학년 대비 · 작성일 2026.04.24</div>
+</div>
+
+<div class="info-box">
+  <b>[시험 정보]</b>
+  <ul>
+    <li>실전 시간: <b>35분</b> · 문항 수: <b>4문제 (논술형)</b> · 배점: 30 × 4 = <b>120점</b></li>
+    <li>출제 범위: 교과서 p.10 ~ p.70 (소인수분해 · 정수와 유리수)</li>
+    <li>준비물: 검정 볼펜, 수정테이프 (사용 가능)</li>
+    <li>유의: 풀이 과정을 반드시 함께 서술 (계산만 쓰면 감점)</li>
+  </ul>
+</div>
+
+<div class="name-line">
+  학년·반·번호: <span>&nbsp;</span> 이름: <span>&nbsp;</span>
+</div>
+
+<!-- ============== 문제 1 ============== -->
+<div class="problem">
+  <div class="q-head">문제 1. 최대공약수와 최소공배수 <span class="points">(30점)</span></div>
+  <div class="q-body">
+    세 자연수 $A, B, C$ 가 다음 조건을 모두 만족한다.
+    <ul>
+      <li> $A < B < C$ </li>
+      <li> $A, B, C$ 의 <b>최대공약수는 3</b></li>
+      <li> $A, B, C$ 의 <b>최소공배수는 90</b></li>
+      <li> $A + B + C = 42$ </li>
+    </ul>
+  </div>
+
+  <div class="sub-q">(1) $A = 3a, B = 3b, C = 3c \;(a < b < c)$ 로 놓을 때, $a, b, c$ 가 만족하는 <b>조건 3가지</b>를 식으로 나타내시오. (5점)</div>
+  <div class="ans-area"></div>
+
+  <div class="sub-q">(2) 위 조건을 만족하는 $(A, B, C)$ 의 순서쌍을 <b>모두</b> 구하시오. (풀이 과정 서술) (15점)</div>
+  <div class="ans-area" style="min-height: 40mm;"></div>
+
+  <div class="sub-q">(3) (2)에서 구한 모든 $(A, B, C)$ 중 <b>$A \times B \times C$ 가 최대인 경우와 최소인 경우의 차</b>를 구하시오. (10점)</div>
+  <div class="ans-area" style="min-height: 25mm;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 문제 2 ============== -->
+<div class="problem">
+  <div class="q-head">문제 2. 서로소·소인수분해와 암호 <span class="points">(30점)</span></div>
+  <div class="q-body">
+    알파벳에 작은 소수부터 순서대로 다음과 같이 대응시킨다.
+    <table class="cipher">
+      <tr><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th><th>I</th><th>J</th><th>K</th><th>L</th><th>M</th></tr>
+      <tr><td>2</td><td>3</td><td>5</td><td>7</td><td>11</td><td>13</td><td>17</td><td>19</td><td>23</td><td>29</td><td>31</td><td>37</td><td>41</td></tr>
+    </table>
+    <table class="cipher">
+      <tr><th>N</th><th>O</th><th>P</th><th>Q</th><th>R</th><th>S</th><th>T</th><th>U</th><th>V</th><th>W</th><th>X</th><th>Y</th><th>Z</th></tr>
+      <tr><td>43</td><td>47</td><td>53</td><td>59</td><td>61</td><td>67</td><td>71</td><td>73</td><td>79</td><td>83</td><td>89</td><td>97</td><td>101</td></tr>
+    </table>
+    <p style="margin: 2mm 0;"><b>암호 규칙:</b> 단어를 이루는 각 알파벳에 대응하는 소수를 <b>모두 곱한 값</b>이 그 단어의 암호.</p>
+  </div>
+
+  <div class="sub-q">(1) 단어 <b>'CAKE'</b> 의 암호를 구하시오. (10점)</div>
+  <div class="ans-area" style="min-height: 22mm;"></div>
+
+  <div class="sub-q">(2) 어떤 단어의 암호가 <b>6,710</b> 이다. 이 단어를 이루는 알파벳을 모두 구하고, 가능한 단어 하나를 쓰시오. (풀이 과정 서술) (15점)</div>
+  <div class="ans-area" style="min-height: 38mm;"></div>
+
+  <div class="sub-q">(3) 두 학생 갑과 을이 서로 다른 단어를 암호화했더니 두 암호가 <b>서로소</b>였다. 이로부터 두 단어가 어떤 관계인지 <b>서로소의 정의</b>를 이용해 서술하시오. (5점)</div>
+  <div class="ans-area" style="min-height: 20mm;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 문제 3 ============== -->
+<div class="problem">
+  <div class="q-head">문제 3. 정수·유리수 덧·뺄셈 마방진 ($4 \times 4$) <span class="points">(30점)</span></div>
+  <div class="q-body">
+    다음 $4 \times 4$ 마방진은 가로 · 세로 · 대각선의 합이 모두 같다.
+    <table class="magic">
+      <tr>
+        <td class="q">?</td><td>$-\dfrac{5}{4}$</td><td>$-\dfrac{3}{2}$</td><td class="q">?</td>
+      </tr>
+      <tr>
+        <td>$-\dfrac{3}{4}$</td><td>$\dfrac{1}{2}$</td><td class="q">?</td><td class="q">?</td>
+      </tr>
+      <tr>
+        <td class="q">?</td><td class="q">?</td><td>$-\dfrac{1}{4}$</td><td>$1$</td>
+      </tr>
+      <tr>
+        <td>$-1$</td><td>$\dfrac{7}{4}$</td><td>$\dfrac{3}{2}$</td><td>$-\dfrac{7}{4}$</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="sub-q">(1) <b>마지막 줄(4행)</b>을 이용해 한 줄의 합 $S$ 를 구하시오. (분수 덧·뺄셈 과정 서술) (5점)</div>
+  <div class="ans-area" style="min-height: 22mm;"></div>
+
+  <div class="sub-q">(2) 빈칸 6개를 모두 채워 마방진을 완성하시오. <b>어떤 줄을 이용해 어떤 칸을 채웠는지 순서대로</b> 풀이 과정을 서술하시오. (25점)</div>
+  <div class="ans-area" style="min-height: 75mm;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 문제 4 ============== -->
+<div class="problem">
+  <div class="q-head">문제 4. 정수·유리수 곱·나눗셈 크기 비교 <span class="points">(30점)</span></div>
+  <div class="q-body">
+    다음 다섯 수가 있다.
+    <ul>
+      <li> $A = \left( -\dfrac{3}{4} \right)^2 \div \left( -\dfrac{9}{8} \right) \times (-2)^3$ </li>
+      <li> $B = -\left( \dfrac{1}{3} \right)^2 \times \left( -\dfrac{6}{5} \right)^2 \div \left( -\dfrac{2}{5} \right)$ </li>
+      <li> $C = \left| -\dfrac{5}{12} \div \dfrac{5}{6} \times (-2) \right| \times (-1)^9$ </li>
+      <li> $D = (-1)^3 \times \left( -\dfrac{2}{3} \right)^2 \div \left( -\dfrac{4}{9} \right)^2$ </li>
+      <li> $E = \left( -\dfrac{5}{4} \right)^2 \div \left( -\dfrac{25}{8} \right) \times \dfrac{2}{3}$ </li>
+    </ul>
+  </div>
+
+  <div class="sub-q">(1) $A, B, C, D, E$ 의 값을 각각 구하시오. <b>다섯 개 모두 풀이 과정을 서술</b>하시오. 부호·거듭제곱·괄호에 주의. (15점)</div>
+  <div class="ans-area" style="min-height: 65mm;"></div>
+
+  <div class="sub-q">(2) 다섯 수를 <b>작은 것부터 큰 것까지</b> 부등호로 나열하시오. (5점)</div>
+  <div class="ans-area"></div>
+
+  <div class="sub-q">(3) 절댓값의 합 $|A| + |B| + |C| + |D| + |E|$ 를 <b>기약분수</b>로 나타내시오. (10점)</div>
+  <div class="ans-area" style="min-height: 28mm;"></div>
+</div>
+
+<div class="footer">— 문제지 끝 —</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 정답 및 풀이 ============== -->
+<div class="ans-cover">
+  <h2>정답 및 풀이 — 2회</h2>
+  <div class="sub">중1 1학기 수학 논술형 수행평가 예상문제</div>
+</div>
+
+<!-- 풀이 1 -->
+<div class="solution">
+  <h3>문제 1 풀이</h3>
+
+  <div class="sol-step">
+    <b>(1)</b> $A = 3a, B = 3b, C = 3c$ 이므로 양변을 $3$ 으로 나누면:
+    <ul>
+      <li> $a < b < c$ (자연수)</li>
+      <li> $a, b, c$ 의 최대공약수 $= 1$ </li>
+      <li> $a, b, c$ 의 최소공배수 $= 30 \;(= 90 \div 3)$ </li>
+      <li> $a + b + c = 14 \;(= 42 \div 3)$ </li>
+    </ul>
+  </div>
+
+  <div class="sol-step">
+    <b>(2)</b> $30$ 의 약수 $\{1, 2, 3, 5, 6, 10, 15, 30\}$ 중 세 개를 골라 위 조건을 모두 만족:
+    <table class="sol-table">
+      <tr><th>$(a, b, c)$</th><th>합</th><th>최대공약수</th><th>최소공배수</th><th>판정</th></tr>
+      <tr><td>$(1, 3, 10)$</td><td>$14$</td><td>$1$</td><td>$30$</td><td>✓</td></tr>
+      <tr><td>$(3, 5, 6)$</td><td>$14$</td><td>$1$</td><td>$30$</td><td>✓</td></tr>
+    </table>
+    따라서 <span class="sol-final">$(A, B, C) = (3, 9, 30)$ 또는 $(9, 15, 18)$</span>
+  </div>
+
+  <div class="sol-step">
+    <b>(3)</b>
+    <ul>
+      <li>$3 \times 9 \times 30 = 27 \times 30 = 810$ </li>
+      <li>$9 \times 15 \times 18 = 135 \times 18 = 2{,}430$ </li>
+    </ul>
+    차 $= 2{,}430 - 810 = $ <span class="sol-final">$1{,}620$</span>
+  </div>
+
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b> GCD로 나눠 단순화하는 아이디어 명시 + 답 2쌍 모두 제시.
+  </div>
+</div>
+
+<!-- 풀이 2 -->
+<div class="solution">
+  <h3>문제 2 풀이</h3>
+
+  <div class="sol-step">
+    <b>(1)</b> $\mathrm{C} \times \mathrm{A} \times \mathrm{K} \times \mathrm{E} = 5 \times 2 \times 31 \times 11$
+    <ul>
+      <li>$5 \times 2 = 10$ </li>
+      <li>$31 \times 11 = 341$ </li>
+      <li>$10 \times 341 = $ <span class="sol-final">$3{,}410$</span></li>
+    </ul>
+  </div>
+
+  <div class="sol-step">
+    <b>(2)</b> $6{,}710$ 을 작은 소수부터 순차 나누기:
+    <table class="sol-table">
+      <tr><th>나눈 소수</th><th>몫</th></tr>
+      <tr><td>$\div 2$</td><td>$3{,}355$</td></tr>
+      <tr><td>$\div 5$</td><td>$671$</td></tr>
+      <tr><td>$\div 11$</td><td>$61$ (소수)</td></tr>
+    </table>
+    $6{,}710 = 2 \times 5 \times 11 \times 61$<br>
+    소인수에 대응하는 알파벳: <span class="sol-final">{A, C, E, R}</span><br>
+    가능한 단어 예: <b>CARE</b> (또는 RACE, ACRE 모두 가능)
+  </div>
+
+  <div class="sol-step">
+    <b>(3)</b> 두 자연수가 서로소 ⟺ 공통된 <b>소인수</b>가 없음. 두 암호가 서로소이면 두 암호의 소인수 집합에 공통 원소가 없으므로, 그에 대응하는 알파벳에도 공통 원소가 없다. 즉 <b>두 단어는 공통된 알파벳을 하나도 가지지 않는다</b>.
+  </div>
+
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b> (3)에서 "서로소 $\Rightarrow$ 공통 소인수 없음 $\Rightarrow$ 공통 알파벳 없음" 논리 사슬 명시.
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- 풀이 3 -->
+<div class="solution">
+  <h3>문제 3 풀이</h3>
+
+  <div class="sol-step">
+    <b>(1)</b> 4행 직접 합산 (분모 4로 통분):<br>
+    $-1 + \dfrac{7}{4} + \dfrac{3}{2} + \left(-\dfrac{7}{4}\right) = -\dfrac{4}{4} + \dfrac{7}{4} + \dfrac{6}{4} - \dfrac{7}{4} = \dfrac{-4 + 7 + 6 - 7}{4} = \dfrac{2}{4}$
+    $\Rightarrow$ <span class="sol-final">$S = \dfrac{1}{2}$</span>
+  </div>
+
+  <div class="sol-step">
+    <b>(2)</b> 각 줄의 합 $= \dfrac{1}{2}$. <b>미지수가 1개만 남은 줄부터</b> 차례로:
+    <table class="sol-table">
+      <tr><th>순서</th><th>사용 줄</th><th>식</th><th>결과</th></tr>
+      <tr><td>①</td><td>2열</td><td>$-\frac{5}{4} + \frac{1}{2} + ? + \frac{7}{4} = \frac{1}{2}$</td><td>(3,2) $= -\frac{1}{2}$</td></tr>
+      <tr><td>②</td><td>3열</td><td>$-\frac{3}{2} + ? + (-\frac{1}{4}) + \frac{3}{2} = \frac{1}{2}$</td><td>(2,3) $= \frac{3}{4}$</td></tr>
+      <tr><td>③</td><td>2행</td><td>$-\frac{3}{4} + \frac{1}{2} + \frac{3}{4} + ? = \frac{1}{2}$</td><td>(2,4) $= 0$</td></tr>
+      <tr><td>④</td><td>4열</td><td>$? + 0 + 1 + (-\frac{7}{4}) = \frac{1}{2}$</td><td>(1,4) $= \frac{5}{4}$</td></tr>
+      <tr><td>⑤</td><td>1행</td><td>$? + (-\frac{5}{4}) + (-\frac{3}{2}) + \frac{5}{4} = \frac{1}{2}$</td><td>(1,1) $= 2$</td></tr>
+      <tr><td>⑥</td><td>3행</td><td>$? + (-\frac{1}{2}) + (-\frac{1}{4}) + 1 = \frac{1}{2}$</td><td>(3,1) $= \frac{1}{4}$</td></tr>
+      <tr><td>⑦</td><td>1열 검산</td><td>$2 + (-\frac{3}{4}) + \frac{1}{4} + (-1) = \frac{1}{2}$ ✓</td><td>—</td></tr>
+      <tr><td>⑧</td><td>대각선 ↘ 검산</td><td>$2 + \frac{1}{2} + (-\frac{1}{4}) + (-\frac{7}{4}) = \frac{1}{2}$ ✓</td><td>—</td></tr>
+      <tr><td>⑨</td><td>대각선 ↙ 검산</td><td>$\frac{5}{4} + \frac{3}{4} + (-\frac{1}{2}) + (-1) = \frac{1}{2}$ ✓</td><td>—</td></tr>
+    </table>
+    완성:
+    <table class="magic">
+      <tr><td>$2$</td><td>$-\dfrac{5}{4}$</td><td>$-\dfrac{3}{2}$</td><td>$\dfrac{5}{4}$</td></tr>
+      <tr><td>$-\dfrac{3}{4}$</td><td>$\dfrac{1}{2}$</td><td>$\dfrac{3}{4}$</td><td>$0$</td></tr>
+      <tr><td>$\dfrac{1}{4}$</td><td>$-\dfrac{1}{2}$</td><td>$-\dfrac{1}{4}$</td><td>$1$</td></tr>
+      <tr><td>$-1$</td><td>$\dfrac{7}{4}$</td><td>$\dfrac{3}{2}$</td><td>$-\dfrac{7}{4}$</td></tr>
+    </table>
+  </div>
+
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b>
+    <ul style="margin: 1mm 0 0 4mm;">
+      <li>(1) <b>분수 합산 자체가 핵심</b> — 통분 후 부호 처리</li>
+      <li>(2) "미지수 1개 남은 줄부터 골라가는 전략" 명시</li>
+      <li>음수 분수 사칙연산 실수 주의 (특히 $-(-\frac{1}{2}) = +\frac{1}{2}$)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- 풀이 4 -->
+<div class="solution">
+  <h3>문제 4 풀이</h3>
+
+  <div class="sol-step">
+    <b>(1)</b> 각 수의 값:
+    <ul>
+      <li><b>A</b> $= \left(-\dfrac{3}{4}\right)^2 \div \left(-\dfrac{9}{8}\right) \times (-2)^3$
+        <br>$= \dfrac{9}{16} \div \left(-\dfrac{9}{8}\right) \times (-8)$
+        $= \dfrac{9}{16} \times \left(-\dfrac{8}{9}\right) \times (-8)$
+        $= \left(-\dfrac{1}{2}\right) \times (-8) = $ <span class="sol-final">$4$</span></li>
+      <li><b>B</b> $= -\left(\dfrac{1}{3}\right)^2 \times \left(-\dfrac{6}{5}\right)^2 \div \left(-\dfrac{2}{5}\right)$
+        <br>$= -\dfrac{1}{9} \times \dfrac{36}{25} \div \left(-\dfrac{2}{5}\right)$
+        $= -\dfrac{4}{25} \div \left(-\dfrac{2}{5}\right)$
+        $= -\dfrac{4}{25} \times \left(-\dfrac{5}{2}\right) = $ <span class="sol-final">$\dfrac{2}{5}$</span></li>
+      <li><b>C</b> $= \left|-\dfrac{5}{12} \div \dfrac{5}{6} \times (-2)\right| \times (-1)^9$
+        <br>안 계산: $-\dfrac{5}{12} \times \dfrac{6}{5} = -\dfrac{1}{2}$;
+        $\;-\dfrac{1}{2} \times (-2) = 1$
+        <br>$\Rightarrow C = |1| \times (-1) = $ <span class="sol-final">$-1$</span></li>
+      <li><b>D</b> $= (-1)^3 \times \left(-\dfrac{2}{3}\right)^2 \div \left(-\dfrac{4}{9}\right)^2$
+        <br>$= -1 \times \dfrac{4}{9} \div \dfrac{16}{81}$
+        $= -\dfrac{4}{9} \times \dfrac{81}{16}$
+        $= -\dfrac{324}{144} = $ <span class="sol-final">$-\dfrac{9}{4}$</span></li>
+      <li><b>E</b> $= \left(-\dfrac{5}{4}\right)^2 \div \left(-\dfrac{25}{8}\right) \times \dfrac{2}{3}$
+        <br>$= \dfrac{25}{16} \div \left(-\dfrac{25}{8}\right) \times \dfrac{2}{3}$
+        $= \dfrac{25}{16} \times \left(-\dfrac{8}{25}\right) \times \dfrac{2}{3}$
+        $= -\dfrac{1}{2} \times \dfrac{2}{3} = $ <span class="sol-final">$-\dfrac{1}{3}$</span></li>
+    </ul>
+  </div>
+
+  <div class="sol-step">
+    <b>(2)</b> 정리: $A = 4, \;B = \dfrac{2}{5}, \;C = -1, \;D = -\dfrac{9}{4}, \;E = -\dfrac{1}{3}$
+    <br>(소수로 비교: $-\dfrac{9}{4} = -2.25, \;-1, \;-\dfrac{1}{3} \approx -0.33, \;\dfrac{2}{5} = 0.4, \;4$)
+    <br><span class="sol-final">$D \;<\; C \;<\; E \;<\; B \;<\; A$ &nbsp;&nbsp;즉&nbsp; $-\dfrac{9}{4} \;<\; -1 \;<\; -\dfrac{1}{3} \;<\; \dfrac{2}{5} \;<\; 4$</span>
+  </div>
+
+  <div class="sol-step">
+    <b>(3)</b> 절댓값:
+    $|A| = 4, \;|B| = \dfrac{2}{5}, \;|C| = 1, \;|D| = \dfrac{9}{4}, \;|E| = \dfrac{1}{3}$
+    <br>합 $= 4 + \dfrac{2}{5} + 1 + \dfrac{9}{4} + \dfrac{1}{3} = 5 + \dfrac{2}{5} + \dfrac{9}{4} + \dfrac{1}{3}$
+    <br>공통분모 $60$ 으로 통분:
+    $= \dfrac{300}{60} + \dfrac{24}{60} + \dfrac{135}{60} + \dfrac{20}{60} = \dfrac{479}{60}$
+    <br>$\Rightarrow$ <span class="sol-final">$\dfrac{479}{60}$</span>&nbsp; (기약분수: $479$ 와 $60$ 의 최대공약수 $= 1$)
+  </div>
+
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b>
+    <ul style="margin: 1mm 0 0 4mm;">
+      <li><b>A:</b> $\left(-\frac{3}{4}\right)^2$ 양수, $(-2)^3 = -8$ 음수 — 부호 두 번 뒤집힘</li>
+      <li><b>B:</b> $-\left(\frac{1}{3}\right)^2$ 의 음수 부호가 <b>제곱 밖</b>에 있음에 주의</li>
+      <li><b>C:</b> 절댓값 안 먼저 계산 → $|1|$ 로 정리 → $(-1)^9 = -1$ 처리</li>
+      <li><b>D:</b> $(-1)^3 = -1$, 그리고 $\left(-\frac{4}{9}\right)^2$ 분모도 제곱 — 약분 정확하게</li>
+      <li><b>E:</b> 분수 약분으로 $\dfrac{25}{16} \times \dfrac{8}{25} = \dfrac{1}{2}$ 빠르게</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">— 풀이 끝 —</div>
+
+</body>
+</html>

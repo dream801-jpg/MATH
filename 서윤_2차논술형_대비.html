@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>중3 1학기 2차 논술형평가 대비 — 양서윤</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters:[
+    {left:'$$', right:'$$', display:true},
+    {left:'$',  right:'$',  display:false}
+  ], throwOnError:false});"></script>
+<style>
+  @page { size: A4; margin: 14mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+    font-size: 10.8pt;
+    line-height: 1.6;
+    color: #111;
+  }
+
+  :root {
+    --theme: #6a1b9a;
+    --theme-bg: #f3e5f5;
+  }
+
+  .cover {
+    text-align: center;
+    padding: 10mm 0 5mm;
+    border-bottom: 2px solid var(--theme);
+    margin-bottom: 6mm;
+  }
+  .cover h1 { font-size: 17pt; margin: 0 0 3mm; letter-spacing: 0.5pt; }
+  .cover .badge {
+    display: inline-block;
+    background: var(--theme);
+    color: white;
+    padding: 1mm 4mm;
+    border-radius: 3px;
+    font-size: 11pt;
+    font-weight: bold;
+    margin: 0 2mm;
+  }
+  .cover .sub { font-size: 11pt; color: #444; margin-top: 3mm; }
+
+  .info-box {
+    border: 1px solid #666;
+    padding: 4mm 6mm;
+    margin: 0 0 6mm;
+    font-size: 10pt;
+    background: #fafafa;
+  }
+  .info-box b { color: var(--theme); }
+  .info-box ul { margin: 2mm 0 0 5mm; padding: 0; }
+  .info-box li { margin-bottom: 1mm; }
+
+  .name-line {
+    display: flex;
+    justify-content: space-between;
+    margin: 4mm 0 6mm;
+    font-size: 10.5pt;
+  }
+  .name-line span { border-bottom: 1px solid #333; min-width: 50mm; padding: 0 4mm; }
+
+  .section-head {
+    margin: 6mm 0 3mm;
+    padding: 2mm 4mm;
+    background: var(--theme-bg);
+    border-left: 4px solid var(--theme);
+    font-weight: bold;
+    font-size: 11.5pt;
+    color: var(--theme);
+  }
+
+  .guide-box {
+    border: 1px dashed var(--theme);
+    background: #fdf7ff;
+    padding: 3mm 5mm;
+    margin: 0 0 5mm;
+    font-size: 10pt;
+  }
+  .guide-box b { color: var(--theme); }
+
+  .problem {
+    break-inside: avoid;
+    margin: 0 0 5mm;
+    padding: 4mm 5mm;
+    border: 1.2px solid #333;
+    border-left: 5px solid var(--theme);
+    background: #fcfcfc;
+  }
+  .q-head {
+    font-weight: bold;
+    color: var(--theme);
+    font-size: 12pt;
+    margin-bottom: 2mm;
+    border-bottom: 1px dashed #aaa;
+    padding-bottom: 2mm;
+  }
+  .q-head .level {
+    display: inline-block;
+    background: #eee;
+    color: #555;
+    font-size: 9.5pt;
+    padding: 0.5mm 2mm;
+    border-radius: 2px;
+    margin-left: 2mm;
+    vertical-align: middle;
+  }
+  .points {
+    float: right;
+    font-weight: normal;
+    color: #888;
+    font-size: 10pt;
+  }
+  .q-body { margin: 2mm 0 3mm; font-size: 11pt; }
+  .sub-q { margin: 4mm 0 1mm; font-weight: 600; }
+  .ans-area {
+    min-height: 35mm;
+    border: 1px dashed #bbb;
+    background: repeating-linear-gradient(
+      transparent, transparent 7mm,
+      #eee 7mm, #eee 7.3mm
+    );
+    margin: 2mm 0 3mm;
+    border-radius: 2px;
+  }
+
+  .stimulus {
+    border: 1px solid #555;
+    padding: 4mm 6mm;
+    margin: 3mm 0;
+    background: #fbfbfb;
+    text-align: center;
+  }
+  .stimulus .label {
+    display: inline-block;
+    padding: 0 4mm;
+    margin-bottom: 2mm;
+    border: 1px solid #555;
+    background: white;
+    font-size: 10pt;
+  }
+  .stimulus .line-fig {
+    margin: 4mm auto 2mm;
+    font-family: monospace;
+    font-size: 14pt;
+    letter-spacing: 0;
+  }
+
+  .page-break { break-after: page; page-break-after: always; }
+
+  /* ===== 정답지 ===== */
+  .ans-cover { text-align: center; margin: 8mm 0 5mm; padding-top: 5mm; }
+  .ans-cover h2 { font-size: 16pt; margin: 0 0 3mm; color: var(--theme); }
+  .ans-cover .sub { color: #666; font-size: 10.5pt; }
+
+  .solution {
+    break-inside: avoid;
+    margin: 0 0 5mm;
+    padding: 4mm 5mm;
+    border-left: 4px solid #2196f3;
+    background: #f8fbff;
+  }
+  .solution h3 {
+    margin: 0 0 3mm;
+    color: var(--theme);
+    font-size: 12pt;
+    border-bottom: 1px solid #aaa;
+    padding-bottom: 1.5mm;
+  }
+  .sol-step { margin: 2mm 0; padding-left: 3mm; }
+  .sol-step b { color: var(--theme); }
+  .sol-final {
+    background: #fff3cd;
+    padding: 1mm 3mm;
+    border-radius: 3px;
+    font-weight: bold;
+    color: #b8860b;
+  }
+  .grading-tip {
+    margin: 3mm 0 0;
+    padding: 2mm 4mm;
+    background: #e8f5e9;
+    border-left: 3px solid #4caf50;
+    font-size: 10pt;
+  }
+  .grading-tip b { color: #2e7d32; }
+
+  .footer {
+    text-align: center;
+    color: #888;
+    font-size: 9pt;
+    margin-top: 4mm;
+    border-top: 1px solid #ccc;
+    padding-top: 2mm;
+  }
+
+  @media print { .no-print { display: none; } }
+</style>
+</head>
+<body>
+
+<!-- ============== 표지 ============== -->
+<div class="cover">
+  <h1>중3 1학기 2차 논술형평가 대비</h1>
+  <div><span class="badge">대비 1회</span></div>
+  <div class="sub">양서윤 · 분당 내정중 · 본 시험 일시: 2026-05-26(화) 수학시간</div>
+</div>
+
+<div class="info-box">
+  <b>[본 시험 안내 — 학교 공지 그대로]</b>
+  <ul>
+    <li>복도쪽부터 번호순으로 앉기</li>
+    <li>시험시간: <b>15분</b> · 문항 수: 2문제 · 총점: 10점 (각 5점)</li>
+    <li>풀이과정을 자세히 서술하기 · 글씨 또박또박 쓰기</li>
+    <li>검정색 볼펜, 수정테이프 사용 (수정테이프 없을 시 두줄 긋고 쓰기)</li>
+    <li>스마트워치 등 디지털 기계 소지 금지</li>
+    <li>다른 반에 시험 본 문제 절대 얘기 하지 않기</li>
+  </ul>
+</div>
+
+<div class="info-box" style="border-color: var(--theme); background: #fdf7ff;">
+  <b>[대비 문제지 안내]</b>
+  <ul>
+    <li><b>문제 1</b>은 본 시험 당일 출제될 이차방정식이 어떤 꼴일지 모르므로, <b>유형 A → B → C</b> 단계별로 7문제를 수록함. 모두 풀어 서술 감각 익히기</li>
+    <li><b>문제 2</b>(황금비)는 학교 안내문 그대로 1문항 정석 풀이 연습</li>
+    <li>각 풀이 끝에 <b>채점 포인트</b>가 있으니 자신의 답안과 대조할 것</li>
+  </ul>
+</div>
+
+<div class="name-line">
+  학년·반·번호: <span>&nbsp;</span> 이름: <span>&nbsp;</span>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============== Part 1 안내 ============== -->
+<div class="section-head">제곱근을 이용한 이차방정식의 풀이 — 유형별 연습</div>
+
+<div class="guide-box">
+  <b>서술 조건 (5점 만점 기준 예시):</b>
+  ① 식을 변형하는 각 단계마다 줄을 바꿔서 적기 ·
+  ② 등호 <span style="font-family:serif;">=</span> 를 한 줄로 정렬 ·
+  ③ 두 해를 <b>모두</b> 쓰기 (± 부호 누락 시 절반 감점) ·
+  ④ 최종 답은 박스 또는 밑줄로 강조
+  <br><span style="color:#888;">※ 본 시험 당일 학교가 별도 &lt;조건&gt;을 제공하면 그 조건을 따른다.</span>
+</div>
+
+<!-- ============== 유형 A 1 ============== -->
+<div class="problem">
+  <div class="q-head">문제 A-1. <span class="level">유형 A · $x^2 = k$ 꼴</span> <span class="points">(5점)</span></div>
+  <div class="q-body">
+    이차방정식 $2x^2 - 18 = 0$ 의 해를 구하고, 그 과정을 자세히 서술하시오.
+  </div>
+  <div class="ans-area"></div>
+</div>
+
+<!-- ============== 유형 A 2 ============== -->
+<div class="problem">
+  <div class="q-head">문제 A-2. <span class="level">유형 A · $x^2 = k$ 꼴</span> <span class="points">(5점)</span></div>
+  <div class="q-body">
+    이차방정식 $3(x^2 - 5) = 0$ 의 해를 구하고, 그 과정을 자세히 서술하시오.
+  </div>
+  <div class="ans-area"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 유형 B 1 ============== -->
+<div class="problem">
+  <div class="q-head">문제 B-1. <span class="level">유형 B · $(x-a)^2 = k$ 꼴</span> <span class="points">(5점)</span></div>
+  <div class="q-body">
+    이차방정식 $(x-3)^2 = 7$ 의 해를 구하고, 그 과정을 자세히 서술하시오.
+  </div>
+  <div class="ans-area"></div>
+</div>
+
+<!-- ============== 유형 B 2 ============== -->
+<div class="problem">
+  <div class="q-head">문제 B-2. <span class="level">유형 B · $(x-a)^2 = k$ 꼴</span> <span class="points">(5점)</span></div>
+  <div class="q-body">
+    이차방정식 $2(x+1)^2 - 10 = 0$ 의 해를 구하고, 그 과정을 자세히 서술하시오.
+  </div>
+  <div class="ans-area"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 유형 C 1 ============== -->
+<div class="problem">
+  <div class="q-head">문제 C-1. <span class="level">유형 C · 일반형 → 완전제곱식</span> <span class="points">(5점)</span></div>
+  <div class="q-body">
+    이차방정식 $x^2 - 6x + 2 = 0$ 의 해를 <b>완전제곱식을 이용하여</b> 구하고, 그 과정을 자세히 서술하시오.
+  </div>
+  <div class="ans-area" style="min-height: 55mm;"></div>
+</div>
+
+<!-- ============== 유형 C 2 ============== -->
+<div class="problem">
+  <div class="q-head">문제 C-2. <span class="level">유형 C · 일반형 → 완전제곱식</span> <span class="points">(5점)</span></div>
+  <div class="q-body">
+    이차방정식 $2x^2 + 8x - 1 = 0$ 의 해를 <b>완전제곱식을 이용하여</b> 구하고, 그 과정을 자세히 서술하시오.
+  </div>
+  <div class="ans-area" style="min-height: 60mm;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 유형 C 3 ============== -->
+<div class="problem">
+  <div class="q-head">문제 C-3. <span class="level">유형 C · 일반형 → 완전제곱식</span> <span class="points">(5점)</span></div>
+  <div class="q-body">
+    이차방정식 $3x^2 - 12x + 5 = 0$ 의 해를 <b>완전제곱식을 이용하여</b> 구하고, 그 과정을 자세히 서술하시오.
+  </div>
+  <div class="ans-area" style="min-height: 60mm;"></div>
+</div>
+
+<!-- ============== Part 2 안내 ============== -->
+<div class="section-head">황금비 — 본 시험과 동일 출제 (정석 1문항)</div>
+
+<!-- ============== 문제 2 황금비 ============== -->
+<div class="problem">
+  <div class="q-head">문제 2. 황금비 <span class="points">(5점)</span></div>
+  <div class="q-body">
+    제시문을 읽고 물음에 알맞은 것을 구하고, 그 과정을 자세히 서술하시오.
+    <div class="stimulus">
+      <div class="label">&lt; 제 시 문 &gt;</div>
+      <div>황금비는 주어진 길이를 조화롭게 나누는 비로, 아래 그림과 같이 선분 $\mathrm{AC}$ 위의 한 점 $\mathrm{B}$에 대하여</div>
+      <div style="margin: 2mm 0;">$$\overline{\mathrm{AB}} : \overline{\mathrm{BC}} = \overline{\mathrm{BC}} : \overline{\mathrm{AC}}$$</div>
+      <div>를 만족시키는 비입니다.</div>
+      <div class="line-fig">A •━━━━━ B •━━━━━━━━━━━ C</div>
+    </div>
+    물음) $\overline{\mathrm{AB}} = 1$ 일 때, $\overline{\mathrm{BC}}$ 의 길이를 구하시오.
+  </div>
+  <div class="ans-area" style="min-height: 70mm;"></div>
+</div>
+
+<div class="footer">— 문제지 끝 —</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 정답 및 풀이 ============== -->
+<div class="ans-cover">
+  <h2>정답 및 풀이</h2>
+  <div class="sub">서윤 — 중3 1학기 2차 논술형평가 대비 1회</div>
+</div>
+
+<!-- ===== 풀이 A-1 ===== -->
+<div class="solution">
+  <h3>문제 A-1 풀이 · $2x^2 - 18 = 0$</h3>
+  <div class="sol-step">
+    양변을 2로 나누면 &nbsp; $x^2 - 9 = 0$<br>
+    9를 우변으로 이항하면 &nbsp; $x^2 = 9$<br>
+    제곱근을 구하면 &nbsp; $x = \pm \sqrt{9} = \pm 3$<br>
+    따라서 &nbsp; <span class="sol-final">$x = 3$ 또는 $x = -3$</span>
+  </div>
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b> $\pm$ 부호를 빠뜨려 $x = 3$ 만 쓰면 <b>절반 감점</b>. "$x = \pm 3$" 또는 "$x = 3$ 또는 $x = -3$" 둘 다 만점.
+  </div>
+</div>
+
+<!-- ===== 풀이 A-2 ===== -->
+<div class="solution">
+  <h3>문제 A-2 풀이 · $3(x^2 - 5) = 0$</h3>
+  <div class="sol-step">
+    양변을 3으로 나누면 &nbsp; $x^2 - 5 = 0$<br>
+    5를 우변으로 이항하면 &nbsp; $x^2 = 5$<br>
+    제곱근을 구하면 &nbsp; <span class="sol-final">$x = \pm \sqrt{5}$</span>
+  </div>
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b> 무리수 답일 때 $\sqrt{}$ 안의 수를 더 이상 간단히 할 수 있는지 확인 (여기선 5는 소수라 그대로). $\pm$ 누락 주의.
+  </div>
+</div>
+
+<!-- ===== 풀이 B-1 ===== -->
+<div class="solution">
+  <h3>문제 B-1 풀이 · $(x-3)^2 = 7$</h3>
+  <div class="sol-step">
+    양변의 제곱근을 구하면 &nbsp; $x - 3 = \pm \sqrt{7}$<br>
+    $-3$ 을 우변으로 이항하면 &nbsp; $x = 3 \pm \sqrt{7}$<br>
+    따라서 &nbsp; <span class="sol-final">$x = 3 + \sqrt{7}$ 또는 $x = 3 - \sqrt{7}$</span>
+  </div>
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b> $(x-3)^2 = 7$ 에서 곧바로 "$x - 3 = \sqrt{7}$" 한 줄만 쓰면 부호 누락. 반드시 $\pm$ 함께. 두 해 모두 명시.
+  </div>
+</div>
+
+<!-- ===== 풀이 B-2 ===== -->
+<div class="solution">
+  <h3>문제 B-2 풀이 · $2(x+1)^2 - 10 = 0$</h3>
+  <div class="sol-step">
+    $-10$ 을 우변으로 이항 &nbsp; $2(x+1)^2 = 10$<br>
+    양변을 2로 나누면 &nbsp; $(x+1)^2 = 5$<br>
+    양변의 제곱근 &nbsp; $x + 1 = \pm \sqrt{5}$<br>
+    $+1$ 을 우변으로 이항 &nbsp; $x = -1 \pm \sqrt{5}$<br>
+    따라서 &nbsp; <span class="sol-final">$x = -1 + \sqrt{5}$ 또는 $x = -1 - \sqrt{5}$</span>
+  </div>
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b> $(x+1)^2 = 5$ 꼴로 먼저 정리하는 단계 필수. 양변을 2로 나누는 단계를 건너뛰면 부분 감점.
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ===== 풀이 C-1 ===== -->
+<div class="solution">
+  <h3>문제 C-1 풀이 · $x^2 - 6x + 2 = 0$ (완전제곱식)</h3>
+  <div class="sol-step">
+    <b>① 상수항 이항:</b> &nbsp; $x^2 - 6x = -2$<br>
+    <b>② 일차항 계수 절반의 제곱을 양변에 더하기:</b> &nbsp; $\left(\dfrac{-6}{2}\right)^2 = 9$<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; $x^2 - 6x + 9 = -2 + 9$<br>
+    <b>③ 좌변을 완전제곱식으로 정리:</b> &nbsp; $(x-3)^2 = 7$<br>
+    <b>④ 양변의 제곱근:</b> &nbsp; $x - 3 = \pm \sqrt{7}$<br>
+    <b>⑤ 이항:</b> &nbsp; <span class="sol-final">$x = 3 \pm \sqrt{7}$</span>
+  </div>
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b> ②번 "양변에 같은 수를 더한다"는 핵심 단계 — <b>"$\left(\dfrac{b}{2}\right)^2$ 을 양변에 더했다"</b>는 근거 한 줄 적기. 좌변만 더하고 우변을 빠뜨리면 식 전체가 틀림.
+  </div>
+</div>
+
+<!-- ===== 풀이 C-2 ===== -->
+<div class="solution">
+  <h3>문제 C-2 풀이 · $2x^2 + 8x - 1 = 0$ (완전제곱식)</h3>
+  <div class="sol-step">
+    <b>① 양변을 $x^2$ 의 계수 2로 나눔:</b> &nbsp; $x^2 + 4x - \dfrac{1}{2} = 0$<br>
+    <b>② 상수항 이항:</b> &nbsp; $x^2 + 4x = \dfrac{1}{2}$<br>
+    <b>③ 양변에 $\left(\dfrac{4}{2}\right)^2 = 4$ 더하기:</b> &nbsp; $x^2 + 4x + 4 = \dfrac{1}{2} + 4 = \dfrac{9}{2}$<br>
+    <b>④ 완전제곱식 정리:</b> &nbsp; $(x+2)^2 = \dfrac{9}{2}$<br>
+    <b>⑤ 양변의 제곱근:</b> &nbsp; $x + 2 = \pm \sqrt{\dfrac{9}{2}} = \pm \dfrac{3}{\sqrt{2}} = \pm \dfrac{3\sqrt{2}}{2}$<br>
+    <b>⑥ 이항:</b> &nbsp; <span class="sol-final">$x = -2 \pm \dfrac{3\sqrt{2}}{2}$</span>
+  </div>
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b> ①번 "$x^2$ 의 계수를 1로 만드는 단계"가 핵심. 이 단계를 빠뜨리면 ③번에서 더하는 수가 틀림. 분모 유리화 ($\dfrac{3}{\sqrt{2}} \to \dfrac{3\sqrt{2}}{2}$) 까지 깔끔히 정리.
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ===== 풀이 C-3 ===== -->
+<div class="solution">
+  <h3>문제 C-3 풀이 · $3x^2 - 12x + 5 = 0$ (완전제곱식)</h3>
+  <div class="sol-step">
+    <b>① 양변을 3으로 나눔:</b> &nbsp; $x^2 - 4x + \dfrac{5}{3} = 0$<br>
+    <b>② 상수항 이항:</b> &nbsp; $x^2 - 4x = -\dfrac{5}{3}$<br>
+    <b>③ 양변에 $\left(\dfrac{-4}{2}\right)^2 = 4$ 더하기:</b> &nbsp; $x^2 - 4x + 4 = -\dfrac{5}{3} + 4 = \dfrac{7}{3}$<br>
+    <b>④ 완전제곱식 정리:</b> &nbsp; $(x-2)^2 = \dfrac{7}{3}$<br>
+    <b>⑤ 양변의 제곱근:</b> &nbsp; $x - 2 = \pm \sqrt{\dfrac{7}{3}} = \pm \dfrac{\sqrt{7}}{\sqrt{3}} = \pm \dfrac{\sqrt{21}}{3}$<br>
+    <b>⑥ 이항:</b> &nbsp; <span class="sol-final">$x = 2 \pm \dfrac{\sqrt{21}}{3}$</span>
+  </div>
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b> ⑤번 분모 유리화 $\dfrac{\sqrt{7}}{\sqrt{3}} = \dfrac{\sqrt{7}\cdot\sqrt{3}}{3} = \dfrac{\sqrt{21}}{3}$ 과정을 한 줄 보여줄 것. 분모에 무리수 남기면 감점.
+  </div>
+</div>
+
+<!-- ===== 풀이 문제 2 황금비 ===== -->
+<div class="solution">
+  <h3>문제 2 풀이 · 황금비</h3>
+  <div class="sol-step">
+    <b>① 미지수 설정:</b> &nbsp; $\overline{\mathrm{AB}} = 1$, &nbsp; $\overline{\mathrm{BC}} = x$ &nbsp;(단, $x > 0$) 라 하면<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; $\overline{\mathrm{AC}} = \overline{\mathrm{AB}} + \overline{\mathrm{BC}} = 1 + x$
+  </div>
+  <div class="sol-step">
+    <b>② 비례식을 곱셈식으로 (외항의 곱 = 내항의 곱):</b><br>
+    &nbsp;&nbsp;&nbsp;&nbsp; $\overline{\mathrm{AB}} : \overline{\mathrm{BC}} = \overline{\mathrm{BC}} : \overline{\mathrm{AC}}$<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; $1 : x = x : (1+x)$<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; $x \cdot x = 1 \cdot (1+x)$<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; $x^2 = 1 + x$
+  </div>
+  <div class="sol-step">
+    <b>③ 일반형으로 정리:</b> &nbsp; $x^2 - x - 1 = 0$
+  </div>
+  <div class="sol-step">
+    <b>④ 완전제곱식으로 풀기:</b><br>
+    &nbsp;&nbsp;&nbsp;&nbsp; $x^2 - x = 1$<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; $x^2 - x + \dfrac{1}{4} = 1 + \dfrac{1}{4}$ &nbsp;(양변에 $\left(\dfrac{-1}{2}\right)^2 = \dfrac{1}{4}$ 더함)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; $\left(x - \dfrac{1}{2}\right)^2 = \dfrac{5}{4}$<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; $x - \dfrac{1}{2} = \pm \dfrac{\sqrt{5}}{2}$<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; $x = \dfrac{1 \pm \sqrt{5}}{2}$
+  </div>
+  <div class="sol-step">
+    <b>⑤ 조건 검토 ($x$ 는 길이 → 양수):</b><br>
+    &nbsp;&nbsp;&nbsp;&nbsp; $\dfrac{1 - \sqrt{5}}{2} < 0$ 이므로 제외, &nbsp; $\dfrac{1 + \sqrt{5}}{2} > 0$ 채택.<br>
+    따라서 &nbsp; <span class="sol-final">$\overline{\mathrm{BC}} = \dfrac{1 + \sqrt{5}}{2}$</span>
+  </div>
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b>
+    ⓐ 비례식 → 곱셈식 변환에서 "외항의 곱 = 내항의 곱" 근거 명시.
+    ⓑ 이차방정식 $x^2 - x - 1 = 0$ 도출까지 식 변형 모두 보이기.
+    ⓒ <b>가장 중요</b>: 두 해 중 "길이는 양수이므로 음수 해는 버린다"는 <b>조건 검토 한 줄</b>이 반드시 있어야 만점. 빠뜨리면 1~2점 감점.
+    ⓓ 황금비는 $\overline{\mathrm{AB}} : \overline{\mathrm{BC}} = 1 : \dfrac{1+\sqrt{5}}{2} = 2 : (1+\sqrt{5})$ 로도 표현 가능 (참고).
+  </div>
+</div>
+
+<div class="footer">— 풀이 끝 —</div>
+
+</body>
+</html>

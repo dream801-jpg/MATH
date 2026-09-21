@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>중1 1학기 수학 논술형 수행평가 예상문제 1회</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters:[
+    {left:'$$', right:'$$', display:true},
+    {left:'$',  right:'$',  display:false}
+  ], throwOnError:false});"></script>
+<style>
+  @page { size: A4 portrait; margin: 10mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+    font-size: 10.8pt;
+    line-height: 1.6;
+    color: #111;
+  }
+
+  .cover {
+    text-align: center;
+    padding: 4mm 0 3mm;
+    border-bottom: 2px solid #222;
+    margin-bottom: 4mm;
+  }
+  .cover h1 { font-size: 15pt; margin: 0 0 2mm; letter-spacing: 0.5pt; }
+  .cover .sub { font-size: 10pt; color: #444; }
+
+  .info-box {
+    border: 1px solid #666;
+    padding: 2.5mm 5mm;
+    margin: 0 0 4mm;
+    font-size: 9.5pt;
+    background: #fafafa;
+  }
+  .info-box b { color: #1a4d8f; }
+  .info-box ul { margin: 1.5mm 0 0 5mm; padding: 0; }
+  .info-box li { margin-bottom: 0.5mm; }
+
+  .name-line {
+    display: flex;
+    justify-content: space-between;
+    margin: 3mm 0 4mm;
+    font-size: 10pt;
+  }
+  .name-line span { border-bottom: 1px solid #333; min-width: 50mm; padding: 0 4mm; }
+
+  .problem {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin: 0 0 6mm;
+    padding: 4mm 5mm;
+    border: 1.2px solid #333;
+    border-left: 5px solid #1a4d8f;
+    background: #fcfcfc;
+  }
+  .q-head {
+    font-weight: bold;
+    color: #1a4d8f;
+    font-size: 12pt;
+    margin-bottom: 2mm;
+    border-bottom: 1px dashed #aaa;
+    padding-bottom: 2mm;
+  }
+  .points {
+    float: right;
+    font-weight: normal;
+    color: #888;
+    font-size: 10pt;
+  }
+  .q-body { margin: 2mm 0 3mm; }
+  .q-body ul { margin: 1mm 0 1mm 5mm; padding: 0; }
+  .q-body li { margin-bottom: 0.5mm; }
+  .sub-q {
+    margin: 4mm 0 1mm;
+    font-weight: 600;
+  }
+  .ans-area {
+    min-height: 15mm;
+    border: 1px dashed #bbb;
+    background: repeating-linear-gradient(
+      transparent, transparent 7mm,
+      #eee 7mm, #eee 7.3mm
+    );
+    margin: 1.5mm 0 2mm;
+    border-radius: 2px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  table.cipher {
+    border-collapse: collapse;
+    margin: 2mm 0;
+    font-size: 10pt;
+  }
+  table.cipher td, table.cipher th {
+    border: 1px solid #555;
+    padding: 1.5mm 3mm;
+    text-align: center;
+    min-width: 8mm;
+  }
+  table.cipher th { background: #e8eff7; font-weight: bold; }
+
+  table.magic {
+    border-collapse: collapse;
+    margin: 3mm auto;
+    font-size: 12pt;
+  }
+  table.magic td {
+    border: 1.5px solid #333;
+    width: 22mm;
+    height: 16mm;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 500;
+  }
+  table.magic td.q { color: #c0392b; font-weight: bold; font-size: 14pt; }
+
+  .page-break { break-after: page; page-break-after: always; }
+
+  .ans-cover { text-align: center; margin: 8mm 0 5mm; padding-top: 5mm; }
+  .ans-cover h2 { font-size: 16pt; margin: 0 0 3mm; }
+  .ans-cover .sub { color: #666; font-size: 10.5pt; }
+
+  .solution {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin: 0 0 6mm;
+    padding: 4mm 5mm;
+    border-left: 4px solid #2196f3;
+    background: #f8fbff;
+  }
+  .solution h3 {
+    margin: 0 0 3mm;
+    color: #1a4d8f;
+    font-size: 12pt;
+    border-bottom: 1px solid #aaa;
+    padding-bottom: 1.5mm;
+  }
+  .sol-step {
+    margin: 2mm 0;
+    padding-left: 3mm;
+  }
+  .sol-step b { color: #1a4d8f; }
+  .sol-final {
+    background: #fff3cd;
+    padding: 1mm 3mm;
+    border-radius: 3px;
+    font-weight: bold;
+    color: #b8860b;
+  }
+  .grading-tip {
+    margin: 3mm 0 0;
+    padding: 2mm 4mm;
+    background: #e8f5e9;
+    border-left: 3px solid #4caf50;
+    font-size: 10pt;
+  }
+  .grading-tip b { color: #2e7d32; }
+
+  table.sol-table {
+    border-collapse: collapse;
+    margin: 2mm 0;
+    width: 100%;
+    font-size: 10pt;
+  }
+  table.sol-table th, table.sol-table td {
+    border: 1px solid #888;
+    padding: 1.5mm 3mm;
+    text-align: center;
+  }
+  table.sol-table th { background: #e8eff7; font-weight: bold; }
+
+  .footer {
+    text-align: center;
+    color: #888;
+    font-size: 9pt;
+    margin-top: 4mm;
+    border-top: 1px solid #ccc;
+    padding-top: 2mm;
+  }
+
+  @media print { .no-print { display: none; } }
+</style>
+</head>
+<body>
+
+<!-- ============== 표지 ============== -->
+<div class="cover">
+  <h1>중1 1학기 수학 논술형 수행평가 예상문제</h1>
+  <div class="sub">1회 · 분당내정중 1학년 대비 · 작성일 2026.04.24</div>
+</div>
+
+<div class="info-box">
+  <b>[시험 정보]</b>
+  <ul>
+    <li>실전 시간: <b>35분</b> · 문항 수: <b>4문제 (논술형)</b> · 배점: 25 × 4 = <b>100점</b></li>
+    <li>출제 범위: 교과서 p.10 ~ p.70 (소인수분해 · 정수와 유리수)</li>
+    <li>준비물: 검정 볼펜, 수정테이프 (사용 가능)</li>
+    <li>유의: 풀이 과정을 반드시 함께 서술 (계산만 쓰면 감점)</li>
+  </ul>
+</div>
+
+<div class="name-line">
+  학년·반·번호: <span>&nbsp;</span> 이름: <span>&nbsp;</span>
+</div>
+
+<!-- ============== 문제 1 ============== -->
+<div class="problem">
+  <div class="q-head">문제 1. 최대공약수와 최소공배수 <span class="points">(25점)</span></div>
+  <div class="q-body">
+    세 자연수 $A, B, C$ 가 다음 조건을 모두 만족한다.
+    <ul>
+      <li> $A < B < C$ </li>
+      <li> $A, B, C$ 의 <b>최대공약수는 4</b></li>
+      <li> $A, B, C$ 의 <b>최소공배수는 120</b></li>
+      <li> $A + B + C = 56$ </li>
+    </ul>
+  </div>
+
+  <div class="sub-q">(1) $A, B, C$ 를 4로 나눈 몫을 각각 $a, b, c \;(a < b < c)$ 라 할 때, $a, b, c$ 가 만족해야 하는 <b>조건 3가지</b>를 식으로 나타내시오. (5점)</div>
+  <div class="ans-area"></div>
+
+  <div class="sub-q">(2) 위 조건을 만족하는 $(A, B, C)$ 의 순서쌍을 <b>모두</b> 구하시오. (풀이 과정 서술) (15점)</div>
+  <div class="ans-area" style="min-height: 35mm;"></div>
+
+  <div class="sub-q">(3) (2)에서 구한 각 순서쌍에 대해 $A \times C$ 의 값을 구하고, 어느 경우의 $A \times C$ 가 더 큰지 비교하시오. (5점)</div>
+  <div class="ans-area"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 문제 2 ============== -->
+<div class="problem">
+  <div class="q-head">문제 2. 서로소·소인수분해와 암호 <span class="points">(25점)</span></div>
+  <div class="q-body">
+    알파벳에 작은 소수부터 순서대로 다음과 같이 대응시킨다.
+    <table class="cipher">
+      <tr><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th><th>I</th><th>J</th></tr>
+      <tr><td>2</td><td>3</td><td>5</td><td>7</td><td>11</td><td>13</td><td>17</td><td>19</td><td>23</td><td>29</td></tr>
+    </table>
+    <table class="cipher">
+      <tr><th>K</th><th>L</th><th>M</th><th>N</th><th>O</th><th>P</th><th>Q</th><th>R</th><th>S</th><th>T</th></tr>
+      <tr><td>31</td><td>37</td><td>41</td><td>43</td><td>47</td><td>53</td><td>59</td><td>61</td><td>67</td><td>71</td></tr>
+    </table>
+    <p style="margin: 2mm 0;"><b>암호 규칙:</b> 단어를 이루는 각 알파벳에 대응하는 소수를 <b>모두 곱한 값</b>을 그 단어의 암호라 한다.</p>
+  </div>
+
+  <div class="sub-q">(1) 단어 <b>'CAT'</b> 의 암호를 구하시오. (10점)</div>
+  <div class="ans-area" style="min-height: 22mm;"></div>
+
+  <div class="sub-q">(2) 어떤 단어의 암호가 <b>858</b> 이다. 이 단어를 이루는 알파벳을 모두 구하시오. (단, 같은 알파벳은 한 번만 사용하며, 풀이 과정을 서술할 것) (15점)</div>
+  <div class="ans-area" style="min-height: 40mm;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 문제 3 ============== -->
+<div class="problem">
+  <div class="q-head">문제 3. 정수·유리수 덧·뺄셈 마방진 <span class="points">(25점)</span></div>
+  <div class="q-body">
+    다음 $3 \times 3$ 마방진은 가로 · 세로 · 대각선 3방향의 합이 모두 같다.
+    <table class="magic">
+      <tr>
+        <td> $-\dfrac{1}{2}$ </td>
+        <td class="q">?</td>
+        <td> $\dfrac{1}{6}$ </td>
+      </tr>
+      <tr>
+        <td class="q">?</td>
+        <td> $0$ </td>
+        <td class="q">?</td>
+      </tr>
+      <tr>
+        <td class="q">?</td>
+        <td> $-\dfrac{1}{3}$ </td>
+        <td class="q">?</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="sub-q">(1) <b>한 줄의 합 $S$</b> 를 구하시오. 그리고 $3 \times 3$ 마방진에서 <b>$S = 3 \times (\text{가운데 수})$</b> 라는 성질이 성립하는 이유를 설명하시오. (5점)</div>
+  <div class="ans-area" style="min-height: 28mm;"></div>
+
+  <div class="sub-q">(2) 빈칸 5개를 모두 채워 마방진을 완성하시오. <b>어떤 줄을 이용해 어떤 칸을 채웠는지 순서대로</b> 풀이 과정을 서술하시오. (15점)</div>
+  <div class="ans-area" style="min-height: 45mm;"></div>
+
+  <div class="sub-q">(3) 완성된 마방진에서 <b>가장 큰 수와 가장 작은 수의 차</b>를 구하시오. (5점)</div>
+  <div class="ans-area"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 문제 4 ============== -->
+<div class="problem">
+  <div class="q-head">문제 4. 정수·유리수 곱·나눗셈 크기 비교 <span class="points">(25점)</span></div>
+  <div class="q-body">
+    다음 다섯 수가 있다.
+    <ul>
+      <li> $A = (-2)^3 \times \left( -\dfrac{1}{4} \right)$ </li>
+      <li> $B = (-3)^2 \div \left( -\dfrac{3}{2} \right)$ </li>
+      <li> $C = \left( -\dfrac{1}{2} \right) \times \left( -\dfrac{1}{2} \right) \times \left( -\dfrac{1}{2} \right) \times (-2)$ </li>
+      <li> $D = \left( -\dfrac{2}{3} \right) \times \left( -\dfrac{9}{4} \right) \div (-1)^2$ </li>
+      <li> $E = -2^2 \div (-2)^2$ </li>
+    </ul>
+  </div>
+
+  <div class="sub-q">(1) $A, B, C, D, E$ 의 값을 각각 구하시오. <b>다섯 개 모두 풀이 과정을 서술</b>하시오. (15점)</div>
+  <div class="ans-area" style="min-height: 55mm;"></div>
+
+  <div class="sub-q">(2) 다섯 수를 <b>작은 것부터 큰 것까지</b> 부등호를 사용해 나열하시오. (5점)</div>
+  <div class="ans-area"></div>
+
+  <div class="sub-q">(3) 절댓값이 가장 큰 수를 고르고, 그 절댓값을 쓰시오. (5점)</div>
+  <div class="ans-area"></div>
+</div>
+
+<div class="footer">— 문제지 끝 —</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 정답 및 풀이 ============== -->
+<div class="ans-cover">
+  <h2>정답 및 풀이 — 1회</h2>
+  <div class="sub">중1 1학기 수학 논술형 수행평가 예상문제</div>
+</div>
+
+<!-- 풀이 1 -->
+<div class="solution">
+  <h3>문제 1 풀이</h3>
+
+  <div class="sol-step">
+    <b>(1)</b> $A = 4a, B = 4b, C = 4c$ 이므로 양변을 $4$ 로 나누면:
+    <ul>
+      <li> $a < b < c$ (자연수)</li>
+      <li> $a, b, c$ 의 최대공약수 $= 1$ (공약수 4를 빼낸 나머지는 서로소)</li>
+      <li> $a, b, c$ 의 최소공배수 $= 30 \;(= 120 \div 4)$ </li>
+      <li> $a + b + c = 14 \;(= 56 \div 4)$ </li>
+    </ul>
+  </div>
+
+  <div class="sol-step">
+    <b>(2)</b> $30$ 의 약수 $\{1, 2, 3, 5, 6, 10, 15, 30\}$ 중 세 개를 골라 위 조건을 모두 만족하는 조합:
+    <table class="sol-table">
+      <tr><th>$(a, b, c)$</th><th>합</th><th>최대공약수</th><th>최소공배수</th><th>판정</th></tr>
+      <tr><td>$(1, 3, 10)$</td><td>$14$</td><td>$1$</td><td>$30$</td><td>✓</td></tr>
+      <tr><td>$(3, 5, 6)$</td><td>$14$</td><td>$1$</td><td>$30$</td><td>✓</td></tr>
+    </table>
+    따라서 <span class="sol-final">$(A, B, C) = (4, 12, 40)$ 또는 $(12, 20, 24)$</span>
+  </div>
+
+  <div class="sol-step">
+    <b>(3)</b>
+    <ul>
+      <li>$(4, 12, 40)$: $A \times C = 4 \times 40 = 160$ </li>
+      <li>$(12, 20, 24)$: $A \times C = 12 \times 24 = 288$ </li>
+    </ul>
+    <span class="sol-final">$(12, 20, 24)$ 의 경우가 더 크다.</span>
+  </div>
+
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b> 답이 <b>2개</b>라는 것을 빠짐없이 찾기. 하나만 쓰면 절반 감점.
+  </div>
+</div>
+
+<!-- 풀이 2 -->
+<div class="solution">
+  <h3>문제 2 풀이</h3>
+
+  <div class="sol-step">
+    <b>(1)</b> $C \times A \times T = 5 \times 2 \times 71 = $ <span class="sol-final">$710$</span>
+  </div>
+
+  <div class="sol-step">
+    <b>(2)</b> $858$ 을 작은 소수부터 순차 나누기:
+    <table class="sol-table">
+      <tr><th>나눈 소수</th><th>몫</th></tr>
+      <tr><td>$\div 2$</td><td>$429$</td></tr>
+      <tr><td>$\div 3$</td><td>$143$</td></tr>
+      <tr><td>$\div 11$</td><td>$13$ (소수)</td></tr>
+    </table>
+    $858 = 2 \times 3 \times 11 \times 13$<br>
+    소인수 $2, 3, 11, 13$ 에 대응하는 알파벳: <span class="sol-final">A, B, E, F</span>
+  </div>
+
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b> 소인수분해 과정을 단계별로 서술해야 만점. 답만 적으면 부분 감점.
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- 풀이 3 -->
+<div class="solution">
+  <h3>문제 3 풀이</h3>
+
+  <div class="sol-step">
+    <b>(1)</b> 가운데 수가 $0$ 이므로 $S = 3 \times 0 = $ <span class="sol-final">$0$</span><br>
+    <b>이유:</b> 마방진 9칸 전체의 합은 $3S$ 이다 (가로 줄 3개의 합). 가운데 칸을 지나는 줄(가로·세로·대각선 2개) 4줄의 합은 $4S$ 인데, 이 4줄은 가운데 수를 4번, 나머지 8칸을 1번씩 포함한다. 즉
+    $4S = (\text{전체 9칸 합}) + 3 \times (\text{가운데}) = 3S + 3 \times (\text{가운데})$
+    정리하면 <b>$S = 3 \times (\text{가운데 수})$.</b>
+  </div>
+
+  <div class="sol-step">
+    <b>(2)</b> $S = 0$ 이므로 각 줄의 합이 $0$.
+    <table class="sol-table">
+      <tr><th>순서</th><th>사용 줄</th><th>식</th><th>결과</th></tr>
+      <tr><td>①</td><td>대각선 ↘</td><td>$-\frac{1}{2} + 0 + ? = 0$</td><td>우하 = $\frac{1}{2}$</td></tr>
+      <tr><td>②</td><td>대각선 ↙</td><td>$\frac{1}{6} + 0 + ? = 0$</td><td>좌하 = $-\frac{1}{6}$</td></tr>
+      <tr><td>③</td><td>위 가로</td><td>$-\frac{1}{2} + ? + \frac{1}{6} = 0$</td><td>상중 = $\frac{1}{3}$</td></tr>
+      <tr><td>④</td><td>왼 세로</td><td>$-\frac{1}{2} + ? + (-\frac{1}{6}) = 0$</td><td>좌중 = $\frac{2}{3}$</td></tr>
+      <tr><td>⑤</td><td>오른 세로</td><td>$\frac{1}{6} + ? + \frac{1}{2} = 0$</td><td>우중 = $-\frac{2}{3}$</td></tr>
+      <tr><td>⑥</td><td>아래 가로 검산</td><td>$-\frac{1}{6} + (-\frac{1}{3}) + \frac{1}{2} = 0$ ✓</td><td>—</td></tr>
+    </table>
+    완성된 마방진:
+    <table class="magic">
+      <tr><td>$-\dfrac{1}{2}$</td><td>$\dfrac{1}{3}$</td><td>$\dfrac{1}{6}$</td></tr>
+      <tr><td>$\dfrac{2}{3}$</td><td>$0$</td><td>$-\dfrac{2}{3}$</td></tr>
+      <tr><td>$-\dfrac{1}{6}$</td><td>$-\dfrac{1}{3}$</td><td>$\dfrac{1}{2}$</td></tr>
+    </table>
+  </div>
+
+  <div class="sol-step">
+    <b>(3)</b> 가장 큰 수 $\dfrac{2}{3}$, 가장 작은 수 $-\dfrac{2}{3}$.
+    차 $= \dfrac{2}{3} - \left( -\dfrac{2}{3} \right) = $ <span class="sol-final">$\dfrac{4}{3}$</span>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- 풀이 4 -->
+<div class="solution">
+  <h3>문제 4 풀이</h3>
+
+  <div class="sol-step">
+    <b>(1)</b>
+    <table class="sol-table">
+      <tr><th>식</th><th>풀이</th><th>값</th></tr>
+      <tr><td>$A$</td><td>$(-8) \times (-\frac{1}{4}) = \frac{8}{4}$</td><td><b>$2$</b></td></tr>
+      <tr><td>$B$</td><td>$9 \div (-\frac{3}{2}) = 9 \times (-\frac{2}{3}) = -\frac{18}{3}$</td><td><b>$-6$</b></td></tr>
+      <tr><td>$C$</td><td>$(-\frac{1}{2})^3 \times (-2) = (-\frac{1}{8}) \times (-2) = \frac{2}{8}$</td><td><b>$\frac{1}{4}$</b></td></tr>
+      <tr><td>$D$</td><td>$(-\frac{2}{3}) \times (-\frac{9}{4}) \div 1 = \frac{18}{12}$</td><td><b>$\frac{3}{2}$</b></td></tr>
+      <tr><td>$E$</td><td>$-4 \div 4$</td><td><b>$-1$</b></td></tr>
+    </table>
+  </div>
+
+  <div class="sol-step">
+    <b>(2)</b> <span class="sol-final">$B \;<\; E \;<\; C \;<\; D \;<\; A$ &nbsp;&nbsp;즉&nbsp; $-6 \;<\; -1 \;<\; \frac{1}{4} \;<\; \frac{3}{2} \;<\; 2$</span>
+  </div>
+
+  <div class="sol-step">
+    <b>(3)</b> 절댓값: $|A|=2,\;|B|=6,\;|C|=\dfrac{1}{4},\;|D|=\dfrac{3}{2},\;|E|=1$.
+    절댓값이 가장 큰 수는 <span class="sol-final">$B = -6$, 절댓값은 $6$</span>
+  </div>
+
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b>
+    <ul style="margin: 1mm 0 0 4mm;">
+      <li>$E$ 의 $-2^2$ 는 $-(2^2) = -4$ 임에 주의 (부호 먼저 계산하지 말 것)</li>
+      <li>$C$ 는 음수 4번 곱 → 양수</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">— 풀이 끝 —</div>
+
+</body>
+</html>

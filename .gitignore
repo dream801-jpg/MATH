@@ -1,2 +1,14 @@
 suhaeng_all.html
 suhaeng_all_answer.html
+
+# 의존성 (재설치 가능)
+node_modules/
+
+# Claude Code 로컬 설정 (머신별)
+.claude/settings.local.json
+
+# 참조자료 원본 — 커밋하지 않음
+#  · ssen_problems.pdf / [중3-1] 쎈_*.pdf 는 각 235MB로 GitHub 100MB 한도 초과
+#  · 쎈 교재·학교 기출 스캔본이라 공개 레포에 올리기 부적절
+#  → 로컬 보관용. 공유가 필요하면 별도 비공개 저장소나 드라이브 사용
+ref/
