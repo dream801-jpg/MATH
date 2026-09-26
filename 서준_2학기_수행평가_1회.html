@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>중1 2학기 수학 수행평가(1차) 예상문제 1회 — 기본도형과 작도</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters:[
+    {left:'$$', right:'$$', display:true},
+    {left:'$',  right:'$',  display:false}
+  ], throwOnError:false});"></script>
+<style>
+  @page { size: A4 portrait; margin: 10mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+    font-size: 10.8pt;
+    line-height: 1.6;
+    color: #111;
+  }
+
+  .cover {
+    text-align: center;
+    padding: 4mm 0 3mm;
+    border-bottom: 2px solid #222;
+    margin-bottom: 4mm;
+  }
+  .cover h1 { font-size: 15pt; margin: 0 0 2mm; letter-spacing: 0.5pt; }
+  .cover .sub { font-size: 10pt; color: #444; }
+
+  .info-box {
+    border: 1px solid #666;
+    padding: 2.5mm 5mm;
+    margin: 0 0 4mm;
+    font-size: 9.5pt;
+    background: #fafafa;
+  }
+  .info-box b { color: #1a4d8f; }
+  .info-box ul { margin: 1.5mm 0 0 5mm; padding: 0; }
+  .info-box li { margin-bottom: 0.5mm; }
+
+  .name-line {
+    display: flex;
+    justify-content: space-between;
+    margin: 3mm 0 4mm;
+    font-size: 10pt;
+  }
+  .name-line span { border-bottom: 1px solid #333; min-width: 50mm; padding: 0 4mm; }
+
+  .problem {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin: 0 0 6mm;
+    padding: 4mm 5mm;
+    border: 1.2px solid #333;
+    border-left: 5px solid #1a4d8f;
+    background: #fcfcfc;
+  }
+  .q-head {
+    font-weight: bold;
+    color: #1a4d8f;
+    font-size: 12pt;
+    margin-bottom: 2mm;
+    border-bottom: 1px dashed #aaa;
+    padding-bottom: 2mm;
+  }
+  .points {
+    float: right;
+    font-weight: normal;
+    color: #888;
+    font-size: 10pt;
+  }
+  .q-body { margin: 2mm 0 3mm; }
+  .q-body ul { margin: 1mm 0 1mm 5mm; padding: 0; }
+  .q-body li { margin-bottom: 0.5mm; }
+  .sub-q {
+    margin: 4mm 0 1mm;
+    font-weight: 600;
+  }
+  .ans-area {
+    min-height: 15mm;
+    border: 1px dashed #bbb;
+    background: repeating-linear-gradient(
+      transparent, transparent 7mm,
+      #eee 7mm, #eee 7.3mm
+    );
+    margin: 1.5mm 0 2mm;
+    border-radius: 2px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  table.cipher {
+    border-collapse: collapse;
+    margin: 2mm 0;
+    font-size: 10pt;
+  }
+  table.cipher td, table.cipher th {
+    border: 1px solid #555;
+    padding: 1.5mm 3mm;
+    text-align: center;
+    min-width: 8mm;
+  }
+  table.cipher th { background: #e8eff7; font-weight: bold; }
+
+  table.magic {
+    border-collapse: collapse;
+    margin: 3mm auto;
+    font-size: 12pt;
+  }
+  table.magic td {
+    border: 1.5px solid #333;
+    width: 22mm;
+    height: 16mm;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 500;
+  }
+  table.magic td.q { color: #c0392b; font-weight: bold; font-size: 14pt; }
+
+  .page-break { break-after: page; page-break-after: always; }
+
+  .ans-cover { text-align: center; margin: 8mm 0 5mm; padding-top: 5mm; }
+  .ans-cover h2 { font-size: 16pt; margin: 0 0 3mm; }
+  .ans-cover .sub { color: #666; font-size: 10.5pt; }
+
+  .solution {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin: 0 0 6mm;
+    padding: 4mm 5mm;
+    border-left: 4px solid #2196f3;
+    background: #f8fbff;
+  }
+  .solution h3 {
+    margin: 0 0 3mm;
+    color: #1a4d8f;
+    font-size: 12pt;
+    border-bottom: 1px solid #aaa;
+    padding-bottom: 1.5mm;
+  }
+  .sol-step {
+    margin: 2mm 0;
+    padding-left: 3mm;
+  }
+  .sol-step b { color: #1a4d8f; }
+  .sol-final {
+    background: #fff3cd;
+    padding: 1mm 3mm;
+    border-radius: 3px;
+    font-weight: bold;
+    color: #b8860b;
+  }
+  .grading-tip {
+    margin: 3mm 0 0;
+    padding: 2mm 4mm;
+    background: #e8f5e9;
+    border-left: 3px solid #4caf50;
+    font-size: 10pt;
+  }
+  .grading-tip b { color: #2e7d32; }
+
+  table.sol-table {
+    border-collapse: collapse;
+    margin: 2mm 0;
+    width: 100%;
+    font-size: 10pt;
+  }
+  table.sol-table th, table.sol-table td {
+    border: 1px solid #888;
+    padding: 1.5mm 3mm;
+    text-align: center;
+  }
+  table.sol-table th { background: #e8eff7; font-weight: bold; }
+
+  .footer {
+    text-align: center;
+    color: #888;
+    font-size: 9pt;
+    margin-top: 4mm;
+    border-top: 1px solid #ccc;
+    padding-top: 2mm;
+  }
+
+  @media print { .no-print { display: none; } }
+  .fig { text-align: center; margin: 2mm 0 3mm; }
+  .fig-row { display: flex; justify-content: space-around; align-items: flex-end; gap: 4mm; margin: 2mm 0 3mm; }
+  .fig-row .cap { text-align: center; font-size: 9.5pt; color: #444; }
+  .stmt { margin: 1.5mm 0 1.5mm 3mm; }
+  .stmt div { margin-bottom: 0.8mm; }
+</style>
+</head>
+<body>
+
+<!-- ============== 표지 ============== -->
+<div class="cover">
+  <h1>중1 2학기 수학 수행평가(1차) 예상문제</h1>
+  <div class="sub">1회 · 분당내정중 1학년 대비 · 작성일 2026.09.25</div>
+</div>
+
+<div class="info-box">
+  <b>[시험 정보]</b>
+  <ul>
+    <li>실시: <b>2026.09.28.(월)</b> 수학시간 · 실전 시간: <b>35분</b> · 문항 수: <b>5문제 (서술형)</b> · 배점: 20 × 5 = <b>100점</b></li>
+    <li>출제 범위: 5. 기본도형과 작도 — 점·선·면 / 위치관계 / 삼각형의 작도 / 평행선의 성질 / 삼각형의 합동</li>
+    <li>준비물: 검정펜, 수정테이프 (컴퍼스·자 없음 → 작도는 <b>순서·조건을 말로 설명</b>하는 형태로 대비)</li>
+    <li>유의: 풀이 과정과 <b>근거(성질의 이름)</b>를 함께 서술 (답만 쓰면 감점)</li>
+  </ul>
+</div>
+
+<div class="name-line">
+  학년·반·번호: <span>&nbsp;</span> 이름: <span>&nbsp;</span>
+</div>
+
+<!-- ============== 문제 1 ============== -->
+<div class="problem">
+  <div class="q-head">문제 1. 점, 선, 면 <span class="points">(20점)</span></div>
+  <div class="q-body">
+    다음 그림과 같이 직선 $l$ 위에 네 점 $\text{A, B, C, D}$ 가 있고, 직선 $l$ 위에 있지 않은 한 점 $\text{P}$ 가 있다.
+    <div class="fig">
+      <svg width="340" height="105" viewBox="0 0 340 105" font-family="'Times New Roman', serif" font-size="15">
+        <line x1="20" y1="78" x2="320" y2="78" stroke="#222" stroke-width="1.5"/>
+        <text x="326" y="83" font-style="italic">l</text>
+        <g fill="#111">
+          <circle cx="70" cy="78" r="3"/><circle cx="140" cy="78" r="3"/>
+          <circle cx="210" cy="78" r="3"/><circle cx="280" cy="78" r="3"/>
+          <circle cx="175" cy="18" r="3"/>
+        </g>
+        <text x="70" y="98" text-anchor="middle">A</text>
+        <text x="140" y="98" text-anchor="middle">B</text>
+        <text x="210" y="98" text-anchor="middle">C</text>
+        <text x="280" y="98" text-anchor="middle">D</text>
+        <text x="185" y="16">P</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="sub-q">(1) 다섯 개의 점 $\text{A, B, C, D, P}$ 중 두 점을 이어 만들 수 있는 서로 다른 <b>직선, 반직선, 선분</b>의 개수를 각각 구하시오. (단, 개수를 센 방법을 서술할 것) (12점)</div>
+  <div class="ans-area" style="min-height: 50mm;"></div>
+
+  <div class="sub-q">(2) (1)의 그림과 관계없이, 선분 $\text{AB}$ 위의 점 $\text{M}$ 은 $\overline{\text{AB}}$ 의 중점이고, 점 $\text{N}$ 은 $\overline{\text{MB}}$ 의 중점이다. $\overline{\text{AN}} = 18\,\text{cm}$ 일 때, $\overline{\text{AB}}$ 와 $\overline{\text{MN}}$ 의 길이를 각각 구하시오. (풀이 과정 서술) (8점)</div>
+  <div class="ans-area" style="min-height: 36mm;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 문제 2 ============== -->
+<div class="problem">
+  <div class="q-head">문제 2. 위치관계 <span class="points">(20점)</span></div>
+  <div class="q-body">
+    다음 그림은 옆면이 모두 직사각형인 삼각기둥 $\text{ABC-DEF}$ 이다.
+    <div class="fig">
+      <svg width="280" height="255" viewBox="0 0 280 255" font-family="'Times New Roman', serif" font-size="15">
+        <g stroke="#222" stroke-width="1.5" fill="none">
+          <polygon points="60,40 140,80 220,40"/>
+          <line x1="60" y1="40" x2="60" y2="190"/>
+          <line x1="140" y1="80" x2="140" y2="230"/>
+          <line x1="220" y1="40" x2="220" y2="190"/>
+          <polyline points="60,190 140,230 220,190"/>
+          <line x1="60" y1="190" x2="220" y2="190" stroke-dasharray="5,4"/>
+        </g>
+        <text x="46" y="38">A</text>
+        <text x="122" y="98">B</text>
+        <text x="226" y="38">C</text>
+        <text x="46" y="200">D</text>
+        <text x="135" y="248">E</text>
+        <text x="226" y="200">F</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="sub-q">(1) 모서리 $\text{AB}$ 와 <b>꼬인 위치</b>에 있는 모서리를 모두 구하시오. (5점)</div>
+  <div class="ans-area" style="min-height: 20mm;"></div>
+
+  <div class="sub-q">(2) 모서리 $\text{AD}$ 와 평행한 면의 개수를 $a$, 면 $\text{ABC}$ 와 수직인 모서리의 개수를 $b$, 모서리 $\text{BC}$ 와 꼬인 위치에 있는 모서리의 개수를 $c$ 라 할 때, $a+b+c$ 의 값을 구하시오. (7점)</div>
+  <div class="ans-area" style="min-height: 30mm;"></div>
+
+  <div class="sub-q">(3) 다음은 공간에서 직선과 평면의 위치관계에 대한 설명이다. <b>옳지 않은 것을 모두 고르고</b>, 옳지 않은 이유를 위 삼각기둥의 모서리나 면을 <b>예로 들어</b> 설명하시오. (8점)
+    <div class="stmt" style="font-weight: normal;">
+      <div>ㄱ. 한 평면에 평행한 서로 다른 두 직선은 평행하다.</div>
+      <div>ㄴ. 한 평면에 수직인 서로 다른 두 직선은 평행하다.</div>
+      <div>ㄷ. 한 직선에 수직인 서로 다른 두 직선은 평행하다.</div>
+      <div>ㄹ. 한 직선에 수직인 서로 다른 두 평면은 평행하다.</div>
+    </div>
+  </div>
+  <div class="ans-area" style="min-height: 40mm;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 문제 3 ============== -->
+<div class="problem">
+  <div class="q-head">문제 3. 삼각형의 작도 <span class="points">(20점)</span></div>
+
+  <div class="sub-q">(1) 길이가 각각 $2\,\text{cm},\ 3\,\text{cm},\ 5\,\text{cm},\ 6\,\text{cm},\ 8\,\text{cm}$ 인 막대가 하나씩 있다. 이 중 세 개를 골라 만들 수 있는 서로 다른 삼각형의 개수를 구하시오. (단, 삼각형이 되는 조건을 이용하여 판단 과정을 서술할 것) (8점)</div>
+  <div class="ans-area" style="min-height: 55mm;"></div>
+
+  <div class="sub-q">(2) 다음 중 $\triangle\text{ABC}$ 가 <b>하나로 정해지는 것</b>을 모두 고르시오. 또, 하나로 정해지지 <b>않는</b> 것은 각각 그 이유를 쓰시오. (12점)
+    <div class="stmt" style="font-weight: normal;">
+      <div>ㄱ. $\overline{\text{AB}} = 4\,\text{cm},\ \overline{\text{BC}} = 6\,\text{cm},\ \overline{\text{CA}} = 10\,\text{cm}$</div>
+      <div>ㄴ. $\overline{\text{AB}} = 5\,\text{cm},\ \overline{\text{BC}} = 7\,\text{cm},\ \angle\text{B} = 40^\circ$</div>
+      <div>ㄷ. $\overline{\text{AB}} = 6\,\text{cm},\ \overline{\text{CA}} = 5\,\text{cm},\ \angle\text{B} = 50^\circ$</div>
+      <div>ㄹ. $\overline{\text{BC}} = 8\,\text{cm},\ \angle\text{B} = 70^\circ,\ \angle\text{C} = 110^\circ$</div>
+      <div>ㅁ. $\overline{\text{AC}} = 7\,\text{cm},\ \angle\text{A} = 50^\circ,\ \angle\text{B} = 60^\circ$</div>
+      <div>ㅂ. $\angle\text{A} = 40^\circ,\ \angle\text{B} = 60^\circ,\ \angle\text{C} = 80^\circ$</div>
+    </div>
+  </div>
+  <div class="ans-area" style="min-height: 100mm;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 문제 4 ============== -->
+<div class="problem">
+  <div class="q-head">문제 4. 평행선의 성질 <span class="points">(20점)</span></div>
+
+  <div class="sub-q">(1) [그림 1]에서 $l \,/\!/\, m$ 일 때, $\angle x$ 의 크기를 구하시오. (단, 보조선을 어떻게 그었는지와 이용한 성질을 서술할 것) (8점)</div>
+  <div class="fig">
+    <svg width="340" height="230" viewBox="0 0 340 230" font-family="'Times New Roman', serif" font-size="14">
+      <line x1="20" y1="30" x2="320" y2="30" stroke="#222" stroke-width="1.5"/>
+      <line x1="20" y1="210" x2="320" y2="210" stroke="#222" stroke-width="1.5"/>
+      <text x="326" y="35" font-style="italic" font-size="15">l</text>
+      <text x="326" y="215" font-style="italic" font-size="15">m</text>
+      <polyline points="80,30 183.9,90 112.4,150 241.1,210" fill="none" stroke="#222" stroke-width="1.5"/>
+      <g fill="none" stroke="#c0392b" stroke-width="1.2">
+        <path d="M102,30 A22,22 0 0 1 99.05,41"/>
+        <path d="M168.6,102.9 A20,20 0 0 1 166.6,80"/>
+        <path d="M127.7,137.1 A20,20 0 0 1 130.5,158.5"/>
+        <path d="M217.1,210 A24,24 0 0 1 219.35,199.86"/>
+      </g>
+      <text x="108" y="45" font-size="13">30°</text>
+      <text x="146" y="95" font-style="italic" font-size="15">x</text>
+      <text x="137" y="150" font-size="13">65°</text>
+      <text x="186" y="203" font-size="13">25°</text>
+      <text x="170" y="228" font-size="12" fill="#444" font-family="'Malgun Gothic', sans-serif">[그림 1]</text>
+    </svg>
+  </div>
+  <div class="ans-area" style="min-height: 40mm;"></div>
+
+  <div class="sub-q">(2) [그림 2]는 폭이 일정한 직사각형 모양의 종이 테이프를 선분 $\text{AB}$ 를 접는 선으로 하여 접은 것이고, 점 $\text{D}$ 는 접기 전 테이프의 윗변 위의 점이다. $\angle\text{ABC} = 65^\circ$ 일 때, $\angle x$ 의 크기를 구하시오. (단, 이용한 성질을 서술할 것) (12점)</div>
+  <div class="fig">
+    <svg width="320" height="215" viewBox="0 0 320 215" font-family="'Times New Roman', serif" font-size="15">
+      <polygon points="20,40 200,40 237.3,120 20,120" fill="#f1f1f1" stroke="#222" stroke-width="1.5"/>
+      <polygon points="200,40 122.86,131.92 184.14,183.33 237.3,120" fill="#dfe8f3" stroke="#222" stroke-width="1.5"/>
+      <g fill="none" stroke="#c0392b" stroke-width="1.2">
+        <path d="M219.3,120 A18,18 0 0 1 229.7,103.7"/>
+        <path d="M143.2,107.7 A16,16 0 0 1 148.9,120"/>
+      </g>
+      <line x1="200" y1="40" x2="300" y2="40" stroke="#555" stroke-width="1.2" stroke-dasharray="5,4"/>
+      <circle cx="290" cy="40" r="2.5" fill="#111"/>
+      <text x="285" y="33">D</text>
+      <text x="195" y="33">A</text>
+      <text x="243" y="126">B</text>
+      <text x="130" y="116" text-anchor="end">C</text>
+      <text x="200" y="110" font-size="13">65°</text>
+      <text x="154" y="112" font-style="italic">x</text>
+      <text x="140" y="208" font-size="12" fill="#444" font-family="'Malgun Gothic', sans-serif">[그림 2]</text>
+    </svg>
+  </div>
+  <div class="ans-area" style="min-height: 40mm;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 문제 5 ============== -->
+<div class="problem">
+  <div class="q-head">문제 5. 삼각형의 합동 <span class="points">(20점)</span></div>
+  <div class="q-body">
+    다음 그림에서 $\triangle\text{ABC}$ 와 $\triangle\text{ADE}$ 는 모두 정삼각형이고, 점 $\text{D}$ 는 $\overline{\text{BC}}$ 위의 점이다.
+    <div class="fig">
+      <svg width="350" height="250" viewBox="0 0 350 250" font-family="'Times New Roman', serif" font-size="15">
+        <g stroke="#222" stroke-width="1.5" fill="none" stroke-linejoin="round">
+          <polygon points="140,46.8 40,220 240,220"/>
+          <polygon points="140,46.8 180,220 310,98.8"/>
+          <line x1="240" y1="220" x2="310" y2="98.8"/>
+        </g>
+        <text x="135" y="38">A</text>
+        <text x="24" y="232">B</text>
+        <text x="244" y="236">C</text>
+        <text x="174" y="238">D</text>
+        <text x="316" y="100">E</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="sub-q">(1) $\triangle\text{ABD} \equiv \triangle\text{ACE}$ 임을 설명하시오. (단, 대응하는 변과 각이 같은 이유와 <b>합동 조건</b>을 밝힐 것) (10점)</div>
+  <div class="ans-area" style="min-height: 55mm;"></div>
+
+  <div class="sub-q">(2) $\overline{\text{BC}} = 10\,\text{cm},\ \overline{\text{CD}} = 3\,\text{cm}$ 일 때, $\overline{\text{CE}}$ 의 길이를 구하시오. (4점)</div>
+  <div class="ans-area" style="min-height: 20mm;"></div>
+
+  <div class="sub-q">(3) $\angle\text{DCE}$ 의 크기를 구하시오. (풀이 과정 서술) (6점)</div>
+  <div class="ans-area" style="min-height: 28mm;"></div>
+</div>
+
+<div class="footer">— 문제지 끝 —</div>
+
+<div class="page-break"></div>
+
+<!-- ============== 정답 및 풀이 ============== -->
+<div class="ans-cover">
+  <h2>정답 및 풀이 — 1회</h2>
+  <div class="sub">중1 2학기 수학 수행평가(1차) 예상문제 · 기본도형과 작도</div>
+</div>
+
+<!-- 풀이 1 -->
+<div class="solution">
+  <h3>문제 1 풀이</h3>
+
+  <div class="sol-step">
+    <b>(1)</b>
+    <table class="sol-table">
+      <tr><th>구분</th><th>직선 $l$ 위의 네 점끼리</th><th>점 $\text{P}$ 와 네 점</th><th style="width: 14mm; white-space: nowrap;">합계</th></tr>
+      <tr><td>직선</td><td>모두 직선 $l$ 로 같음 → $1$ 개</td><td>$\overleftrightarrow{\text{PA}}, \overleftrightarrow{\text{PB}}, \overleftrightarrow{\text{PC}}, \overleftrightarrow{\text{PD}}$ → $4$ 개</td><td><b>$5$</b></td></tr>
+      <tr><td>반직선</td><td>$\overrightarrow{\text{AB}}\,(=\overrightarrow{\text{AC}}=\overrightarrow{\text{AD}}),\ \overrightarrow{\text{BA}},\ \overrightarrow{\text{BC}},\ \overrightarrow{\text{CB}},\ \overrightarrow{\text{CD}},\ \overrightarrow{\text{DC}}$ → $6$ 개</td><td>$\overrightarrow{\text{PA}}, \overrightarrow{\text{AP}}$ 처럼 점마다 $2$ 개 → $8$ 개</td><td><b>$14$</b></td></tr>
+      <tr><td>선분</td><td>$\overline{\text{AB}}, \overline{\text{AC}}, \overline{\text{AD}}, \overline{\text{BC}}, \overline{\text{BD}}, \overline{\text{CD}}$ → $6$ 개</td><td>$\overline{\text{PA}}, \overline{\text{PB}}, \overline{\text{PC}}, \overline{\text{PD}}$ → $4$ 개</td><td><b>$10$</b></td></tr>
+    </table>
+    <span class="sol-final">직선 $5$ 개, 반직선 $14$ 개, 선분 $10$ 개</span>
+  </div>
+
+  <div class="sol-step">
+    <b>(2)</b> $\overline{\text{AM}} = \overline{\text{MB}} = \dfrac{1}{2}\overline{\text{AB}}$, $\overline{\text{MN}} = \dfrac{1}{2}\overline{\text{MB}} = \dfrac{1}{4}\overline{\text{AB}}$ 이므로<br>
+    $\overline{\text{AN}} = \overline{\text{AM}} + \overline{\text{MN}} = \dfrac{1}{2}\overline{\text{AB}} + \dfrac{1}{4}\overline{\text{AB}} = \dfrac{3}{4}\overline{\text{AB}} = 18$<br>
+    $\overline{\text{AB}} = 18 \times \dfrac{4}{3} = 24$, &nbsp; $\overline{\text{MN}} = \dfrac{1}{4} \times 24 = 6$<br>
+    <span class="sol-final">$\overline{\text{AB}} = 24\,\text{cm}$, $\overline{\text{MN}} = 6\,\text{cm}$</span>
+  </div>
+
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b>
+    <ul style="margin: 1mm 0 0 4mm;">
+      <li>한 직선 위의 점끼리는 <b>직선은 1개</b>뿐이고, 반직선은 $\overrightarrow{\text{AB}} = \overrightarrow{\text{AC}}$ 처럼 <b>시작점과 방향이 같으면 같은 반직선</b>. 이걸 빼먹고 $20$ 개로 세면 감점.</li>
+      <li>반직선은 $\overrightarrow{\text{PA}} \ne \overrightarrow{\text{AP}}$ (시작점이 다름), 선분·직선은 $\overline{\text{PA}} = \overline{\text{AP}}$.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 풀이 2 -->
+<div class="solution">
+  <h3>문제 2 풀이</h3>
+
+  <div class="sol-step">
+    <b>(1)</b> 모서리 $\text{AB}$ 와 만나는 모서리: $\text{AC, AD, BC, BE}$ / 평행한 모서리: $\text{DE}$<br>
+    나머지가 꼬인 위치 → <span class="sol-final">$\overline{\text{CF}},\ \overline{\text{DF}},\ \overline{\text{EF}}$</span>
+  </div>
+
+  <div class="sol-step">
+    <b>(2)</b>
+    <ul>
+      <li>$a$: 모서리 $\text{AD}$ 와 평행한 면 → 면 $\text{BEFC}$ 뿐 → $a = 1$ (면 $\text{ABED}$, $\text{ADFC}$ 는 $\text{AD}$ 를 포함, 면 $\text{ABC}$, $\text{DEF}$ 는 수직)</li>
+      <li>$b$: 면 $\text{ABC}$ 와 수직인 모서리 → $\text{AD, BE, CF}$ → $b = 3$</li>
+      <li>$c$: 모서리 $\text{BC}$ 와 꼬인 위치 → $\text{AD, DE, DF}$ → $c = 3$</li>
+    </ul>
+    $a + b + c = 1 + 3 + 3 = $ <span class="sol-final">$7$</span>
+  </div>
+
+  <div class="sol-step">
+    <b>(3)</b> 옳지 않은 것: <span class="sol-final">ㄱ, ㄷ</span>
+    <ul>
+      <li><b>ㄱ</b> — 모서리 $\text{AB}$ 와 $\text{BC}$ 는 모두 면 $\text{DEF}$ 와 평행하지만, 점 $\text{B}$ 에서 <b>만난다</b>. (주의: $\text{EF}$ 는 면 $\text{DEF}$ 에 <b>포함</b>된 모서리라 "평행한 직선"의 예가 될 수 없음)</li>
+      <li><b>ㄷ</b> — 모서리 $\text{AB}$ 와 $\text{AC}$ 는 모두 모서리 $\text{AD}$ 와 수직이지만, 점 $\text{A}$ 에서 <b>만난다</b>. 또 $\text{AB}$ 와 $\text{EF}$ 는 모두 $\text{BE}$ 와 수직이지만 <b>꼬인 위치</b>이다.</li>
+      <li>ㄴ(예: $\text{AD} /\!/ \text{BE}$, 둘 다 면 $\text{ABC}$ 에 수직), ㄹ(예: 면 $\text{ABC} /\!/$ 면 $\text{DEF}$, 둘 다 $\text{AD}$ 에 수직)은 옳다.</li>
+    </ul>
+  </div>
+
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b> (3)은 "옳지 않다"만 쓰면 부분점수. <b>구체적인 모서리 이름으로 반례</b>를 들어야 만점. 평면에서는 ㄷ이 참이지만 <b>공간에서는 거짓</b>이라는 점이 핵심.
+  </div>
+</div>
+
+<!-- 풀이 3 -->
+<div class="solution">
+  <h3>문제 3 풀이</h3>
+
+  <div class="sol-step">
+    <b>(1)</b> 삼각형이 되는 조건: <b>(가장 긴 변의 길이) &lt; (나머지 두 변의 길이의 합)</b>
+    <table class="sol-table">
+      <tr><th>세 막대</th><th>판정</th><th>세 막대</th><th>판정</th></tr>
+      <tr><td>$2, 3, 5$</td><td>$5 = 2+3$ ✗</td><td>$2, 6, 8$</td><td>$8 = 2+6$ ✗</td></tr>
+      <tr><td>$2, 3, 6$</td><td>$6 > 5$ ✗</td><td>$3, 5, 6$</td><td>$6 < 8$ ○</td></tr>
+      <tr><td>$2, 3, 8$</td><td>$8 > 5$ ✗</td><td>$3, 5, 8$</td><td>$8 = 3+5$ ✗</td></tr>
+      <tr><td>$2, 5, 6$</td><td>$6 < 7$ ○</td><td>$3, 6, 8$</td><td>$8 < 9$ ○</td></tr>
+      <tr><td>$2, 5, 8$</td><td>$8 > 7$ ✗</td><td>$5, 6, 8$</td><td>$8 < 11$ ○</td></tr>
+    </table>
+    <span class="sol-final">$4$ 개 — $(2,5,6),\ (3,5,6),\ (3,6,8),\ (5,6,8)$</span>
+  </div>
+
+  <div class="sol-step">
+    <b>(2)</b> 하나로 정해지는 것: <span class="sol-final">ㄴ, ㅁ</span>
+    <ul>
+      <li>ㄴ: 두 변과 그 <b>끼인각</b>($\angle\text{B}$ 는 $\overline{\text{AB}}, \overline{\text{BC}}$ 사이의 각) → 하나로 정해짐</li>
+      <li>ㅁ: $\angle\text{C} = 180^\circ - 50^\circ - 60^\circ = 70^\circ$ 이므로 한 변 $\overline{\text{AC}}$ 와 <b>그 양 끝각</b> $\angle\text{A}, \angle\text{C}$ 를 아는 것과 같다 → 하나로 정해짐</li>
+      <li>ㄱ: $10 = 4 + 6$ → 가장 긴 변이 나머지 두 변의 합보다 작지 않으므로 <b>삼각형이 만들어지지 않는다</b></li>
+      <li>ㄷ: $\angle\text{B}$ 는 $\overline{\text{AB}}, \overline{\text{CA}}$ 의 <b>끼인각이 아니다</b> → 삼각형이 하나로 정해지지 않는다 (실제로 $2$ 개 그려짐)</li>
+      <li>ㄹ: $\angle\text{B} + \angle\text{C} = 180^\circ$ → 두 각의 합이 $180^\circ$ 보다 작지 않으므로 <b>삼각형이 만들어지지 않는다</b></li>
+      <li>ㅂ: 세 각의 크기만 주어짐 → 모양은 같고 크기가 다른 삼각형이 <b>무수히 많다</b></li>
+    </ul>
+  </div>
+
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b>
+    <ul style="margin: 1mm 0 0 4mm;">
+      <li>(1) $2+3=5$, $2+6=8$, $3+5=8$ 처럼 <b>합이 같은 경우</b>를 삼각형으로 세면 오답 (등호는 안 됨).</li>
+      <li>(2) ㅁ은 "끼인변이 아니라서 안 된다"로 틀리기 쉬움 → 나머지 한 각을 구하면 ASA가 됨을 써야 함. ㄷ은 반대로 "두 변과 한 각이니 된다"로 틀리기 쉬움.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 풀이 4 -->
+<div class="solution">
+  <h3>문제 4 풀이</h3>
+
+  <div class="sol-step">
+    <b>(1)</b> 꺾인 두 꼭짓점($\angle x$ 인 점, $65^\circ$ 인 점)을 각각 지나고 $l$ 에 평행한 직선 $p, q$ 를 긋는다. ($l /\!/ p /\!/ q /\!/ m$)
+    <ul>
+      <li>$65^\circ$ 인 꼭짓점에서: $65^\circ$ 를 $q$ 가 둘로 나눔. 아래쪽 각 $= 25^\circ$ ($m$ 과의 <b>엇각</b>) → 위쪽 각 $= 65^\circ - 25^\circ = 40^\circ$</li>
+      <li>$\angle x$ 인 꼭짓점에서: $\angle x$ 를 $p$ 가 둘로 나눔. 위쪽 각 $= 30^\circ$ ($l$ 과의 엇각), 아래쪽 각 $= 40^\circ$ ($q$ 와의 엇각)</li>
+    </ul>
+    $\angle x = 30^\circ + 40^\circ = $ <span class="sol-final">$70^\circ$</span>
+    <div style="font-size: 9.5pt; color: #555; margin-top: 1mm;">검산: (오른쪽으로 뾰족한 각의 합) $= x + 25^\circ$ , (왼쪽으로 뾰족한 각의 합) $= 30^\circ + 65^\circ$ → $x = 70^\circ$ ✓</div>
+  </div>
+
+  <div class="sol-step">
+    <b>(2)</b>
+    <ul>
+      <li>테이프의 위아래 변은 평행하므로 $\angle\text{DAB} = \angle\text{ABC} = 65^\circ$ (<b>엇각</b>)</li>
+      <li>접은 각은 같으므로 $\angle\text{BAC} = \angle\text{DAB} = 65^\circ$ (<b>접은 각</b>)</li>
+      <li>$\triangle\text{ABC}$ 에서 $\angle x = 180^\circ - (65^\circ + 65^\circ) = $ <span class="sol-final">$50^\circ$</span></li>
+    </ul>
+  </div>
+
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b> (1) 꺾인 꼭짓점마다 평행한 보조선을 긋고 엇각으로 옮기는 과정이 서술되어야 함. 다른 정당한 방법도 인정. (2) "엇각"과 "접은 각"이라는 <b>근거 두 가지</b>를 모두 써야 만점.
+  </div>
+</div>
+
+<!-- 풀이 5 -->
+<div class="solution">
+  <h3>문제 5 풀이</h3>
+
+  <div class="sol-step">
+    <b>(1)</b> $\triangle\text{ABD}$ 와 $\triangle\text{ACE}$ 에서
+    <ul>
+      <li>$\overline{\text{AB}} = \overline{\text{AC}}$ ($\triangle\text{ABC}$ 는 정삼각형) ····· ①</li>
+      <li>$\overline{\text{AD}} = \overline{\text{AE}}$ ($\triangle\text{ADE}$ 는 정삼각형) ····· ②</li>
+      <li>$\angle\text{BAD} = 60^\circ - \angle\text{DAC} = \angle\text{CAE}$ ($\angle\text{BAC} = \angle\text{DAE} = 60^\circ$) ····· ③</li>
+    </ul>
+    ①, ②, ③에 의해 <span class="sol-final">$\triangle\text{ABD} \equiv \triangle\text{ACE}$ ($\text{SAS}$ 합동)</span>
+  </div>
+
+  <div class="sol-step">
+    <b>(2)</b> $\overline{\text{BD}} = \overline{\text{BC}} - \overline{\text{CD}} = 10 - 3 = 7$ 이고, 합동인 도형의 대응변이므로 $\overline{\text{CE}} = \overline{\text{BD}} = $ <span class="sol-final">$7\,\text{cm}$</span>
+  </div>
+
+  <div class="sol-step">
+    <b>(3)</b> 대응각이므로 $\angle\text{ACE} = \angle\text{ABD} = 60^\circ$<br>
+    $\angle\text{DCE} = \angle\text{ACD} + \angle\text{ACE} = 60^\circ + 60^\circ = $ <span class="sol-final">$120^\circ$</span>
+  </div>
+
+  <div class="grading-tip">
+    <b>⚡ 채점 포인트:</b>
+    <ul style="margin: 1mm 0 0 4mm;">
+      <li>③의 끼인각을 "정삼각형이라 $60^\circ$"로 쓰면 오답 — $\angle\text{BAD}$ 는 $60^\circ$ 가 아님. <b>공통인 $\angle\text{DAC}$ 를 빼서</b> 같음을 보여야 함.</li>
+      <li>합동 기호는 <b>대응 순서</b>대로 ($\text{A}\to\text{A},\ \text{B}\to\text{C},\ \text{D}\to\text{E}$).</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">— 풀이 끝 —</div>
+
+</body>
+</html>
