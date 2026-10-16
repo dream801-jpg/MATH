@@ -449,6 +449,7 @@
           <button class="btn btn-primary" style="flex:1;padding:10px" onclick="saveToken()">저장</button>
           <button class="btn btn-secondary" style="flex:1;padding:10px" onclick="clearToken()">삭제</button>
         </div>
+        <button class="btn btn-secondary" style="width:100%;padding:10px;margin-top:8px" onclick="copyToken()">저장된 토큰 복사 (다른 기기로 옮길 때)</button>
         <div class="token-help">
           GitHub &rarr; Settings &rarr; Developer settings &rarr; Personal access tokens &rarr; Fine-grained tokens<br>
           Repository: MATH, Permissions: Contents (Read and write)
@@ -1203,7 +1204,24 @@
       alert('토큰이 저장되었습니다. 이제 수업 기록 추가 시 자동으로 커밋됩니다.');
     }
 
+    // 다른 기기로 옮기기 위해 저장된 토큰 꺼내기 (복사 실패 시 창에 띄워 수동 복사)
+    function copyToken() {
+      var token = localStorage.getItem('math_github_token');
+      if (!token) { alert('이 기기에는 저장된 토큰이 없습니다.'); return; }
+      function showManual() {
+        prompt('아래 토큰을 길게 눌러 전체 복사하세요.', token);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(token).then(function() {
+          alert('토큰이 복사되었습니다.\n카톡 "나와의 채팅" 등에 붙여넣어 보관하세요.');
+        }, showManual);
+      } else {
+        showManual();
+      }
+    }
+
     function clearToken() {
+      if (!confirm('이 기기에서 토큰을 삭제할까요?\n삭제하면 이 기기에서는 기록 저장이 안 됩니다.')) return;
       localStorage.removeItem('math_github_token');
       updateTokenStatus();
     }
