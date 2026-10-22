@@ -18,7 +18,7 @@ test("코드 블록·UTF-8 BOM·숫자 정답·메타 정보 누락을 허용한
   const text=JSON.stringify({questions:[{question:"2x = 4",answer:2}]});
   const data=importWorksheet(`\uFEFF설명\n\`\`\`json\n${text}\n\`\`\``);
   assert.equal(data.questions[0].answer,"2");assert.equal(data.analysis.unit,"");
-  assert.ok(data.questions[0].solution.includes("풀이가 없습니다"));
+  assert.equal(data.questions[0].solution,"");assert.equal(data.questions[0].solution_missing,true);
 });
 test("기존 중첩 구조와 문제 배열만 있는 파일도 지원한다",()=>{
   const questions=[{question:"x = 3",answer:"3",solution:"해는 3입니다."}];

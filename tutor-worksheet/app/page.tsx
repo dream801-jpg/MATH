@@ -3,10 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import type { Analysis, Mode, Question,SubjectMode,EnglishMode,EnglishQuestionType } from "@/lib/schema";
 import { MathText } from "./components/math-text";
 import { ProblemDiagram } from "./components/problem-diagram";
-import { inferCircleChord } from "@/lib/diagram-schema";
+import {canSelect,NO_SOLUTION} from "@/lib/teacher-review";
+import type {StudyContext} from "@/lib/study-context";
 import {printText} from "@/lib/text-format";
 import {sampleWorksheets} from "@/lib/sample-worksheets";
-import { buildPrompt, checkQuestion, exampleText, exportWorksheet, importWorksheet, MAX_IMPORT_BYTES } from "@/lib/worksheet";
+import { buildPrompt, editQuestion, exampleText, exportWorksheet, importWorksheet, MAX_IMPORT_BYTES } from "@/lib/worksheet";
 
 const choices:{id:Mode;title:string;description:string;symbol:string}[]=[
   {id:"numbers",title:"숫자만 변경",description:"같은 풀이로 한 번 더",symbol:"123"},
@@ -27,22 +28,27 @@ export default function Home() {
   const [mode,setMode]=useState<Mode>("numbers");const [count,setCount]=useState(5);const [original,setOriginal]=useState("");
   const [source,setSource]=useState("");const [questions,setQuestions]=useState<Question[]>([]);
   const [selected,setSelected]=useState<string[]>([]);
+  const [diagramConfirmed,setDiagramConfirmed]=useState<Record<string,boolean>>({});
+  const [missingAllowed,setMissingAllowed]=useState<Record<string,boolean>>({});
+  const [study,setStudy]=useState<StudyContext>({});
+  const [showHints,setShowHints]=useState(false);
   const [drafts,setDrafts]=useState<Record<string,{question:string;answer:string;solution:string}>>({});
   const [error,setError]=useState("");const [notice,setNotice]=useState("");const [reading,setReading]=useState(false);
   const [preview,setPreview]=useState(false);const [answers,setAnswers]=useState(true);
   const [student,setStudent]=useState("");const [date,setDate]=useState("");const [unit,setUnit]=useState("");
   const [spacing,setSpacing]=useState("compact");const [compactPrint,setCompactPrint]=useState(true);const [copied,setCopied]=useState(false);
   const fileRef=useRef<HTMLInputElement>(null);const resultRef=useRef<HTMLElement>(null);
-  const picked=questions.filter(q=>selected.includes(q.id)&&q.verification!=="failed");
-  const prompt=buildPrompt(mode,count,original,{subject,englishMode,englishType});
+  const eligible=(q:Question)=>canSelect(q,!!diagramConfirmed[q.id],!!missingAllowed[q.id]);
+  const picked=questions.filter(q=>selected.includes(q.id)&&eligible(q));
+  const prompt=buildPrompt(mode,count,original,{subject,englishMode,englishType,study});
   useEffect(()=>{setDate(new Date().toLocaleDateString("sv-SE"));},[]);
-  useEffect(()=>{setCopied(false);},[mode,count,original,subject,englishMode,englishType]);
+  useEffect(()=>{setCopied(false);},[mode,count,original,subject,englishMode,englishType,study]);
   function load(text:string,isExample=false) {
     setError("");setNotice("");
     try {
       const data=importWorksheet(text);
       setAnalysis(data.analysis);setUnit(data.analysis.unit);setQuestions(data.questions);setSource(text);
-      setSelected([]);setDrafts({});setPreview(false);
+      setSelected([]);setDrafts({});setDiagramConfirmed({});setMissingAllowed({});setPreview(false);setShowHints(false);
       const failed=data.questions.filter(q=>q.verification==="failed").length;
       setNotice(`${isExample?"예제 ":""}${data.questions.length}문제를 불러왔습니다.${failed?` 필수 도형 누락 ${failed}개는 선택할 수 없습니다. 도형을 포함해 다시 요청하세요.`:" 정답과 풀이를 확인하고 문제를 선택하세요."}${data.displayWarnings.length?` 표시 점검: ${data.displayWarnings.join(" ")}`:""}`);
       setTimeout(()=>resultRef.current?.scrollIntoView({behavior:"smooth",block:"start"}),50);
@@ -70,15 +76,16 @@ export default function Home() {
   function applyEdit(q:Question) {
     try {
       const draft=drafts[q.id];
-      const replacement=draft?.question!==q.question&&q.diagram?.type==="circle_chord"?inferCircleChord(draft?.question||q.question):undefined;
-      const updated=checkQuestion({...q,...draft,diagram:replacement??q.diagram},q.id);
+      const updated=editQuestion(q,draft||q);
       setQuestions(prev=>prev.map(item=>item.id===q.id?updated:item));
       setSelected(prev=>prev.filter(id=>id!==q.id));setPreview(false);setError("");
+      setDiagramConfirmed(prev=>({...prev,[q.id]:false}));setMissingAllowed(prev=>({...prev,[q.id]:false}));
       setDrafts(prev=>{const next={...prev};delete next[q.id];return next;});
       setNotice("수정한 내용을 반영했습니다. 정답·풀이와 도형의 조건을 확인하고 다시 선택하세요.");
     }catch{setError("문제와 정답을 비워둘 수 없습니다. 각 항목을 6,000자 이하로 작성하세요.");}
   }
   async function print(include:boolean) {
+    if(!picked.length)return;
     setAnswers(include);setPreview(true);
     await new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve())));
     await document.fonts.ready;window.print();
@@ -96,6 +103,7 @@ export default function Home() {
               {subject==="english"?<><div className="mode-grid english-mode-grid" role="group" aria-label="영어 변형 방식">{englishChoices.map(choice=><button key={choice.id} className={`mode ${englishMode===choice.id?"active":""}`} aria-pressed={englishMode===choice.id} onClick={()=>setEnglishMode(choice.id)}><span className="mode-symbol">{choice.symbol}</span><strong>{choice.title}</strong><small>{choice.description}</small></button>)}</div><label className="field-label" htmlFor="english-type">영어 문제 유형</label><select id="english-type" value={englishType} onChange={e=>setEnglishType(e.target.value as EnglishQuestionType)}><option value="retain">원본 유형 유지</option><option value="blank">빈칸 추론</option><option value="grammar">어법</option><option value="vocabulary">문맥상 어휘</option><option value="mixed">섞어서 출제</option></select><p className="english-mode-note">원본 유형 유지는 문장삽입이면 다른 문장을, 빈칸이면 다른 부분을 출제합니다. 원문 유지에서도 어법·어휘 오류를 찾는 문제는 출제 부분 한 곳을 의도적으로 바꿀 수 있습니다.</p></>:<div className="mode-grid" role="group" aria-label="유사문제 생성 방식">{choices.map(choice=><button key={choice.id} className={`mode ${mode===choice.id?"active":""}`} aria-pressed={mode===choice.id} onClick={()=>setMode(choice.id)}><span className="mode-symbol">{choice.symbol}</span><strong>{choice.title}</strong><small>{choice.description}</small></button>)}</div>}
               <fieldset><legend>생성 개수</legend><div className="count-group">{[3,5,10].map(n=><button key={n} aria-pressed={count===n} className={count===n?"active":""} onClick={()=>setCount(n)}>{n}문제</button>)}</div></fieldset>
               <details className="prompt-original"><summary>사진 대신 원문 입력 (선택)</summary><label className="field-label" htmlFor="prompt-original">AI에 보낼 원본 문제</label><textarea id="prompt-original" maxLength={6000} rows={3} value={original} onChange={e=>setOriginal(e.target.value)} placeholder="사진을 보낼 경우 비워두세요."/></details>
+              <details className="lesson-settings"><summary>수업 조건과 연습 목적 (선택)</summary>{([["grade","학년"],["scope","배운 범위"],["methods","허용 풀이 방법"],["mistake","원본에서 틀린 이유"]] as const).map(([field,label])=><label className="edit-label" key={field}>{label}<input maxLength={240} value={study[field]||""} onChange={e=>setStudy(prev=>({...prev,[field]:e.target.value}))}/></label>)}<label className="edit-label">연습 목적<select value={study.purpose||""} onChange={e=>setStudy(prev=>({...prev,purpose:e.target.value as StudyContext["purpose"]}))}><option value="">기본</option><option value="concept">개념 다시 익히기</option><option value="accuracy">계산·표현 실수 줄이기</option><option value="independent">혼자 풀 수 있는지 확인하기</option></select></label><p className="hint">목적에 맞는 힌트와 해설을 AI에 요청합니다. 힌트는 접어서 표시하고 출력 여부는 따로 고릅니다.</p></details>
               <button className="button primary full" onClick={()=>void copyPrompt()}>{copied?"✓ 요청문 복사됨":"AI에 보낼 요청문 복사"}</button>
               <details><summary>요청문 직접 복사</summary><textarea aria-label="AI 요청문" readOnly value={prompt} rows={10} onFocus={e=>e.target.select()}/></details>
               <p className="file-note">어느 AI에서나 같은 요청문을 사용하세요.<br/>이 앱은 AI를 호출하지 않습니다.</p>
@@ -116,15 +124,19 @@ export default function Home() {
               {(analysis.original_problem||analysis.unit||analysis.original_diagram||analysis.warning||analysis.answer||analysis.solution)&&<section className="card"><div className="section-label">원본 문제 정보</div>{analysis.original_problem&&<p className="pre-wrap"><MathText text={analysis.original_problem}/></p>}<ProblemDiagram diagram={analysis.original_diagram}/><div className="original-answer"><strong>원본 문제 · AI가 구한 정답</strong><p className="original-answer-value"><MathText text={analysis.answer||"정답을 제시하지 못했습니다."}/></p><p className="hint">AI의 답이 틀릴 수 있습니다. 원본 정답지와 비교한 뒤 유사문제를 사용하세요.</p><details><summary>원본 풀이 확인</summary><p className="pre-wrap"><MathText text={analysis.solution||"원본 풀이가 없습니다. AI에 원본 풀이를 먼저 요청하세요."}/></p></details></div><dl className="metadata">{[["과목",analysis.subject],["단원",analysis.unit],["문제 유형",analysis.problem_type],["핵심 개념",analysis.concept],["난이도",analysis.difficulty]].filter(([,v])=>v).map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>{analysis.warning&&<p className="notice">{analysis.warning}</p>}</section>}
               <section className="card results" ref={resultRef}><div className="section-heading"><div><div className="section-label">03 · 확인하고 고르기</div><h2>연습 문제 <span className="count-badge">{questions.length}</span></h2></div><button className="text-button" onClick={saveFile}>문제 파일 저장 ↓</button></div>
                 <p className="hint">AI가 작성한 문제·정답·풀이와 도형을 확인한 뒤 선택하세요.</p>
-                <button className="text-button" onClick={()=>{setSelected(questions.filter(q=>q.verification!=="failed").map(q=>q.id));setPreview(false);}}>전체 문제·정답을 확인하고 모두 선택</button>
+                <button className="text-button" onClick={()=>{setSelected(questions.filter(eligible).map(q=>q.id));setPreview(false);}}>확인 가능한 문제·정답을 확인하고 모두 선택</button>{" · "}<button className="text-button" onClick={()=>{setSelected(questions.filter(q=>q.retry&&eligible(q)).map(q=>q.id));setPreview(false);setNotice("오답 표시한 문제 중 도형·풀이 확인을 마친 문제만 선택했습니다.");}}>오답 표시한 문제만 선택</button>
                 {questions.map((q,i)=>{
                   const draft=drafts[q.id]||q;
-                  return <article className={`question-card ${selected.includes(q.id)?"selected":""} ${q.verification==="failed"?"failed-question":""}`} key={q.id}><div className="question-top"><strong>문제 {i+1}</strong><span className="badge">{labels[q.verification]}</span></div><p className="question-text"><MathText text={q.question}/></p>
+                  return <article className={`question-card ${selected.includes(q.id)?"selected":""} ${q.verification==="failed"?"failed-question":""}`} key={q.id}><div className="question-top"><strong>문제 {i+1}</strong><span className="badge">{q.verification==="failed"?labels.failed:q.diagram_review_required&&!diagramConfirmed[q.id]?"도형 재확인 필요":q.solution_missing?"풀이 없음 · 별도 허용 필요":labels.needs_review}</span></div><p className="question-text"><MathText text={q.question}/></p>
                     <ProblemDiagram diagram={q.diagram}/>
-                    <details><summary>정답 · 풀이</summary><p className="pre-wrap">정답: <MathText text={q.answer}/>{"\n\n"}<MathText text={q.solution}/></p></details>
+                    {q.hint&&<details><summary>힌트 보기</summary><p className="pre-wrap"><MathText text={q.hint}/></p></details>}
+                    <details><summary>정답 · 풀이{q.solution_missing?" · 풀이 없음":""}</summary><p className="pre-wrap">정답: <MathText text={q.answer}/>{"\n\n"}<MathText text={q.solution_missing?NO_SOLUTION:q.solution}/></p></details>
+                    {q.diagram_review_required&&<div className="review-warning"><strong>도형 재확인 필요</strong><p>본문이 바뀌어 기존 그림의 길이·좌표·각·교점이 조건과 다를 수 있습니다. 그림 수정이 필요하면 새 JSON을 불러오세요.</p><label className="check-row"><input type="checkbox" checked={!!diagramConfirmed[q.id]} onChange={e=>{setDiagramConfirmed(prev=>({...prev,[q.id]:e.target.checked}));setSelected(prev=>prev.filter(id=>id!==q.id));setPreview(false);}}/>수정한 조건과 기존 도형·그래프가 일치함을 직접 확인했습니다</label></div>}
+                    {q.solution_missing&&<div className="review-warning"><strong>풀이 없음</strong><p>해설지에는 ‘{NO_SOLUTION}’ 안내문이 출력됩니다.</p><label className="check-row"><input type="checkbox" checked={!!missingAllowed[q.id]} onChange={e=>{setMissingAllowed(prev=>({...prev,[q.id]:e.target.checked}));setSelected(prev=>prev.filter(id=>id!==q.id));setPreview(false);}}/>풀이 없는 상태로 사용하는 것을 허용합니다</label></div>}
+                    <div className="question-options"><label className="check-row"><input type="checkbox" checked={q.retry} onChange={e=>{setQuestions(prev=>prev.map(item=>item.id===q.id?{...item,retry:e.target.checked}:item));}}/>오답 · 재시험 대상</label><label className="edit-label">이 문제의 풀이 공간<select value={q.work_space} onChange={e=>{setQuestions(prev=>prev.map(item=>item.id===q.id?{...item,work_space:e.target.value as Question["work_space"]}:item));}}><option value="inherit">전체 설정 따르기</option><option value="compact">없음</option><option value="normal">32mm</option><option value="wide">72mm</option></select></label></div>
                     <details className="question-editor"><summary>문제·정답·풀이 수정</summary>{([['question','문제'],['answer','정답'],['solution','풀이']] as const).map(([field,label])=><label className="edit-label" key={field}>{label}<textarea rows={field==="answer"?2:3} maxLength={6000} value={draft[field]} onChange={e=>setDrafts(prev=>({...prev,[q.id]:{...draft,[field]:e.target.value}}))}/></label>)}<button className="button secondary" onClick={()=>applyEdit(q)}>수정 반영</button>{drafts[q.id]&&<p className="hint">수정 반영 전에는 기존 내용이 출력됩니다.</p>}</details>
                     {q.verification==="failed"&&<p className="hint">{q.verification_note}</p>}
-                    <label className="check-row select-row"><input type="checkbox" disabled={q.verification==="failed"} checked={selected.includes(q.id)} onChange={()=>toggle(q.id)}/>문제·정답을 확인하고 선택</label>
+                    <label className="check-row select-row"><input type="checkbox" disabled={!eligible(q)} checked={selected.includes(q.id)&&eligible(q)} onChange={()=>toggle(q.id)}/>문제·정답을 확인하고 선택</label>
                   </article>;
                 })}
                 <div className="selection-footer"><span><strong>{picked.length}개</strong> 선택됨</span><button className="button dark" disabled={!picked.length} onClick={()=>{setPreview(true);setTimeout(()=>document.getElementById("worksheet-settings")?.scrollIntoView({behavior:"smooth"}),50);}}>선택 문제로 문제지 만들기 →</button></div>
@@ -132,15 +144,15 @@ export default function Home() {
             </>}
           </div>
         </div>
-        {preview&&!!picked.length&&<section id="worksheet-settings" className="card print-settings"><div className="section-label">04 · 출력 준비</div><h2>문제지가 준비되었습니다.</h2><div className="settings-grid"><label>학생 이름<input value={student} maxLength={40} onChange={e=>setStudent(e.target.value)} placeholder="이름 입력"/></label><label>날짜<input type="date" value={date} onChange={e=>setDate(e.target.value)}/></label><label>단원<input value={unit} maxLength={80} onChange={e=>setUnit(e.target.value)}/></label><label>풀이 공간<select value={spacing} onChange={e=>setSpacing(e.target.value)}><option value="compact">없음 · 빈 공간 줄이기</option><option value="normal">기본 · 풀이 공간 32mm</option><option value="wide">넓게 · 풀이 공간 72mm</option></select></label></div>
-          <label className="check-row"><input type="checkbox" checked={compactPrint} onChange={e=>setCompactPrint(e.target.checked)}/>출력할 글·수식 간격 줄이기</label><p className="hint">긴 문제·해설은 다음 장으로 이어집니다. 위의 풀이 공간과 간격을 바꾸면 이미 불러온 문제도 바로 반영됩니다.</p><label className="check-row"><input type="checkbox" checked={answers} onChange={e=>setAnswers(e.target.checked)}/>끝에 정답 및 해설 추가</label><div className="print-actions"><button className="button secondary" onClick={()=>void print(false)}>문제지만 PDF</button><button className="button secondary" onClick={()=>void print(true)}>문제 + 정답 PDF</button><button className="button primary" onClick={()=>void print(answers)}>PDF 저장</button><button className="button dark" onClick={()=>void print(answers)}>인쇄</button></div><p className="hint">PDF 버튼도 브라우저 인쇄 창을 엽니다. 대상은 ‘PDF로 저장’, 용지는 A4, 배율 100%, 머리글·바닥글 끄기를 선택하세요. 긴 문제나 해설은 여러 장에 이어질 수 있습니다.</p></section>}
+        {preview&&!!picked.length&&<section id="worksheet-settings" className="card print-settings"><div className="section-label">04 · 출력 준비</div><h2>문제지가 준비되었습니다.</h2>{picked.some(q=>q.solution_missing)&&<p className="review-warning" role="status">선택한 문제 중 풀이 없음 {picked.filter(q=>q.solution_missing).length}개가 있습니다. 해설지에는 풀이 대신 다음 안내문이 들어갑니다: {NO_SOLUTION}</p>}<div className="settings-grid"><label>학생 이름<input value={student} maxLength={40} onChange={e=>setStudent(e.target.value)} placeholder="이름 입력"/></label><label>날짜<input type="date" value={date} onChange={e=>setDate(e.target.value)}/></label><label>단원<input value={unit} maxLength={80} onChange={e=>setUnit(e.target.value)}/></label><label>풀이 공간<select value={spacing} onChange={e=>setSpacing(e.target.value)}><option value="compact">없음 · 빈 공간 줄이기</option><option value="normal">기본 · 풀이 공간 32mm</option><option value="wide">넓게 · 풀이 공간 72mm</option></select></label></div>
+          <label className="check-row"><input type="checkbox" checked={showHints} onChange={e=>setShowHints(e.target.checked)}/>문제지에 힌트 포함</label><label className="check-row"><input type="checkbox" checked={compactPrint} onChange={e=>setCompactPrint(e.target.checked)}/>출력할 글·수식 간격 줄이기</label><p className="hint">긴 문제·해설은 다음 장으로 이어집니다. 위의 풀이 공간과 간격을 바꾸면 이미 불러온 문제도 바로 반영됩니다.</p><label className="check-row"><input type="checkbox" checked={answers} onChange={e=>setAnswers(e.target.checked)}/>끝에 정답 및 해설 추가</label><div className="print-actions"><button className="button secondary" onClick={()=>void print(false)}>문제지만 PDF</button><button className="button secondary" onClick={()=>void print(true)}>문제 + 정답 PDF</button><button className="button primary" onClick={()=>void print(answers)}>PDF 저장</button><button className="button dark" onClick={()=>void print(answers)}>인쇄</button></div><p className="hint">PDF 버튼도 브라우저 인쇄 창을 엽니다. 대상은 ‘PDF로 저장’, 용지는 A4, 배율 100%, 머리글·바닥글 끄기를 선택하세요. 긴 문제나 해설은 여러 장에 이어질 수 있습니다.</p></section>}
       </main><footer>다시풀기 <span>·</span> 나의 속도로, 한 문제씩.</footer>
     </div>
     {preview&&!!picked.length&&<div className={`print-document spacing-${spacing} ${compactPrint?"print-compact":""}`}>
       <section className="worksheet"><header className="worksheet-header"><p>한 번 더 익히는 나만의 연습</p><h1>유사문제 연습</h1><div className="worksheet-info"><span>학생 이름: {student||"________________"}</span><span>날짜: {date||"________________"}</span><span>단원: {unit||"________________"}</span></div></header>
-        {picked.map((q,i)=><article className="print-question" key={q.id}><div className="print-number">{i+1}.</div><div><p className="question-text"><MathText text={printText(q.question,compactPrint)}/></p><ProblemDiagram diagram={q.diagram}/><div className="work-space"/></div></article>)}
+        {picked.map((q,i)=><article className="print-question" key={q.id}><div className="print-number">{i+1}.</div><div><p className="question-text"><MathText text={printText(q.question,compactPrint)}/></p><ProblemDiagram diagram={q.diagram}/>{showHints&&q.hint&&<p className="print-hint">힌트: <MathText text={q.hint}/></p>}<div className={`work-space space-${q.work_space}`}/></div></article>)}
       </section>
-      {answers&&<section className="answer-sheet"><header className="worksheet-header"><p>유사문제 연습</p><h1>정답 및 해설</h1><div className="worksheet-info"><span>{student}</span><span>{unit}</span></div></header>{picked.map((q,i)=><article className="print-answer" key={q.id}><h2>{i+1}번 · 정답: <MathText text={q.answer}/></h2><p className="pre-wrap"><MathText text={printText(q.solution,compactPrint)}/></p></article>)}</section>}
+      {answers&&<section className="answer-sheet"><header className="worksheet-header"><p>유사문제 연습</p><h1>정답 및 해설</h1><div className="worksheet-info"><span>{student}</span><span>{unit}</span></div></header>{picked.map((q,i)=><article className="print-answer" key={q.id}><h2>{i+1}번 · 정답: <MathText text={q.answer}/></h2><p className="pre-wrap"><MathText text={printText(q.solution_missing?NO_SOLUTION:q.solution,compactPrint)}/></p></article>)}</section>}
     </div>}
   </>;
 }

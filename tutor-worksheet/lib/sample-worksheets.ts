@@ -6,8 +6,10 @@ import trigonometry from "../examples/trigonometric-graph-worksheet.json";
 import triangle from "../examples/triangle-incenter-worksheet.json";
 
 import absoluteIntegral from "../examples/absolute-integral-worksheet.json";
+import english from "../examples/english-review-worksheet.json";
 
 export const sampleWorksheets=[
+  {id:"english-review",title:"영어 원문 유지",description:"다른 빈칸 2곳 · 어법 오류 1곳",data:english},
   {id:"absolute-integral",title:"긴 문제 인쇄 예제",description:"절댓값 정적분 · 여백 조절",data:absoluteIntegral},
   {id:"linear",title:"일차방정식",description:"기본 사용법 연습",data:linear},
   {id:"matrix",title:"행렬",description:"행·열이 정렬된 수식",data:matrix},

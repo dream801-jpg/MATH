@@ -1,0 +1,30 @@
+{
+  "original_problem": "다음 글의 빈칸에 들어갈 말로 가장 적절한 것을 고르시오.\n[지문]\nStudents in a science club compared two ways of growing beans. They put one group of plants near a window and another group in a darker corner. To make the comparison fair, they changed only the amount of light. Both groups received the same amount of water. At first, some students expected every plant to grow equally well. Instead of relying on this expectation, they kept careful records each day. After two weeks, the results were different: the plants near the window were taller. The students therefore based their conclusion on ________.\n[보기]\n① the number of club members\n② the color of the room\n③ evidence rather than expectation\n④ the students’ favorite plants\n⑤ expectation rather than evidence",
+  "subject": "영어",
+  "unit": "영어 독해·어법",
+  "problem_type": "빈칸 추론·어법",
+  "concept": "공정한 실험·관찰 근거·수 일치",
+  "difficulty": "고등학교 기본",
+  "answer": "③ evidence rather than expectation",
+  "solution": "매일 기록하고 2주 뒤 실제 결과를 비교했으므로 관찰 근거로 결론을 내린다는 ③이 맞다. ① 구성원 수, ② 방 색깔, ④ 선호는 근거가 없다. ⑤는 기록과 실제 결과를 중시하는 내용에 반대된다.",
+  "warning": "앱 사용을 위해 직접 작성한 영어 예제입니다. 원본 빈칸을 복원한 같은 지문에서 서로 다른 두 곳을 빈칸으로 만들고 어법 오류 한 곳을 만들었습니다. 지문 전체 재작성 예제가 아닙니다.",
+  "original_diagram_required": false,
+  "generated_questions": [
+    {
+      "question": "다음 글의 빈칸에 들어갈 말로 가장 적절한 것을 고르시오.\n[지문]\nStudents in a science club compared two ways of growing beans. They put one group of plants near a window and another group in a darker corner. To make the comparison fair, they changed only the amount of light. Both groups received ________. At first, some students expected every plant to grow equally well. Instead of relying on this expectation, they kept careful records each day. After two weeks, the results were different: the plants near the window were taller. The students therefore based their conclusion on evidence rather than expectation.\n[보기]\n① no water at all\n② the same amount of water\n③ water only near the window\n④ a different amount of water each day\n⑤ water only in the darker corner",
+      "answer": "② the same amount of water",
+      "solution": "비교하는 조건은 창가와 어두운 곳이라는 빛의 차이이다. Both groups와 이어지는 기록·비교를 고려하면 두 집단에 물은 같게 주었다는 ②가 알맞다. ①은 물을 전혀 주지 않아 빛만 비교하기 어렵다. ③·⑤는 한 집단에만 물을 준다. ④는 매일 물의 양까지 바꾼다. 원문 → 변경: the same amount of water → 빈칸. 나머지 본문은 동일하다.",
+      "hint": "비교하려는 조건과 같게 유지할 조건을 구분하세요."
+    },
+    {
+      "question": "다음 글의 빈칸에 들어갈 말로 가장 적절한 것을 고르시오.\n[지문]\nStudents in a science club compared two ways of growing beans. They put one group of plants near a window and another group in a darker corner. To make the comparison fair, they changed only the amount of light. Both groups received the same amount of water. At first, some students expected every plant to grow equally well. Instead of relying on this expectation, they kept ________ each day. After two weeks, the results were different: the plants near the window were taller. The students therefore based their conclusion on evidence rather than expectation.\n[보기]\n① identical conclusions in advance\n② their classmates’ guesses alone\n③ the plants in complete darkness\n④ their preferred answers unchanged\n⑤ careful records",
+      "answer": "⑤ careful records",
+      "solution": "expectation에 의존하지 않고 each day 했던 일이며 2주 뒤 실제 결과를 비교하므로 꼼꼼한 기록이라는 ⑤가 적절하다. ①·④는 관찰 전 결론을 고정한다. ②는 추측에만 의존한다. ③은 창가와 어두운 곳을 나눈 실험 조건과 모순된다. 원문 → 변경: careful records → 빈칸. 첫 문제와 다른 출제 지점이며 나머지 본문은 동일하다."
+    },
+    {
+      "question": "다음 글에서 괄호로 표시한 ①~⑤ 중 어법상 틀린 것을 고르시오.\n[지문]\nStudents in a science club ①(compared) two ways of growing beans. They put one group of plants near a window and another group in a darker corner. To make the comparison fair, they changed only the amount of light. Both groups ②(received) the same amount of water. At first, some students ③(expected) every plant to grow equally well. Instead of relying on this expectation, they kept careful records each day. After two weeks, the results ④(was different): the plants near the window were taller. The students therefore ⑤(based) their conclusion on evidence rather than expectation.",
+      "answer": "④ was different → were different",
+      "solution": "④의 주어 results는 복수이므로 were different가 맞다. ① compared는 과거의 비교, ② received는 과거의 물 공급, ③ expected는 과거의 예상, ⑤ based는 과거의 결론 도출을 나타내어 모두 적절하다. 원문 → 변경: were different → was different. 의도적 오류 한 곳과 번호·괄호 표시 외의 본문은 동일하다."
+    }
+  ]
+}

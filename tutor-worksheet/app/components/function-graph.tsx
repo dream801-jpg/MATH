@@ -24,5 +24,5 @@ export function FunctionGraphDiagram({graph:g}:{graph:FunctionGraph}) {
     {g.curves.map((c,i)=><text key={i} x={right} y={top-10-i*20} textAnchor="end" className="diagram-label">{c.label??`y = ${c.amplitude} ${c.kind}(${c.frequency}x)`}</text>)}
     {g.x_end_label&&<><line x1={right} y1={zeroY} x2={right} y2={y(graphValue(g.curves[0],g.x_max))} strokeDasharray="4 4" className="diagram-stroke"/><text x={right} y={zeroY+25} textAnchor="middle" className="diagram-label">{g.x_end_label}</text></>}
     {g.points.map(p=><g key={p.id}><circle cx={x(p.x)} cy={y(p.y)} r="2.5" fill="currentColor"/><text x={x(p.x)+(p.position==="left"?-14:p.position==="right"?14:0)} y={y(p.y)+(p.position==="below"?22:-12)} textAnchor="middle" className="diagram-label">{p.id}</text></g>)}
-  </svg><figcaption>조건에 맞춰 그린 함수 그래프입니다. 축의 가로·세로 배율은 다를 수 있습니다.</figcaption></figure>;
+  </svg><figcaption>입력된 좌표로 그린 그래프입니다. 문제 조건과 직접 대조하세요. 축의 가로·세로 배율은 다를 수 있습니다.</figcaption></figure>;
 }

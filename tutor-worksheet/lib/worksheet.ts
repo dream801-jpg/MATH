@@ -4,14 +4,20 @@ import {buildEnglishPrompt} from "./english-prompt";
 import { getDisplayWarnings } from "./display-check";
 import { inferCircleChord } from "./diagram-schema";
 import {normalizeTextBreaks} from "./text-format";
+import {solutionMissing} from "./teacher-review";
+import {studyInstructions,type StudyContext} from "./study-context";
 
 export const MAX_IMPORT_BYTES=1024*1024;
 export function checkQuestion(q:unknown,id:string):Question {
   const checked=questionSchema.parse(q);
-  for(const field of ["question","answer","solution"] as const)checked[field]=normalizeTextBreaks(checked[field]);
+  for(const field of ["question","answer","solution","hint"] as const)checked[field]=normalizeTextBreaks(checked[field]);
+  questionSchema.parse(checked);
   checked.diagram??=inferCircleChord(checked.question);
   const missing=checked.diagram_required&&!checked.diagram;
-  return {...checked,id,verification:missing?"failed":"needs_review",verification_note:missing?"필수 도형이 없습니다. AI에 도형을 포함한 결과를 다시 요청하세요.":"AI가 작성한 정답·풀이입니다. 내용을 확인한 뒤 문제지에 선택하세요."};
+  return {...checked,id,solution_missing:solutionMissing(checked.solution),verification:missing?"failed":"needs_review",verification_note:missing?"필수 도형이 없습니다. AI에 도형을 포함한 결과를 다시 요청하세요.":"AI가 작성한 정답·풀이입니다. 내용을 확인한 뒤 문제지에 선택하세요."};
+}
+export function editQuestion(q:Question,draft:Pick<Question,"question"|"answer"|"solution">):Question {
+  return checkQuestion({...q,...draft,diagram_review_required:q.diagram_review_required||!!(q.diagram||q.diagram_required)&&draft.question.trim()!==q.question},q.id);
 }
 export function importWorksheet(source:string):{analysis:Analysis;questions:Question[];displayWarnings:string[]} {
   if(new TextEncoder().encode(source).length>MAX_IMPORT_BYTES) throw Error("문제 파일은 1MB 이하로 불러와 주세요.");
@@ -44,13 +50,14 @@ export function importWorksheet(source:string):{analysis:Analysis;questions:Ques
 }
 export function exportWorksheet(analysis:Analysis,questions:Question[]):string {
   // 사용자의 확인·선택 상태는 저장하지 않고 문제와 도형만 저장한다.
-  return JSON.stringify({...analysis,generated_questions:questions.map(({question,answer,solution,diagram,diagram_required})=>({question,answer,solution,diagram,diagram_required}))},null,2);
+  return JSON.stringify({...analysis,generated_questions:questions.map(({question,answer,solution,hint,diagram,diagram_required,diagram_review_required,retry,work_space})=>({question,answer,solution,hint,diagram,diagram_required,diagram_review_required,retry,work_space}))},null,2);
 }
-export function buildPrompt(mode:Mode,count:number,original="",options?:{subject:SubjectMode;englishMode:EnglishMode;englishType:EnglishQuestionType}):string {
-  if(options?.subject==="english")return buildEnglishPrompt(options.englishMode,count,original,options.englishType);
+export function buildPrompt(mode:Mode,count:number,original="",options?:{subject:SubjectMode;englishMode:EnglishMode;englishType:EnglishQuestionType;study?:StudyContext}):string {
+  if(options?.subject==="english")return buildEnglishPrompt(options.englishMode,count,original,options.englishType)+studyInstructions(options.study);
   const instruction={numbers:"원본의 구조·문구·풀이 방법은 유지하고 숫자만 변경해 주세요.",similar:"원본의 핵심 개념과 풀이 방법을 유지하면서 구조나 표현을 조금 바꿔 주세요.",applied:"같은 개념을 쓰는 문장제 또는 조건을 추가한 응용 문제로 바꿔 주세요."}[mode];
   return `첨부한 사진 또는 아래 원문을 보고 개인 과외용 유사문제 ${count}개를 만들어 주세요.
 ${instruction}
+${studyInstructions(options?.study)}
 ${original.trim()?`원문: ${original.trim()}\n`:""}
 원문, 보기, 조건을 정확히 읽고 과목·단원·유형·핵심 개념·난이도를 분석해 주세요.
 사진이 흐리거나 조건이 빠졌으면 추측해서 만들지 말고 먼저 다시 물어봐 주세요.
@@ -79,6 +86,7 @@ ${original.trim()?`원문: ${original.trim()}\n`:""}
 - 출력 간격: 문장을 단어마다 줄바꿈하거나 빈 줄을 반복하지 마세요. 보기 ㄱ·ㄴ·ㄷ은 각각 한 문단으로 쓰고, 문장 속 짧은 수식은 $...$를 사용하세요. 긴 독립 수식만 $$...$$로 작성하세요. 페이지 나눔·풀이 여백은 앱에서 설정하므로 문제 문자열에 공백이나 빈 줄을 넣어 만들지 마세요.
 - JSON: 모든 문자열의 줄바꿈·따옴표·역슬래시는 JSON 규칙에 맞게 이스케이프하세요. 특히 LaTeX 역슬래시 하나는 JSON 문자열 안에서 역슬래시 두 개로 작성하세요. JSON 원문에서는 줄바꿈을 역슬래시 한 개와 n으로 이스케이프하세요. 파싱 후에도 역슬래시와 n이 글자로 남도록 중복 이스케이프하지 마세요. LaTeX 명령의 역슬래시 이스케이프와 구분하고, 마지막 쉼표·주석·불완전한 괄호를 넣지 마세요. 그림이나 표기를 완전히 보존할 수 없는 경우 warning에 구체적으로 알려 주세요.
 아래 구조의 올바른 JSON 한 개만 반환하세요. 설명문을 앞뒤에 붙이지 마세요. generated_questions에는 정확히 ${count}개를 넣고 각 문제에 question, answer, solution을 모두 작성하세요.
+수학은 정의역·분모가 0이 되는 값·근호와 로그의 조건·해의 개수·조건을 동시에 만족하는 대상의 존재 여부를 다시 확인하고, 무연근·누락된 해가 없는지 풀이에 밝혀 주세요.
 파일을 만들 수 있다면 같은 내용을 UTF-8의 worksheet.json으로 저장해 주세요.
 ${JSON.stringify({original_problem:"원본 문제 전체",subject:"과목",unit:"단원",problem_type:"문제 유형",concept:"핵심 개념",difficulty:"난이도",answer:"원본 정답",solution:"원본 풀이",warning:"",original_diagram_required:false,generated_questions:[{question:"생성 문제 전체",answer:"정답",solution:"간단한 풀이",diagram_required:false}]},null,2)}
 위 예시의 도형 필수 여부 false는 도형이 없는 문제일 때만 유지하세요. 도형이 있으면 true로 바꾸고 original_diagram 및 각 diagram을 추가하세요.`;

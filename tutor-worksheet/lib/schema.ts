@@ -13,13 +13,17 @@ export const analysisSchema = z.object({
 export const questionSchema = z.object({
   question: required,
   answer: z.union([required,z.number().finite().transform(String)]),
-  solution: z.string().trim().max(6000).default("풀이가 없습니다. AI에 풀이를 요청하거나 직접 입력해 주세요."),
+  solution: z.string().trim().max(6000).default(""),
+  hint:z.string().trim().max(2000).default(""),
+  diagram_review_required:z.boolean().default(false),
+  retry:z.boolean().default(false),
+  work_space:z.enum(["inherit","compact","normal","wide"]).default("inherit"),
   diagram:diagramSchema.optional(),
   diagram_required:z.boolean().default(false),
 });
 export type Analysis = z.infer<typeof analysisSchema>;
 export type Question = z.infer<typeof questionSchema> & {
-  id:string; verification:"needs_review"|"failed"; verification_note:string;
+  id:string; verification:"needs_review"|"failed"; verification_note:string; solution_missing:boolean;
 };
 export type Mode = "numbers"|"similar"|"applied";
 export type SubjectMode="math"|"english";
