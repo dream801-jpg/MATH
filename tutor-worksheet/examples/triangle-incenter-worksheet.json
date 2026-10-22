@@ -1,0 +1,452 @@
+{
+  "original_problem": "15. 그림과 같이 $\\overline{AB}=5$, $\\overline{BC}=4$, $\\cos(\\angle ABC)=\\frac{1}{8}$인 삼각형 ABC가 있다. $\\angle ABC$의 이등분선과 $\\angle CAB$의 이등분선이 만나는 점을 D, 선분 BD의 연장선과 삼각형 ABC의 외접원이 만나는 점을 E라 할 때, <보기>에서 옳은 것만을 있는 대로 고른 것은? [4점]\n<보기>\nㄱ. $\\overline{AC}=6$\nㄴ. $\\overline{EA}=\\overline{EC}$\nㄷ. $\\overline{ED}=\\frac{31}{8}$\n① ㄱ  ② ㄱ, ㄴ  ③ ㄱ, ㄷ  ④ ㄴ, ㄷ  ⑤ ㄱ, ㄴ, ㄷ",
+  "subject": "수학",
+  "unit": "수학Ⅰ — 삼각함수와 삼각형",
+  "problem_type": "코사인법칙·각의 이등분선·외접원을 이용한 참거짓 판단",
+  "concept": "코사인법칙, 원주각과 현의 길이, 내심과 외접원의 호의 중점, 반각공식과 사인법칙",
+  "difficulty": "상",
+  "answer": "② ㄱ, ㄴ",
+  "solution": "코사인법칙으로 $AC^2=5^2+4^2-2\\cdot5\\cdot4\\cdot(\\frac{1}{8})=36$이므로 $AC=6$이다. 따라서 ㄱ은 참이다.\nBD가 각 B를 이등분하므로 $\\angle ABE=\\angle EBC$이고, 같은 외접원의 현에 대한 원주각 관계에 따라 $EA=EC$이다. 따라서 ㄴ은 참이다.\n또한 $\\alpha=\\angle CAB$, $\\beta=\\angle ABC$, $\\gamma=\\angle ACB$라 하자. $\\angle AEB=\\gamma$이므로 $\\angle BAE=\\alpha+\\beta/2$이다. AD는 각 A의 이등분선이므로 $\\angle DAE=(\\alpha+\\beta)/2$이다. 삼각형 ADB에서 $\\angle ADB=\\pi-(\\alpha+\\beta)/2$이고 B, D, E가 이 순서로 일직선 위에 있으므로 $\\angle ADE=(\\alpha+\\beta)/2$이다. 따라서 $ED=EA$이다.\n외접원의 반지름을 R라 하면 사인법칙으로 $AC=2R\\sin\\beta$, $AE=2R\\sin(\\beta/2)$이므로 $ED=EA=\\frac{AC}{2\\cos(\\beta/2)}$이다.\n반각공식에서 $\\cos(\\beta/2)=\\sqrt{\\frac{1+(\\frac{1}{8})}{2}}=\\frac{3}{4}$이다. 따라서 $ED=\\frac{6}{2\\cdot(\\frac{3}{4})}=4$이다. 보기 ㄷ의 값 $\\frac{31}{8}$과 다르므로 ㄷ은 거짓이다.\n따라서 정답은 ② ㄱ, ㄴ이다.",
+  "warning": "",
+  "original_diagram_required": true,
+  "original_diagram": {
+    "type": "geometry",
+    "points": [
+      {
+        "id": "A",
+        "x": 0.625,
+        "y": 4.960783708246107,
+        "position": "above"
+      },
+      {
+        "id": "B",
+        "x": 0,
+        "y": 0,
+        "position": "below"
+      },
+      {
+        "id": "C",
+        "x": 4,
+        "y": 0,
+        "position": "below"
+      },
+      {
+        "id": "D",
+        "x": 1.5,
+        "y": 1.3228756555322954,
+        "position": "below"
+      },
+      {
+        "id": "E",
+        "x": 4.5,
+        "y": 3.968626966596886,
+        "position": "right"
+      },
+      {
+        "id": "O",
+        "x": 2,
+        "y": 2.2677868380553634,
+        "show": false
+      }
+    ],
+    "segments": [
+      {
+        "from": "A",
+        "to": "B",
+        "label": "5"
+      },
+      {
+        "from": "B",
+        "to": "C",
+        "label": "4"
+      },
+      {
+        "from": "C",
+        "to": "A"
+      },
+      {
+        "from": "A",
+        "to": "D"
+      },
+      {
+        "from": "B",
+        "to": "E"
+      },
+      {
+        "from": "A",
+        "to": "E"
+      },
+      {
+        "from": "E",
+        "to": "C"
+      }
+    ],
+    "circles": [
+      {
+        "center": "O",
+        "radius": 3.0237157840738176
+      }
+    ],
+    "angles": [
+      {
+        "vertex": "B",
+        "from": "C",
+        "to": "D",
+        "label": ""
+      },
+      {
+        "vertex": "B",
+        "from": "D",
+        "to": "A",
+        "label": ""
+      },
+      {
+        "vertex": "A",
+        "from": "B",
+        "to": "D",
+        "label": ""
+      },
+      {
+        "vertex": "A",
+        "from": "D",
+        "to": "C",
+        "label": ""
+      }
+    ]
+  },
+  "generated_questions": [
+    {
+      "question": "그림과 같이 $\\overline{AB}=8$, $\\overline{BC}=6$, $\\cos(\\angle ABC)=\\frac{17}{32}$인 삼각형 ABC가 있다. $\\angle ABC$의 이등분선과 $\\angle CAB$의 이등분선이 만나는 점을 D, 선분 BD의 연장선과 삼각형 ABC의 외접원이 만나는 점을 E라 할 때, <보기>에서 옳은 것만을 있는 대로 고른 것은? [4점]\n<보기>\nㄱ. $\\overline{AC}=7$\nㄴ. $\\overline{EA}=\\overline{EC}$\nㄷ. $\\overline{ED}=4$\n① ㄱ  ② ㄱ, ㄴ  ③ ㄱ, ㄷ  ④ ㄴ, ㄷ  ⑤ ㄱ, ㄴ, ㄷ",
+      "answer": "⑤ ㄱ, ㄴ, ㄷ",
+      "solution": "코사인법칙으로 $AC^2=8^2+6^2-2\\cdot8\\cdot6\\cdot(\\frac{17}{32})=49$이므로 $AC=7$이다. 따라서 ㄱ은 참이다.\nBD가 각 B를 이등분하므로 $\\angle ABE=\\angle EBC$이고, 같은 외접원의 현에 대한 원주각 관계에 따라 $EA=EC$이다. 따라서 ㄴ은 참이다.\n또한 $\\alpha=\\angle CAB$, $\\beta=\\angle ABC$, $\\gamma=\\angle ACB$라 하자. $\\angle AEB=\\gamma$이므로 $\\angle BAE=\\alpha+\\beta/2$이다. AD는 각 A의 이등분선이므로 $\\angle DAE=(\\alpha+\\beta)/2$이다. 삼각형 ADB에서 $\\angle ADB=\\pi-(\\alpha+\\beta)/2$이고 B, D, E가 이 순서로 일직선 위에 있으므로 $\\angle ADE=(\\alpha+\\beta)/2$이다. 따라서 $ED=EA$이다.\n외접원의 반지름을 R라 하면 사인법칙으로 $AC=2R\\sin\\beta$, $AE=2R\\sin(\\beta/2)$이므로 $ED=EA=\\frac{AC}{2\\cos(\\beta/2)}$이다.\n반각공식에서 $\\cos(\\beta/2)=\\sqrt{\\frac{1+(\\frac{17}{32})}{2}}=\\frac{7}{8}$이다. 따라서 $ED=\\frac{7}{2\\cdot(\\frac{7}{8})}=4$이다. 보기 ㄷ의 값 $4$과 같으므로 ㄷ은 참이다.\n따라서 정답은 ⑤ ㄱ, ㄴ, ㄷ이다.",
+      "diagram_required": true,
+      "diagram": {
+        "type": "geometry",
+        "points": [
+          {
+            "id": "A",
+            "x": 4.25,
+            "y": 6.777720855862979,
+            "position": "above"
+          },
+          {
+            "id": "B",
+            "x": 0,
+            "y": 0,
+            "position": "below"
+          },
+          {
+            "id": "C",
+            "x": 6,
+            "y": 0,
+            "position": "below"
+          },
+          {
+            "id": "D",
+            "x": 3.5,
+            "y": 1.936491673103708,
+            "position": "below"
+          },
+          {
+            "id": "E",
+            "x": 7,
+            "y": 3.872983346207417,
+            "position": "right"
+          },
+          {
+            "id": "O",
+            "x": 3,
+            "y": 2.8401877872187726,
+            "show": false
+          }
+        ],
+        "segments": [
+          {
+            "from": "A",
+            "to": "B",
+            "label": "8"
+          },
+          {
+            "from": "B",
+            "to": "C",
+            "label": "6"
+          },
+          {
+            "from": "C",
+            "to": "A"
+          },
+          {
+            "from": "A",
+            "to": "D"
+          },
+          {
+            "from": "B",
+            "to": "E"
+          },
+          {
+            "from": "A",
+            "to": "E"
+          },
+          {
+            "from": "E",
+            "to": "C"
+          }
+        ],
+        "circles": [
+          {
+            "center": "O",
+            "radius": 4.131182235954578
+          }
+        ],
+        "angles": [
+          {
+            "vertex": "B",
+            "from": "C",
+            "to": "D",
+            "label": ""
+          },
+          {
+            "vertex": "B",
+            "from": "D",
+            "to": "A",
+            "label": ""
+          },
+          {
+            "vertex": "A",
+            "from": "B",
+            "to": "D",
+            "label": ""
+          },
+          {
+            "vertex": "A",
+            "from": "D",
+            "to": "C",
+            "label": ""
+          }
+        ]
+      }
+    },
+    {
+      "question": "그림과 같이 $\\overline{AB}=9$, $\\overline{BC}=7$, $\\cos(\\angle ABC)=\\frac{7}{18}$인 삼각형 ABC가 있다. $\\angle ABC$의 이등분선과 $\\angle CAB$의 이등분선이 만나는 점을 D, 선분 BD의 연장선과 삼각형 ABC의 외접원이 만나는 점을 E라 할 때, <보기>에서 옳은 것만을 있는 대로 고른 것은? [4점]\n<보기>\nㄱ. $\\overline{AC}=10$\nㄴ. $\\overline{EA}=\\overline{EC}$\nㄷ. $\\overline{ED}=\\frac{27}{5}$\n① ㄱ  ② ㄱ, ㄴ  ③ ㄱ, ㄷ  ④ ㄴ, ㄷ  ⑤ ㄱ, ㄴ, ㄷ",
+      "answer": "④ ㄴ, ㄷ",
+      "solution": "코사인법칙으로 $AC^2=9^2+7^2-2\\cdot9\\cdot7\\cdot(\\frac{7}{18})=81$이므로 $AC=9$이다. 따라서 ㄱ은 거짓이다.\nBD가 각 B를 이등분하므로 $\\angle ABE=\\angle EBC$이고, 같은 외접원의 현에 대한 원주각 관계에 따라 $EA=EC$이다. 따라서 ㄴ은 참이다.\n또한 $\\alpha=\\angle CAB$, $\\beta=\\angle ABC$, $\\gamma=\\angle ACB$라 하자. $\\angle AEB=\\gamma$이므로 $\\angle BAE=\\alpha+\\beta/2$이다. AD는 각 A의 이등분선이므로 $\\angle DAE=(\\alpha+\\beta)/2$이다. 삼각형 ADB에서 $\\angle ADB=\\pi-(\\alpha+\\beta)/2$이고 B, D, E가 이 순서로 일직선 위에 있으므로 $\\angle ADE=(\\alpha+\\beta)/2$이다. 따라서 $ED=EA$이다.\n외접원의 반지름을 R라 하면 사인법칙으로 $AC=2R\\sin\\beta$, $AE=2R\\sin(\\beta/2)$이므로 $ED=EA=\\frac{AC}{2\\cos(\\beta/2)}$이다.\n반각공식에서 $\\cos(\\beta/2)=\\sqrt{\\frac{1+(\\frac{7}{18})}{2}}=\\frac{5}{6}$이다. 따라서 $ED=\\frac{9}{2\\cdot(\\frac{5}{6})}=\\frac{27}{5}$이다. 보기 ㄷ의 값 $\\frac{27}{5}$과 같으므로 ㄷ은 참이다.\n따라서 정답은 ④ ㄴ, ㄷ이다.",
+      "diagram_required": true,
+      "diagram": {
+        "type": "geometry",
+        "points": [
+          {
+            "id": "A",
+            "x": 3.5,
+            "y": 8.2915619758885,
+            "position": "above"
+          },
+          {
+            "id": "B",
+            "x": 0,
+            "y": 0,
+            "position": "below"
+          },
+          {
+            "id": "C",
+            "x": 7,
+            "y": 0,
+            "position": "below"
+          },
+          {
+            "id": "D",
+            "x": 3.5,
+            "y": 2.3216373532487804,
+            "position": "below"
+          },
+          {
+            "id": "E",
+            "x": 8.000000000000002,
+            "y": 5.306599664568641,
+            "position": "right"
+          },
+          {
+            "id": "O",
+            "x": 3.5,
+            "y": 3.4070781937287284,
+            "show": false
+          }
+        ],
+        "segments": [
+          {
+            "from": "A",
+            "to": "B",
+            "label": "9"
+          },
+          {
+            "from": "B",
+            "to": "C",
+            "label": "7"
+          },
+          {
+            "from": "C",
+            "to": "A"
+          },
+          {
+            "from": "A",
+            "to": "D"
+          },
+          {
+            "from": "B",
+            "to": "E"
+          },
+          {
+            "from": "A",
+            "to": "E"
+          },
+          {
+            "from": "E",
+            "to": "C"
+          }
+        ],
+        "circles": [
+          {
+            "center": "O",
+            "radius": 4.88448378215977
+          }
+        ],
+        "angles": [
+          {
+            "vertex": "B",
+            "from": "C",
+            "to": "D",
+            "label": ""
+          },
+          {
+            "vertex": "B",
+            "from": "D",
+            "to": "A",
+            "label": ""
+          },
+          {
+            "vertex": "A",
+            "from": "B",
+            "to": "D",
+            "label": ""
+          },
+          {
+            "vertex": "A",
+            "from": "D",
+            "to": "C",
+            "label": ""
+          }
+        ]
+      }
+    },
+    {
+      "question": "그림과 같이 $\\overline{AB}=10$, $\\overline{BC}=8$, $\\cos(\\angle ABC)=\\frac{1}{8}$인 삼각형 ABC가 있다. $\\angle ABC$의 이등분선과 $\\angle CAB$의 이등분선이 만나는 점을 D, 선분 BD의 연장선과 삼각형 ABC의 외접원이 만나는 점을 E라 할 때, <보기>에서 옳은 것만을 있는 대로 고른 것은? [4점]\n<보기>\nㄱ. $\\overline{AC}=12$\nㄴ. $\\overline{EA}=\\overline{EC}$\nㄷ. $\\overline{ED}=\\frac{31}{4}$\n① ㄱ  ② ㄱ, ㄴ  ③ ㄱ, ㄷ  ④ ㄴ, ㄷ  ⑤ ㄱ, ㄴ, ㄷ",
+      "answer": "② ㄱ, ㄴ",
+      "solution": "코사인법칙으로 $AC^2=10^2+8^2-2\\cdot10\\cdot8\\cdot(\\frac{1}{8})=144$이므로 $AC=12$이다. 따라서 ㄱ은 참이다.\nBD가 각 B를 이등분하므로 $\\angle ABE=\\angle EBC$이고, 같은 외접원의 현에 대한 원주각 관계에 따라 $EA=EC$이다. 따라서 ㄴ은 참이다.\n또한 $\\alpha=\\angle CAB$, $\\beta=\\angle ABC$, $\\gamma=\\angle ACB$라 하자. $\\angle AEB=\\gamma$이므로 $\\angle BAE=\\alpha+\\beta/2$이다. AD는 각 A의 이등분선이므로 $\\angle DAE=(\\alpha+\\beta)/2$이다. 삼각형 ADB에서 $\\angle ADB=\\pi-(\\alpha+\\beta)/2$이고 B, D, E가 이 순서로 일직선 위에 있으므로 $\\angle ADE=(\\alpha+\\beta)/2$이다. 따라서 $ED=EA$이다.\n외접원의 반지름을 R라 하면 사인법칙으로 $AC=2R\\sin\\beta$, $AE=2R\\sin(\\beta/2)$이므로 $ED=EA=\\frac{AC}{2\\cos(\\beta/2)}$이다.\n반각공식에서 $\\cos(\\beta/2)=\\sqrt{\\frac{1+(\\frac{1}{8})}{2}}=\\frac{3}{4}$이다. 따라서 $ED=\\frac{12}{2\\cdot(\\frac{3}{4})}=8$이다. 보기 ㄷ의 값 $\\frac{31}{4}$과 다르므로 ㄷ은 거짓이다.\n따라서 정답은 ② ㄱ, ㄴ이다.",
+      "diagram_required": true,
+      "diagram": {
+        "type": "geometry",
+        "points": [
+          {
+            "id": "A",
+            "x": 1.25,
+            "y": 9.921567416492215,
+            "position": "above"
+          },
+          {
+            "id": "B",
+            "x": 0,
+            "y": 0,
+            "position": "below"
+          },
+          {
+            "id": "C",
+            "x": 8,
+            "y": 0,
+            "position": "below"
+          },
+          {
+            "id": "D",
+            "x": 3,
+            "y": 2.6457513110645907,
+            "position": "below"
+          },
+          {
+            "id": "E",
+            "x": 9,
+            "y": 7.937253933193772,
+            "position": "right"
+          },
+          {
+            "id": "O",
+            "x": 4,
+            "y": 4.535573676110727,
+            "show": false
+          }
+        ],
+        "segments": [
+          {
+            "from": "A",
+            "to": "B",
+            "label": "10"
+          },
+          {
+            "from": "B",
+            "to": "C",
+            "label": "8"
+          },
+          {
+            "from": "C",
+            "to": "A"
+          },
+          {
+            "from": "A",
+            "to": "D"
+          },
+          {
+            "from": "B",
+            "to": "E"
+          },
+          {
+            "from": "A",
+            "to": "E"
+          },
+          {
+            "from": "E",
+            "to": "C"
+          }
+        ],
+        "circles": [
+          {
+            "center": "O",
+            "radius": 6.047431568147635
+          }
+        ],
+        "angles": [
+          {
+            "vertex": "B",
+            "from": "C",
+            "to": "D",
+            "label": ""
+          },
+          {
+            "vertex": "B",
+            "from": "D",
+            "to": "A",
+            "label": ""
+          },
+          {
+            "vertex": "A",
+            "from": "B",
+            "to": "D",
+            "label": ""
+          },
+          {
+            "vertex": "A",
+            "from": "D",
+            "to": "C",
+            "label": ""
+          }
+        ]
+      }
+    }
+  ]
+}

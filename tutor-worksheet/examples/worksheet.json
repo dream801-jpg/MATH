@@ -1,0 +1,38 @@
+{
+  "original_problem": "다음 방정식을 푸시오. 3x + 5 = 20",
+  "subject": "수학",
+  "unit": "일차방정식",
+  "problem_type": "일차방정식의 해",
+  "concept": "등식의 성질",
+  "difficulty": "기본",
+  "answer": "5",
+  "solution": "3x = 15이므로 x = 5입니다.",
+  "warning": "",
+  "generated_questions": [
+    {
+      "question": "다음 방정식을 푸시오. 4x + 7 = 31",
+      "answer": "6",
+      "solution": "양변에서 7만큼 빼면 4x = 24입니다. 따라서 x = 6입니다."
+    },
+    {
+      "question": "다음 방정식을 푸시오. 2x + 3 = 17",
+      "answer": "7",
+      "solution": "양변에서 3만큼 빼면 2x = 14입니다. 따라서 x = 7입니다."
+    },
+    {
+      "question": "다음 방정식을 푸시오. 5x + 4 = 24",
+      "answer": "4",
+      "solution": "양변에서 4만큼 빼면 5x = 20입니다. 따라서 x = 4입니다."
+    },
+    {
+      "question": "다음 방정식을 푸시오. 6x + 2 = 20",
+      "answer": "3",
+      "solution": "양변에서 2만큼 빼면 6x = 18입니다. 따라서 x = 3입니다."
+    },
+    {
+      "question": "다음 방정식을 푸시오. 3x + 8 = 32",
+      "answer": "8",
+      "solution": "양변에서 8만큼 빼면 3x = 24입니다. 따라서 x = 8입니다."
+    }
+  ]
+}
