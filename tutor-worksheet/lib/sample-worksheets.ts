@@ -7,8 +7,10 @@ import triangle from "../examples/triangle-incenter-worksheet.json";
 
 import absoluteIntegral from "../examples/absolute-integral-worksheet.json";
 import english from "../examples/english-review-worksheet.json";
+import regionColoring from "../examples/region-coloring-worksheet.json";
 
 export const sampleWorksheets=[
+  {id:"region-coloring",title:"영역 색칠 경우의 수",description:"곡선 경계 · 점만 닿는 영역 구분",data:regionColoring},
   {id:"english-review",title:"영어 원문 유지",description:"다른 빈칸 2곳 · 어법 오류 1곳",data:english},
   {id:"absolute-integral",title:"긴 문제 인쇄 예제",description:"절댓값 정적분 · 여백 조절",data:absoluteIntegral},
   {id:"linear",title:"일차방정식",description:"기본 사용법 연습",data:linear},

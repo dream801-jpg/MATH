@@ -1,4 +1,5 @@
 import {z} from "zod";
+import {regionMapSchema} from "./region-map";
 
 const coordinate=z.number().finite().min(-10000).max(10000);
 const name=z.string().trim().min(1).max(12);
@@ -34,7 +35,7 @@ const functionGraph=z.object({
   if(g.horizontal_lines.some(l=>l.y<g.y_min||l.y>g.y_max)||g.points.some(p=>p.x<g.x_min||p.x>g.x_max||p.y<g.y_min||p.y>g.y_max))ctx.addIssue({code:"custom",message:"점과 수평선은 그래프 범위 안에 있어야 합니다."});
   if(new Set(g.points.map(p=>p.id)).size!==g.points.length)ctx.addIssue({code:"custom",message:"점 이름은 중복될 수 없습니다."});
 });
-export const diagramSchema=z.discriminatedUnion("type",[circleChord,geometry,functionGraph]);
+export const diagramSchema=z.discriminatedUnion("type",[circleChord,geometry,functionGraph,regionMapSchema]);
 export type Diagram=z.infer<typeof diagramSchema>;
 export type Geometry=z.infer<typeof geometry>;
 export type FunctionGraph=z.infer<typeof functionGraph>;
@@ -53,7 +54,7 @@ export function inferCircleChord(text:string):Diagram|undefined {
 }
 
 // 원·현 유형의 좌표 계산은 그림을 그리기 위한 것이며 정답 검산과는 별개다.
-export function getGeometry(diagram:Exclude<Diagram,{type:"function_graph"}>):Geometry {
+export function getGeometry(diagram:Exclude<Diagram,{type:"function_graph"|"region_map"}>):Geometry {
   if(diagram.type==="geometry")return diagram;
   const {ab,ac,angle_degrees}=diagram;
   const theta=angle_degrees*Math.PI/180,k=ab-2*ac,d=ac*(ab-ac);

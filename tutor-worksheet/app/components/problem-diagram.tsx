@@ -1,9 +1,11 @@
 import {getGeometry,type Diagram} from "@/lib/diagram-schema";
 import {FunctionGraphDiagram} from "./function-graph";
+import {RegionMapDiagram} from "./region-map";
 
 export function ProblemDiagram({diagram}:{diagram?:Diagram}) {
   if(!diagram)return null;
   if(diagram.type==="function_graph")return <FunctionGraphDiagram graph={diagram}/>;
+  if(diagram.type==="region_map")return <RegionMapDiagram diagram={diagram}/>;
   const g=getGeometry(diagram),byName=new Map(g.points.map(p=>[p.id,p]));
   const xs=g.points.map(p=>p.x),ys=g.points.map(p=>p.y);
   for(const circle of g.circles) {const c=byName.get(circle.center)!;xs.push(c.x-circle.radius,c.x+circle.radius);ys.push(c.y-circle.radius,c.y+circle.radius);}
