@@ -249,7 +249,7 @@ textarea{resize:vertical;line-height:1.7}
 .pencil-circle.is-drawn path{stroke-dasharray:1;stroke-dashoffset:1;animation:pencil-draw .34s cubic-bezier(.2,.7,.2,1) forwards}
 .pencil-slash path{stroke-dasharray:1;stroke-dashoffset:1;animation:pencil-draw .22s ease-out forwards}
 @keyframes pencil-draw{to{stroke-dashoffset:0}}
-@media (prefers-reduced-motion:reduce){.pencil-mark path{animation:none!important;stroke-dashoffset:0!important}html{scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){.pencil-mark path{animation:none!important;stroke-dashoffset:0!important}html{scroll-behavior:auto}.mini-page{animation:none}}
 
 /* ── 미리보기와 A4 종이 ── */
 .print-document{width:210mm;margin:48px auto 72px;color:var(--ink)}
