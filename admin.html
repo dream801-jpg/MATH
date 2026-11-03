@@ -1073,7 +1073,19 @@
         if (editMode) {
           for (var i = 0; i < student.sessions.length; i++) {
             if (student.sessions[i].number === editMode) {
-              student.sessions[i] = newSession; break;
+              // 수정 = 기존 기록에 고친 칸만 덮어쓰기. 숙제 상태·메모는 수정 양식에 없으므로 기존 값 유지
+              // (2026-11-03 수정 시 숙제 상태가 '미완료'로 초기화되던 문제)
+              var old = student.sessions[i];
+              var merged = Object.assign({}, old, newSession);
+              if (newSession.homework) {
+                merged.homework_status = old.homework_status || 'not_done';
+                merged.homework_note = old.homework_note || '';
+              } else {
+                delete merged.homework; delete merged.homework_status; delete merged.homework_note;
+              }
+              if (!newSession.feedback) delete merged.feedback;
+              if (!newSession.next_preview) delete merged.next_preview;
+              student.sessions[i] = merged; break;
             }
           }
         } else {
