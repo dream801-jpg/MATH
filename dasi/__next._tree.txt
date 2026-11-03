@@ -1,0 +1,4 @@
+:HL["/MATH/dasi/_next/static/css/cf545f5d57458d78.css","style"]
+:HL["/MATH/dasi/_next/static/css/efd20c7f06a53d34.css","style"]
+1:[["children",{"s":"__PAGE__","h":160}]]
+0:{"b":"I0M5GwoJkTb3kz3obDwHU","t":{"t":{"s":"","h":80,"c":"$Q1"}}}

@@ -5,8 +5,12 @@ export function FunctionGraphDiagram({graph:g}:{graph:FunctionGraph}) {
   const x=(v:number)=>left+(v-g.x_min)/(g.x_max-g.x_min)*(right-left);
   const y=(v:number)=>bottom-(v-g.y_min)/(g.y_max-g.y_min)*(bottom-top);
   const zeroX=x(Math.max(g.x_min,Math.min(g.x_max,0))),zeroY=y(Math.max(g.y_min,Math.min(g.y_max,0)));
-  return <figure className="problem-diagram function-graph"><svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label="삼각함수 곡선과 수평선, 교점의 그래프">
-    <title>삼각함수 곡선과 수평선, 교점의 그래프</title>
+  const description=[
+    ...g.curves.map(c=>c.label??`y = ${c.amplitude} ${c.kind}(${c.frequency}x)`),
+    ...g.horizontal_lines.map(l=>l.label??`y = ${l.y}`),
+  ].join(", ")+(g.points.length?` 그래프와 점 ${g.points.map(p=>p.id).join(", ")}`:" 그래프");
+  return <figure className="problem-diagram function-graph"><svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={description}>
+    <title>{description}</title>
     <svg x={left} y={top} width={right-left} height={bottom-top} viewBox={`${left} ${top} ${right-left} ${bottom-top}`} overflow="hidden">
       {g.curves.map((c,i)=>{
         const count=Math.max(400,Math.ceil(c.frequency*(g.x_max-g.x_min)*30));
@@ -20,7 +24,11 @@ export function FunctionGraphDiagram({graph:g}:{graph:FunctionGraph}) {
     <path d={`M${zeroX-4},${top-10} L${zeroX},${top-18} L${zeroX+4},${top-10}`} className="diagram-stroke"/>
     <text x={right+27} y={zeroY+20} className="diagram-label">x</text><text x={zeroX-18} y={top-15} className="diagram-label">y</text>
     <text x={zeroX-20} y={zeroY+22} className="diagram-label">O</text>
-    {g.horizontal_lines.map((l,i)=><g key={i}><line x1={left-10} y1={y(l.y)} x2={right+20} y2={y(l.y)} className="diagram-stroke"/><text x={right+14} y={y(l.y)-10} textAnchor="end" className="diagram-label">{l.label??`y = ${l.y}`}</text></g>)}
+    {g.horizontal_lines.map((l,i)=>{
+      // 교점 이름이 선 위에 붙으면 직선 이름은 선 아래로 보내 겹치지 않게 한다.
+      const below=!g.points.some(p=>Math.abs(p.y-l.y)<1e-9&&p.position==="below");
+      return <g key={i}><line x1={left-10} y1={y(l.y)} x2={right+20} y2={y(l.y)} className="diagram-stroke"/><text x={right-8} y={y(l.y)+(below?24:-10)} textAnchor="end" className="diagram-label">{l.label??`y = ${l.y}`}</text></g>;
+    })}
     {g.curves.map((c,i)=><text key={i} x={right} y={top-10-i*20} textAnchor="end" className="diagram-label">{c.label??`y = ${c.amplitude} ${c.kind}(${c.frequency}x)`}</text>)}
     {g.x_end_label&&<><line x1={right} y1={zeroY} x2={right} y2={y(graphValue(g.curves[0],g.x_max))} strokeDasharray="4 4" className="diagram-stroke"/><text x={right} y={zeroY+25} textAnchor="middle" className="diagram-label">{g.x_end_label}</text></>}
     {g.points.map(p=><g key={p.id}><circle cx={x(p.x)} cy={y(p.y)} r="2.5" fill="currentColor"/><text x={x(p.x)+(p.position==="left"?-14:p.position==="right"?14:0)} y={y(p.y)+(p.position==="below"?22:-12)} textAnchor="middle" className="diagram-label">{p.id}</text></g>)}

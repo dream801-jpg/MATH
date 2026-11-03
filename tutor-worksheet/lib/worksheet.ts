@@ -8,6 +8,19 @@ import {solutionMissing} from "./teacher-review";
 import {studyInstructions,type StudyContext} from "./study-context";
 
 export const MAX_IMPORT_BYTES=1024*1024;
+
+// 형식 오류 위치(zod path)를 교사가 읽을 수 있는 말로 바꾼다. 예: [0,"answer"] → "1번 문제의 정답"
+const FIELD_NAMES:Record<string,string>={question:"문제",answer:"정답",solution:"풀이",hint:"힌트",diagram:"도형",work_space:"풀이 공간",retry:"오답 표시",original_problem:"원본 문제",subject:"과목",unit:"단원",warning:"주의 문구",original_diagram:"원본 도형"};
+export function describeIssuePath(path:readonly PropertyKey[]):string {
+  if(!path.length)return "문제 목록을 찾지 못했거나 문제 수가 맞지 않습니다. ";
+  const [first,second]=path;
+  if(typeof first==="number"){
+    const field=typeof second==="string"?FIELD_NAMES[second]??second:"";
+    return `${first+1}번 문제${field?`의 ${field}`:""} 항목이 비어 있거나 형식이 맞지 않습니다. `;
+  }
+  const field=typeof first==="string"?FIELD_NAMES[first]??first:"";
+  return `원본 정보${field?`의 ${field}`:""} 항목의 형식이 맞지 않습니다. `;
+}
 export function checkQuestion(q:unknown,id:string):Question {
   const checked=questionSchema.parse(q);
   for(const field of ["question","answer","solution","hint"] as const)checked[field]=normalizeTextBreaks(checked[field]);
@@ -42,8 +55,7 @@ export function importWorksheet(source:string):{analysis:Analysis;questions:Ques
     return {analysis,questions:raw.map((q,i)=>checkQuestion({...q,diagram_required:q.diagram_required||analysis.original_diagram_required},`question-${i+1}`)),displayWarnings};
   } catch(e) {
     if(e instanceof z.ZodError) {
-      const path=e.issues[0]?.path.join(".");
-      throw Error(`문제 형식이 맞지 않습니다${path?` (${path})`:""}. question(문제)과 answer(정답)가 있는 문제 1~30개가 필요합니다. 항목은 6,000자 이하로 작성해 주세요.`);
+      throw Error(`${describeIssuePath(e.issues[0]?.path??[])}question(문제)과 answer(정답)가 있는 문제 1~30개가 필요합니다. 항목은 6,000자 이하로 작성해 주세요.`);
     }
     throw e;
   }

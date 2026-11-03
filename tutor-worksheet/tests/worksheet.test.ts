@@ -1,6 +1,6 @@
 import {test} from "node:test";
 import assert from "node:assert/strict";
-import {buildPrompt,checkQuestion,exampleText,exportWorksheet,importWorksheet,MAX_IMPORT_BYTES} from "../lib/worksheet";
+import {buildPrompt,checkQuestion,describeIssuePath,exampleText,exportWorksheet,importWorksheet,MAX_IMPORT_BYTES} from "../lib/worksheet";
 
 test("공통 요청문에 방식·개수·원문과 반환 형식을 넣는다",()=>{
   for(const mode of ["numbers","similar","applied"] as const) for(const count of [3,5,10]) {
@@ -39,4 +39,12 @@ test("문제 파일 왕복 시 한글·수식·정답을 유지하며 확인 상
   for(let i=0;i<5;i++)data=importWorksheet(exportWorksheet(data.analysis,data.questions));
   assert.equal(data.analysis.unit,"일차방정식");assert.equal(data.questions[0].answer,"6");
   assert.ok(!exportWorksheet(data.analysis,data.questions).includes('"verification"'));
+});
+test("형식 오류 위치를 사람이 읽는 말로 알려준다",()=>{
+  assert.equal(describeIssuePath([0,"answer"]),"1번 문제의 정답 항목이 비어 있거나 형식이 맞지 않습니다. ");
+  assert.equal(describeIssuePath([2]),"3번 문제 항목이 비어 있거나 형식이 맞지 않습니다. ");
+  assert.match(describeIssuePath([]),/문제 목록/);
+  assert.match(describeIssuePath(["unit"]),/원본 정보의 단원/);
+  assert.throws(()=>importWorksheet('{"questions":[{"question":"x=1"}]}'),/1번 문제의 정답/);
+  assert.throws(()=>importWorksheet('{"questions":[{"question":"x=1"}]}'),e=>!String(e).includes("0.answer"));
 });
