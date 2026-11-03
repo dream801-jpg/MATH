@@ -316,6 +316,24 @@
     @media (min-width: 600px) {
       main { padding-top: 24px; }
     }
+    /* ── PC: 왼쪽 오늘 알림장 쓰기, 오른쪽 지난 알림장·일정·저장 연결 ── */
+    @media (min-width: 1024px) {
+      .bar-in, .setup-band span.in { max-width: 1120px; padding-left: 32px; padding-right: 32px; }
+      main {
+        max-width: 1120px; padding: 28px 32px 48px;
+        display: grid; grid-template-columns: minmax(0, 1fr) 400px; column-gap: 28px;
+        grid-template-areas: "notice notice" "draft draft" "stu stu" "form past" "form sched" "form token" "form .";
+        grid-template-rows: auto auto auto auto auto auto 1fr; align-items: start;
+      }
+      #notice { grid-area: notice; }
+      #draftArea { grid-area: draft; }
+      main > section[aria-labelledby="stuTitle"] { grid-area: stu; }
+      main > section[aria-labelledby="stuTitle"] .students { max-width: 560px; }
+      #sessionForm { grid-area: form; }
+      #pastSec { grid-area: past; }
+      #schedSec { grid-area: sched; }
+      #tokenSec { grid-area: token; }
+    }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
     }
@@ -838,6 +856,8 @@
       populateStudents(DATA);
       $('sessionForm').hidden = false;
       $('pastSec').hidden = false;
+      // PC에서는 지난 알림장을 처음부터 펼쳐 둔다(오른쪽 칸이 비지 않게)
+      if (window.matchMedia && window.matchMedia('(min-width: 1024px)').matches && !PAST_OPENED_ONCE) { PAST_OPENED_ONCE = true; toggleFold($('pastToggle'), true); }
       $('schedSec').hidden = false;
       showSessionForm();
       showSessionList();
@@ -1723,6 +1743,7 @@
     }
 
     // ── 저장 연결 (토큰) ──
+    var PAST_OPENED_ONCE = false;
     function toggleFold(btn, force) {
       var open = force != null ? force : btn.getAttribute('aria-expanded') !== 'true';
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');

@@ -53,7 +53,7 @@
 
     .seg {
       display: flex; flex-wrap: wrap; gap: 3px;
-      background: var(--gray); border-radius: 10px; padding: 3px;
+      background: var(--gray); border-radius: var(--r-page); padding: 3px;
     }
     .seg button {
       min-width: 76px; min-height: 44px; padding: 0 12px;
@@ -165,8 +165,8 @@
     .ledger { background: var(--paper); border-radius: var(--r-page); padding: 18px 20px 20px; }
     .ledger-line { font-size: 17px; font-weight: 700; }
     .ledger-sub { font-size: 13px; color: var(--gray); margin-top: 2px; }
-    .track { height: 8px; border-radius: 4px; background: var(--bg); margin-top: 10px; overflow: hidden; }
-    .track span { display: block; height: 100%; border-radius: 4px; background: var(--gray); }
+    .track { height: 8px; border-radius: 3px; background: var(--bg); margin-top: 10px; overflow: hidden; }
+    .track span { display: block; height: 100%; border-radius: 3px; background: var(--gray); }
 
     .cal { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--bg); }
     .cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
@@ -187,13 +187,13 @@
     }
     .cal-cell.today { background: var(--ink); color: var(--paper); font-weight: 800; }
     .cal-cell.today .cal-dot { box-shadow: 0 0 0 1.5px var(--paper); }
-    .cal-cell.exam .cal-d { box-shadow: 0 0 0 1.5px var(--ink); border-radius: 6px; padding: 0 4px; }
+    .cal-cell.exam .cal-d { box-shadow: 0 0 0 1.5px var(--ink); border-radius: var(--r-ctl); padding: 0 4px; }
     .cal-dots { display: flex; gap: 3px; justify-content: center; min-height: 9px; }
     .cal-dot { width: 9px; height: 9px; border-radius: 50%; box-shadow: 0 0 0 1px var(--gray); }
     .cal-dot.next { background: var(--paper) !important; box-shadow: inset 0 0 0 2px var(--gray); }
     .cal-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 12px; font-size: 13px; color: var(--gray); }
     .cal-legend span { display: inline-flex; align-items: center; gap: 6px; }
-    .lg-exam { width: 14px; height: 12px; border-radius: 4px; box-shadow: 0 0 0 1.5px var(--ink); }
+    .lg-exam { width: 14px; height: 12px; border-radius: 3px; box-shadow: 0 0 0 1.5px var(--ink); }
 
     /* ── 상태 안내 ── */
     .state { background: var(--paper); border-radius: var(--r-page); padding: 32px 20px; text-align: center; }
@@ -205,6 +205,23 @@
     .btn:hover { background: var(--gray); }
 
     .footer { max-width: 560px; margin: 0 auto; padding: 28px 20px 36px; text-align: center; font-size: 13px; color: var(--gray); }
+
+    /* ── PC: 왼쪽 알림장, 오른쪽 다음 수업·수업 시간·달력 ── */
+    @media (min-width: 1024px) {
+      .bar-in, .footer { max-width: 1120px; padding-left: 32px; padding-right: 32px; }
+      main {
+        max-width: 1120px; padding: 28px 32px 8px;
+        display: grid; grid-template-columns: minmax(0, 1fr) 380px; column-gap: 28px;
+        grid-template-areas: "today plan" "today ledger" "book ledger";
+        grid-template-rows: auto auto 1fr; align-items: start;
+      }
+      .area-today { grid-area: today; }
+      .area-plan { grid-area: plan; padding-top: 42px; }
+      .area-book { grid-area: book; }
+      .area-ledger { grid-area: ledger; }
+      .area-ledger > section:first-child > .sec-title { margin-top: 24px; }
+      main > .state { grid-column: 1 / -1; }
+    }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -347,7 +364,7 @@
       } else {
         var latest = sorted[0];
         var isToday = latest.date === TODAY_STR;
-        html += '<section aria-labelledby="todayTab">'
+        html += '<div class="area-today"><section aria-labelledby="todayTab">'
           + '<h2 class="tab' + (isToday ? ' is-today' : '') + '" id="todayTab">' + (isToday ? '오늘 알림장' : '최근 알림장') + '</h2>'
           + '<article class="page">'
           + '<div class="page-head">'
@@ -355,20 +372,20 @@
           + '<span class="page-no num">' + sessionNo(latest) + '</span>'
           + '</div>'
           + pageRows(latest, sorted[1], true)
-          + '</article></section>';
+          + '</article></section></div>';
       }
 
-      html += renderPlan(s, sorted);
+      html += '<div class="area-plan">' + renderPlan(s, sorted) + '</div>';
 
       if (sorted.length > 1) {
-        html += '<section aria-labelledby="bookTitle">'
+        html += '<div class="area-book"><section aria-labelledby="bookTitle">'
           + '<h2 class="sec-title" id="bookTitle">지난 알림장</h2>'
           + '<div class="book">';
         for (var i = 1; i < sorted.length; i++) html += renderEntry(sorted[i], sorted[i + 1]);
-        html += '</div></section>';
+        html += '</div></section></div>';
       }
 
-      html += renderLedger(DATA);
+      html += '<div class="area-ledger">' + renderLedger(DATA) + '</div>';
       document.getElementById('app').innerHTML = html;
     }
 
