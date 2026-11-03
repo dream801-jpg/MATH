@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MATH - 관리자 (예비용 옛 화면)</title>
+  <style>
+    :root {
+      --bg: #f0f2f5;
+      --card: #ffffff;
+      --dark: #222831;
+      --gray: #393E46;
+      --light-text: #6b7280;
+      --border: #e5e7eb;
+      --accent: #FFD369;
+      --accent2: #77B5FE;
+      --success: #16a34a;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --orange: #ea580c;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      min-height: 100vh;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .header {
+      background: var(--dark);
+      padding: 20px;
+      text-align: center;
+    }
+    .header h1 {
+      color: var(--accent);
+      font-size: 22px;
+      letter-spacing: 3px;
+    }
+    .header p { color: #9ca3af; font-size: 12px; margin-top: 4px; }
+
+    .container { max-width: 500px; margin: 0 auto; padding: 16px; }
+
+    /* ── 카드 ── */
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--bg);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title .dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+    }
+
+    /* ── 폼 요소 ── */
+    .form-group {
+      margin-bottom: 14px;
+    }
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--light-text);
+      margin-bottom: 5px;
+      letter-spacing: 0.3px;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--dark);
+      background: white;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .form-textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* ── 별점 ── */
+    .star-rating {
+      display: flex;
+      gap: 6px;
+    }
+    .star-rating span {
+      font-size: 28px;
+      color: var(--border);
+      cursor: pointer;
+      transition: color 0.15s;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .star-rating span.filled { color: var(--accent); }
+
+    /* ── 이전 숙제 ── */
+    .prev-hw {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .prev-hw-text {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .prev-hw-none {
+      color: var(--light-text);
+      font-size: 13px;
+      text-align: center;
+      padding: 10px;
+    }
+
+    /* ── 버튼 ── */
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn:active { opacity: 0.8; }
+    .btn-primary {
+      background: var(--dark);
+      color: var(--accent);
+    }
+    .btn-secondary {
+      background: var(--bg);
+      color: var(--dark);
+      border: 1.5px solid var(--border);
+    }
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+    .btn + .btn { margin-top: 8px; }
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* ── 토큰 설정 ── */
+    .token-section {
+      overflow: hidden;
+      transition: max-height 0.3s;
+    }
+    .token-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .token-toggle .arrow {
+      font-size: 12px;
+      color: var(--light-text);
+      transition: transform 0.2s;
+    }
+    .token-body { display: none; margin-top: 12px; }
+    .token-body.open { display: block; }
+    .token-status {
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 10px;
+    }
+    .token-status.set {
+      background: #dcfce7;
+      color: var(--success);
+    }
+    .token-status.unset {
+      background: #f3f4f6;
+      color: var(--light-text);
+    }
+    .token-help {
+      font-size: 11px;
+      color: var(--light-text);
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+
+    /* ── 결과 모달 ── */
+    .result-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .result-overlay.show { display: flex; align-items: center; justify-content: center; }
+    .result-box {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 460px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .result-title {
+      font-size: 18px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .result-msg {
+      text-align: center;
+      font-size: 14px;
+      color: var(--light-text);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .result-json {
+      width: 100%;
+      min-height: 120px;
+      padding: 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: monospace;
+      font-size: 11px;
+      margin-bottom: 12px;
+      resize: vertical;
+    }
+    .result-success {
+      color: var(--success);
+    }
+
+    /* ── 네비 ── */
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    /* ── 요일 선택 ── */
+    .day-picker {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .day-chip {
+      cursor: pointer;
+      user-select: none;
+    }
+    .day-chip input { display: none; }
+    .day-chip span {
+      display: block;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: 600;
+      background: var(--bg);
+      color: var(--light-text);
+      border: 1.5px solid var(--border);
+      transition: all 0.15s;
+    }
+    .day-chip input:checked + span {
+      background: var(--dark);
+      color: var(--accent);
+      border-color: var(--dark);
+    }
+
+    /* ── 시험 아이템 ── */
+    .exam-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+    .exam-item-info { flex: 1; }
+    .exam-item-name { font-weight: 600; }
+    .exam-item-date { font-size: 11px; color: var(--light-text); }
+    .btn-exam-delete {
+      background: none;
+      border: none;
+      color: var(--danger);
+      font-size: 16px;
+      cursor: pointer;
+      padding: 4px 8px;
+      font-weight: 700;
+    }
+
+    /* ── 수업 리스트 ── */
+    .session-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+    .session-list-item:last-child { margin-bottom: 0; }
+    .session-list-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .session-list-num {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--dark);
+      padding: 2px 8px;
+      border-radius: 5px;
+      display: inline-block;
+      margin-bottom: 3px;
+    }
+    .session-list-topic {
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .session-list-date {
+      font-size: 11px;
+      color: var(--light-text);
+    }
+    .btn-delete {
+      background: none;
+      border: 1.5px solid var(--danger);
+      color: var(--danger);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-left: 10px;
+      font-family: inherit;
+    }
+    .btn-delete:active { background: var(--danger); color: white; }
+    .btn-edit {
+      background: none;
+      border: 1.5px solid var(--accent);
+      color: var(--dark);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-left: 6px;
+      font-family: inherit;
+    }
+    .btn-edit:active { background: var(--accent); }
+    .session-list-empty {
+      text-align: center;
+      color: var(--light-text);
+      font-size: 13px;
+      padding: 12px;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 6px 14px;
+      background: var(--dark);
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PIN 잠금 화면 -->
+  <div id="pinOverlay" style="position:fixed;top:0;left:0;right:0;bottom:0;background:var(--dark);z-index:999;display:flex;align-items:center;justify-content:center">
+    <div style="text-align:center;padding:20px">
+      <h1 style="color:var(--accent);font-size:26px;letter-spacing:4px;margin-bottom:8px">MATH</h1>
+      <p style="color:#9ca3af;font-size:13px;margin-bottom:24px">관리자 PIN을 입력하세요</p>
+      <input type="password" id="pinInput" inputmode="numeric" maxlength="4" placeholder="****"
+        style="width:140px;padding:14px;text-align:center;font-size:24px;letter-spacing:12px;border:2px solid var(--gray);border-radius:12px;background:transparent;color:white;font-family:inherit"
+        onkeyup="checkPin(event)">
+      <p id="pinError" style="color:var(--danger);font-size:12px;margin-top:10px;opacity:0">PIN이 틀렸습니다</p>
+    </div>
+  </div>
+
+  <div class="header">
+    <h1>MATH</h1>
+    <p>관리자 페이지</p>
+  </div>
+
+  <div class="container">
+    <div class="nav-links">
+      <a href="index.html">학생용 보기</a>
+      <a href="index.html?parent">학부모용 보기</a>
+    </div>
+
+    <!-- GitHub 설정 -->
+    <div class="card">
+      <div class="token-toggle" onclick="toggleToken()">
+        <div class="card-title" style="margin:0;padding:0;border:0">
+          <span class="dot" style="background:var(--gray)"></span>
+          GitHub 설정
+        </div>
+        <span class="token-status" id="tokenStatus">미설정</span>
+      </div>
+      <div class="token-body" id="tokenBody">
+        <div class="form-group" style="margin-bottom:8px">
+          <input type="password" class="form-input" id="tokenInput"
+            placeholder="github_pat_xxxxxxxxxxxx">
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary" style="flex:1;padding:10px" onclick="saveToken()">저장</button>
+          <button class="btn btn-secondary" style="flex:1;padding:10px" onclick="clearToken()">삭제</button>
+        </div>
+        <button class="btn btn-secondary" style="width:100%;padding:10px;margin-top:8px" onclick="copyToken()">저장된 토큰 복사 (다른 기기로 옮길 때)</button>
+        <div class="token-help">
+          GitHub &rarr; Settings &rarr; Developer settings &rarr; Personal access tokens &rarr; Fine-grained tokens<br>
+          Repository: MATH, Permissions: Contents (Read and write)
+        </div>
+      </div>
+    </div>
+
+    <!-- 학생 선택 -->
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>학생 선택</div>
+      <select class="form-select" id="studentSelect" onchange="onStudentChange()">
+        <option value="">불러오는 중...</option>
+      </select>
+    </div>
+
+    <!-- 기존 수업 관리 -->
+    <div class="card" id="sessionListCard" style="display:none">
+      <div class="card-title"><span class="dot" style="background:var(--danger)"></span>기존 수업 관리</div>
+      <div id="sessionListContent"></div>
+    </div>
+
+    <!-- 일정 관리 -->
+    <div class="card" id="scheduleCard" style="display:none">
+      <div class="card-title"><span class="dot" style="background:var(--accent2)"></span>일정 관리</div>
+
+      <div class="form-group">
+        <label class="form-label">다음 수업 날짜</label>
+        <input type="date" class="form-input" id="nextSession">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">수업 요일 (캘린더 참고용)</label>
+        <div class="day-picker" id="dayPicker">
+          <label class="day-chip"><input type="checkbox" value="월"><span>월</span></label>
+          <label class="day-chip"><input type="checkbox" value="화"><span>화</span></label>
+          <label class="day-chip"><input type="checkbox" value="수"><span>수</span></label>
+          <label class="day-chip"><input type="checkbox" value="목"><span>목</span></label>
+          <label class="day-chip"><input type="checkbox" value="금"><span>금</span></label>
+          <label class="day-chip"><input type="checkbox" value="토"><span>토</span></label>
+          <label class="day-chip"><input type="checkbox" value="일"><span>일</span></label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">수업 시간</label>
+        <input type="text" class="form-input" id="schTime" placeholder="19:00 - 21:00">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">시험 일정</label>
+        <div id="examList"></div>
+        <div class="form-row" style="margin-top:8px">
+          <input type="text" class="form-input" id="newExamName" placeholder="시험 이름">
+          <input type="date" class="form-input" id="newExamDate">
+        </div>
+        <button class="btn btn-secondary" style="margin-top:8px;padding:10px" onclick="addExam()">시험 추가</button>
+      </div>
+
+      <button class="btn btn-primary" onclick="saveSchedule()">일정 저장</button>
+    </div>
+
+    <!-- 이전 숙제 체크 -->
+    <div class="card" id="prevHwCard" style="display:none">
+      <div class="card-title"><span class="dot" style="background:var(--orange)"></span>이전 숙제 확인</div>
+      <div id="prevHwContent"></div>
+    </div>
+
+    <!-- 수업 기록 폼 -->
+    <div class="card" id="sessionForm" style="display:none">
+      <div class="card-title"><span class="dot" style="background:var(--success)"></span>오늘 수업 기록</div>
+
+      <div class="form-row" style="grid-template-columns: 1fr 1fr 1fr">
+        <div class="form-group">
+          <label class="form-label">회차</label>
+          <input type="number" class="form-input" id="fNumber" min="1">
+        </div>
+        <div class="form-group">
+          <label class="form-label">날짜</label>
+          <input type="date" class="form-input" id="fDate">
+        </div>
+        <div class="form-group">
+          <label class="form-label">시간(h)</label>
+          <input type="number" class="form-input" id="fHours" min="0.5" step="0.5" value="1">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">단원 / 주제</label>
+        <input type="text" class="form-input" id="fTopic" placeholder="이차함수 그래프">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">수업 내용</label>
+        <textarea class="form-textarea" id="fContent" placeholder="오늘 수업에서 다룬 내용"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">숙제</label>
+        <input type="text" class="form-input" id="fHomework" placeholder="교재 p.65 1~10번">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">피드백 (학부모만 볼 수 있음)</label>
+        <textarea class="form-textarea" id="fFeedback" placeholder="수업 태도, 이해도, 보완할 점 등"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">이해도</label>
+        <div class="star-rating" id="starRating">
+          <span data-v="1">&#9733;</span>
+          <span data-v="2">&#9733;</span>
+          <span data-v="3">&#9733;</span>
+          <span data-v="4">&#9733;</span>
+          <span data-v="5">&#9733;</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">다음 수업 예고</label>
+        <input type="text" class="form-input" id="fNextPreview" placeholder="다음에 다룰 내용">
+      </div>
+
+      <button class="btn btn-primary" id="submitBtn" onclick="submitSession()">수업 기록 추가</button>
+    </div>
+  </div>
+
+  <!-- 결과 모달 -->
+  <div class="result-overlay" id="resultOverlay">
+    <div class="result-box" id="resultBox"></div>
+  </div>
+
+  <script>
+    // ── PIN 잠금 ──
+    var PIN = '0801';
+    var pinUnlocked = sessionStorage.getItem('math_pin_ok') === '1';
+
+    if (pinUnlocked) {
+      document.getElementById('pinOverlay').style.display = 'none';
+    } else {
+      document.getElementById('pinInput').focus();
+    }
+
+    function checkPin(e) {
+      var val = document.getElementById('pinInput').value;
+      if (val.length === 4) {
+        if (val === PIN) {
+          sessionStorage.setItem('math_pin_ok', '1');
+          document.getElementById('pinOverlay').style.display = 'none';
+        } else {
+          document.getElementById('pinError').style.opacity = '1';
+          document.getElementById('pinInput').value = '';
+          setTimeout(function() { document.getElementById('pinError').style.opacity = '0'; }, 2000);
+        }
+      }
+    }
+
+    var DATA = null;
+    var SELECTED_STUDENT = null;
+    var UNDERSTANDING = 3;
+    var REPO = 'dream801-jpg/MATH';
+    var EDIT_MODE = null; // null이면 추가, 숫자면 해당 회차 수정 중
+
+    // ── 초기화 ──
+    fetch('data.json?v=' + Date.now())
+      .then(function(r) { return r.json(); })
+      .then(function(d) { DATA = d; populateStudents(d); })
+      .catch(function() { alert('data.json을 불러올 수 없습니다.'); });
+
+    // 토큰 상태 확인
+    updateTokenStatus();
+
+    // 날짜 기본값
+    var today = new Date();
+    var todayStr = today.getFullYear() + '-'
+      + ('0' + (today.getMonth() + 1)).slice(-2) + '-'
+      + ('0' + today.getDate()).slice(-2);
+
+    // 별점 이벤트
+    var stars = document.querySelectorAll('#starRating span');
+    for (var i = 0; i < stars.length; i++) {
+      (function(star) {
+        star.onclick = function() {
+          UNDERSTANDING = parseInt(this.getAttribute('data-v'));
+          updateStars();
+        };
+      })(stars[i]);
+    }
+
+    function updateStars() {
+      for (var i = 0; i < stars.length; i++) {
+        var v = parseInt(stars[i].getAttribute('data-v'));
+        if (v <= UNDERSTANDING) stars[i].classList.add('filled');
+        else stars[i].classList.remove('filled');
+      }
+    }
+    updateStars();
+
+    // ── 학생 드롭다운 ──
+    function populateStudents(data) {
+      var sel = document.getElementById('studentSelect');
+      sel.innerHTML = '<option value="">학생을 선택하세요</option>';
+      data.students.forEach(function(s) {
+        var opt = document.createElement('option');
+        opt.value = s.id;
+        opt.textContent = s.name + ' (' + s.grade + ')';
+        sel.appendChild(opt);
+      });
+    }
+
+    function onStudentChange() {
+      var id = document.getElementById('studentSelect').value;
+      if (!id) {
+        SELECTED_STUDENT = null;
+        document.getElementById('prevHwCard').style.display = 'none';
+        document.getElementById('sessionForm').style.display = 'none';
+        return;
+      }
+
+      SELECTED_STUDENT = DATA.students.filter(function(s) { return s.id === id; })[0];
+      showSessionList();
+      showSchedule();
+      showPrevHomework();
+      showSessionForm();
+    }
+
+    // ── 기존 수업 리스트 ──
+    function showSessionList() {
+      var card = document.getElementById('sessionListCard');
+      var content = document.getElementById('sessionListContent');
+
+      if (!SELECTED_STUDENT || SELECTED_STUDENT.sessions.length === 0) {
+        card.style.display = 'none';
+        return;
+      }
+
+      card.style.display = 'block';
+      var html = '';
+      var sorted = SELECTED_STUDENT.sessions.slice().sort(function(a, b) { return b.number - a.number; });
+
+      sorted.forEach(function(s, i) {
+        html += '<div class="session-list-item">'
+          + '<div class="session-list-info">'
+          + '<span class="session-list-num">' + s.number + '회차</span>'
+          + '<div class="session-list-topic">' + escapeHtml(s.topic || '') + '</div>'
+          + '<div class="session-list-date">' + s.date + '</div>'
+          + '</div>'
+          + '<button class="btn-edit" onclick="editSession(' + s.number + ')">수정</button>'
+          + '<button class="btn-delete" onclick="deleteSession(' + s.number + ')">삭제</button>'
+          + '</div>';
+      });
+
+      content.innerHTML = html;
+    }
+
+    // ── GitHub API 공용 ──
+    // 최신 data.json을 가져온다. 실패 시 사유가 담긴 Error를 던진다.
+    function ghFetchLatest(token) {
+      return fetch('https://api.github.com/repos/' + REPO + '/contents/data.json', {
+        headers: { 'Authorization': 'token ' + token }
+      })
+      .then(function(r) {
+        if (r.status === 401) throw new Error('토큰이 만료되었거나 잘못되었습니다. GitHub 설정에서 토큰을 다시 저장해주세요.');
+        if (!r.ok) throw new Error('GitHub 응답 오류 (HTTP ' + r.status + ')');
+        return r.json();
+      })
+      .then(function(meta) {
+        if (!meta.sha) throw new Error('파일 정보를 가져올 수 없습니다.');
+        return { sha: meta.sha, data: JSON.parse(base64ToUtf8(meta.content)) };
+      });
+    }
+
+    // 최신 데이터를 받아 mutate(data)로 고친 뒤 커밋한다. 성공 시 커밋된 데이터를 넘겨준다.
+    function ghCommit(token, commitMsg, mutate) {
+      return ghFetchLatest(token).then(function(res) {
+        mutate(res.data);
+        return fetch('https://api.github.com/repos/' + REPO + '/contents/data.json', {
+          method: 'PUT',
+          headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: commitMsg,
+            content: utf8ToBase64(JSON.stringify(res.data, null, 2)),
+            sha: res.sha
+          })
+        })
+        .then(function(r) {
+          if (!r.ok) throw new Error('커밋 실패 (HTTP ' + r.status + ')');
+          return res.data;
+        });
+      });
+    }
+
+    function findStudent(data, id) {
+      for (var i = 0; i < data.students.length; i++) {
+        if (data.students[i].id === id) return data.students[i];
+      }
+      return null;
+    }
+
+    function deleteSession(num) {
+      if (!confirm(num + '회차 수업을 삭제하시겠습니까?')) return;
+
+      var selectedId = SELECTED_STUDENT.id;
+      var studentName = SELECTED_STUDENT.name;
+      var token = localStorage.getItem('math_github_token');
+
+      function removeLocally() {
+        SELECTED_STUDENT.sessions = SELECTED_STUDENT.sessions.filter(function(s) { return s.number !== num; });
+      }
+
+      if (token) {
+        ghCommit(token, studentName + ' ' + num + '회차 삭제', function(latest) {
+          var student = findStudent(latest, selectedId);
+          if (!student) throw new Error('학생 데이터 없음');
+          student.sessions = student.sessions.filter(function(s) { return s.number !== num; });
+          DATA = latest;
+          SELECTED_STUDENT = student;
+        })
+        .then(function() {
+          showResult(true, num + '회차가 삭제되었습니다!<br><br>1~2분 후 반영됩니다.');
+        })
+        .catch(function(err) {
+          removeLocally();
+          showCopyMode(JSON.stringify(DATA, null, 2), err.message);
+        });
+      } else {
+        removeLocally();
+        showCopyMode(JSON.stringify(DATA, null, 2));
+      }
+    }
+
+    // ── 수업 수정 ──
+    function editSession(num) {
+      var session = null;
+      for (var i = 0; i < SELECTED_STUDENT.sessions.length; i++) {
+        if (SELECTED_STUDENT.sessions[i].number === num) { session = SELECTED_STUDENT.sessions[i]; break; }
+      }
+      if (!session) return;
+
+      EDIT_MODE = num;
+      document.getElementById('sessionForm').style.display = 'block';
+      document.getElementById('fNumber').value = session.number;
+      document.getElementById('fNumber').readOnly = true;
+      document.getElementById('fDate').value = session.date || '';
+      document.getElementById('fHours').value = session.hours || 1;
+      document.getElementById('fTopic').value = session.topic || '';
+      document.getElementById('fContent').value = session.content || '';
+      document.getElementById('fHomework').value = session.homework || '';
+      document.getElementById('fFeedback').value = session.feedback || '';
+      document.getElementById('fNextPreview').value = session.next_preview || '';
+      UNDERSTANDING = session.understanding || 3;
+      updateStars();
+
+      var btn = document.getElementById('submitBtn');
+      btn.textContent = num + '회차 수정 저장';
+
+      // 폼으로 스크롤
+      document.getElementById('sessionForm').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ── 일정 관리 ──
+    function showSchedule() {
+      var card = document.getElementById('scheduleCard');
+      if (!SELECTED_STUDENT) { card.style.display = 'none'; return; }
+      card.style.display = 'block';
+
+      // 다음 수업 날짜
+      document.getElementById('nextSession').value = SELECTED_STUDENT.next_session || '';
+
+      // 요일 체크박스 설정
+      var checks = document.querySelectorAll('#dayPicker input');
+      for (var i = 0; i < checks.length; i++) {
+        checks[i].checked = SELECTED_STUDENT.schedule.days.indexOf(checks[i].value) >= 0;
+      }
+
+      // 시간
+      document.getElementById('schTime').value = SELECTED_STUDENT.schedule.time || '';
+
+      // 시험 목록
+      renderExams();
+    }
+
+    function renderExams() {
+      var list = document.getElementById('examList');
+      var exams = SELECTED_STUDENT.exams || [];
+      if (exams.length === 0) {
+        list.innerHTML = '<div style="font-size:12px;color:var(--light-text);padding:8px 0">등록된 시험 없음</div>';
+        return;
+      }
+      var html = '';
+      exams.forEach(function(e, i) {
+        html += '<div class="exam-item">'
+          + '<div class="exam-item-info">'
+          + '<div class="exam-item-name">' + escapeHtml(e.name) + '</div>'
+          + '<div class="exam-item-date">' + e.date + '</div>'
+          + '</div>'
+          + '<button class="btn-exam-delete" onclick="deleteExam(' + i + ')">&#10005;</button>'
+          + '</div>';
+      });
+      list.innerHTML = html;
+    }
+
+    function addExam() {
+      var name = document.getElementById('newExamName').value.trim();
+      var date = document.getElementById('newExamDate').value;
+      if (!name || !date) { alert('시험 이름과 날짜를 입력해주세요.'); return; }
+      if (!SELECTED_STUDENT.exams) SELECTED_STUDENT.exams = [];
+      SELECTED_STUDENT.exams.push({ name: name, date: date });
+      document.getElementById('newExamName').value = '';
+      document.getElementById('newExamDate').value = '';
+      renderExams();
+    }
+
+    function deleteExam(idx) {
+      SELECTED_STUDENT.exams.splice(idx, 1);
+      renderExams();
+    }
+
+    function saveSchedule() {
+      // 요일 수집
+      var days = [];
+      var checks = document.querySelectorAll('#dayPicker input');
+      for (var i = 0; i < checks.length; i++) {
+        if (checks[i].checked) days.push(checks[i].value);
+      }
+      if (days.length === 0) { alert('수업 요일을 하나 이상 선택해주세요.'); return; }
+
+      // 변경사항을 미리 수집
+      var selectedId = SELECTED_STUDENT.id;
+      var newTime = document.getElementById('schTime').value.trim();
+      var newNextSession = document.getElementById('nextSession').value;
+      var newExams = JSON.parse(JSON.stringify(SELECTED_STUDENT.exams || []));
+      var token = localStorage.getItem('math_github_token');
+
+      // 일정 필드를 학생 객체에 반영 (커밋용/폴백용 공용)
+      function applySchedule(student) {
+        student.schedule.days = days;
+        student.schedule.time = newTime;
+        student.exams = newExams;
+        if (newNextSession) { student.next_session = newNextSession; }
+        else { delete student.next_session; }
+      }
+
+      if (token) {
+        // GitHub API에서 최신 데이터를 가져와서 일정만 수정 후 커밋
+        ghCommit(token, SELECTED_STUDENT.name + ' 일정 변경', function(latest) {
+          var student = findStudent(latest, selectedId);
+          if (!student) throw new Error('학생 데이터 없음');
+          applySchedule(student);
+          DATA = latest;
+          SELECTED_STUDENT = student;
+        })
+        .then(function() {
+          showResult(true, '일정이 저장되었습니다!<br><br>1~2분 후 캘린더에 반영됩니다.');
+        })
+        .catch(function(err) {
+          applySchedule(SELECTED_STUDENT);
+          showCopyMode(JSON.stringify(DATA, null, 2), err.message);
+        });
+      } else {
+        applySchedule(SELECTED_STUDENT);
+        showCopyMode(JSON.stringify(DATA, null, 2));
+      }
+    }
+
+    // ── 이전 숙제 ──
+    function showPrevHomework() {
+      var card = document.getElementById('prevHwCard');
+      var content = document.getElementById('prevHwContent');
+
+      if (!SELECTED_STUDENT || SELECTED_STUDENT.sessions.length === 0) {
+        card.style.display = 'none';
+        return;
+      }
+
+      var last = SELECTED_STUDENT.sessions[SELECTED_STUDENT.sessions.length - 1];
+      if (!last.homework) {
+        card.style.display = 'none';
+        return;
+      }
+
+      card.style.display = 'block';
+      var statusOptions = [
+        { value: 'done', label: '완료' },
+        { value: 'partial', label: '일부 완료' },
+        { value: 'wrong', label: '오답 있음' },
+        { value: 'not_done', label: '미완료' }
+      ];
+
+      var optionsHtml = '';
+      statusOptions.forEach(function(o) {
+        var selected = (last.homework_status === o.value) ? ' selected' : '';
+        optionsHtml += '<option value="' + o.value + '"' + selected + '>' + o.label + '</option>';
+      });
+
+      content.innerHTML = '<div class="prev-hw">'
+        + '<div class="prev-hw-text">' + last.number + '회차: ' + escapeHtml(last.homework) + '</div>'
+        + '<div class="form-group" style="margin-bottom:8px">'
+        + '<label class="form-label">숙제 상태</label>'
+        + '<select class="form-select" id="prevHwStatus">' + optionsHtml + '</select>'
+        + '</div>'
+        + '<div class="form-group" style="margin-bottom:0">'
+        + '<label class="form-label">메모 (오답 문제, 안 한 이유 등)</label>'
+        + '<input type="text" class="form-input" id="prevHwNote" value="' + escapeAttr(last.homework_note || '') + '" placeholder="5번, 9번 오답">'
+        + '</div></div>';
+    }
+
+    // ── 수업 폼 ──
+    function showSessionForm() {
+      EDIT_MODE = null;
+      document.getElementById('fNumber').readOnly = false;
+      document.getElementById('submitBtn').textContent = '수업 기록 추가';
+      document.getElementById('sessionForm').style.display = 'block';
+      var maxNum = 0;
+      SELECTED_STUDENT.sessions.forEach(function(s) { if (s.number > maxNum) maxNum = s.number; });
+      var nextNum = maxNum + 1;
+      document.getElementById('fNumber').value = nextNum;
+      document.getElementById('fDate').value = todayStr;
+      document.getElementById('fTopic').value = '';
+      document.getElementById('fContent').value = '';
+      document.getElementById('fHomework').value = '';
+      document.getElementById('fFeedback').value = '';
+      document.getElementById('fNextPreview').value = '';
+      UNDERSTANDING = 3;
+      updateStars();
+    }
+
+    // ── 제출 ──
+    function submitSession() {
+      if (!SELECTED_STUDENT) return;
+
+      var topic = document.getElementById('fTopic').value.trim();
+      var content = document.getElementById('fContent').value.trim();
+      var hours = parseFloat(document.getElementById('fHours').value);
+      var num = parseInt(document.getElementById('fNumber').value);
+
+      if (!topic) { alert('단원/주제를 입력해주세요.'); return; }
+      if (!content) { alert('수업 내용을 입력해주세요.'); return; }
+      if (!hours || hours <= 0) { alert('시간은 0보다 커야 합니다.'); return; }
+
+      // 회차 중복 체크 (수정 모드가 아닐 때만)
+      if (!EDIT_MODE) {
+        var dup = SELECTED_STUDENT.sessions.some(function(s) { return s.number === num; });
+        if (dup) { alert(num + '회차가 이미 존재합니다.'); return; }
+      }
+
+      var btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = '처리 중...';
+
+      // 숙제 상태 수집
+      var hwUpdate = null;
+      if (SELECTED_STUDENT.sessions.length > 0 && document.getElementById('prevHwStatus')) {
+        hwUpdate = {
+          status: document.getElementById('prevHwStatus').value,
+          note: document.getElementById('prevHwNote').value.trim()
+        };
+      }
+
+      // 새 세션 생성
+      var newSession = {
+        number: parseInt(document.getElementById('fNumber').value),
+        date: document.getElementById('fDate').value,
+        hours: parseFloat(document.getElementById('fHours').value) || 1,
+        topic: topic,
+        content: content,
+        homework: document.getElementById('fHomework').value.trim(),
+        homework_status: 'not_done',
+        homework_note: '',
+        feedback: document.getElementById('fFeedback').value.trim(),
+        understanding: UNDERSTANDING,
+        next_preview: document.getElementById('fNextPreview').value.trim()
+      };
+
+      // 빈 필드 정리
+      if (!newSession.homework) { delete newSession.homework; delete newSession.homework_status; delete newSession.homework_note; }
+      if (!newSession.feedback) delete newSession.feedback;
+      if (!newSession.next_preview) delete newSession.next_preview;
+
+      var selectedId = SELECTED_STUDENT.id;
+      var editMode = EDIT_MODE;
+      var commitMsg = editMode
+        ? SELECTED_STUDENT.name + ' ' + newSession.number + '회차 수정'
+        : SELECTED_STUDENT.name + ' ' + newSession.number + '회차 수업 기록';
+
+      EDIT_MODE = null;
+      document.getElementById('fNumber').readOnly = false;
+
+      var token = localStorage.getItem('math_github_token');
+
+      if (token) {
+        commitToGithub(token, selectedId, newSession, editMode, hwUpdate, commitMsg);
+      } else {
+        // 토큰 없을 때는 메모리에서 직접 수정
+        if (hwUpdate && SELECTED_STUDENT.sessions.length > 0) {
+          var last = SELECTED_STUDENT.sessions[SELECTED_STUDENT.sessions.length - 1];
+          last.homework_status = hwUpdate.status;
+          last.homework_note = hwUpdate.note;
+        }
+        if (editMode) {
+          for (var i = 0; i < SELECTED_STUDENT.sessions.length; i++) {
+            if (SELECTED_STUDENT.sessions[i].number === editMode) {
+              SELECTED_STUDENT.sessions[i] = newSession; break;
+            }
+          }
+        } else {
+          SELECTED_STUDENT.sessions.push(newSession);
+        }
+        showCopyMode(JSON.stringify(DATA, null, 2));
+      }
+    }
+
+    // ── GitHub 직접 커밋 (최신 데이터 기반) ──
+    function commitToGithub(token, studentId, newSession, editMode, hwUpdate, commitMsg) {
+      // 숙제 상태 + 세션 추가/수정을 학생 객체에 반영 (커밋용/폴백용 공용)
+      function applySession(student) {
+        if (hwUpdate && student.sessions.length > 0) {
+          var last = student.sessions[student.sessions.length - 1];
+          last.homework_status = hwUpdate.status;
+          last.homework_note = hwUpdate.note;
+        }
+        if (editMode) {
+          for (var i = 0; i < student.sessions.length; i++) {
+            if (student.sessions[i].number === editMode) {
+              // 수정 = 기존 기록에 고친 칸만 덮어쓰기. 숙제 상태·메모는 수정 양식에 없으므로 기존 값 유지
+              // (2026-11-03 수정 시 숙제 상태가 '미완료'로 초기화되던 문제)
+              var old = student.sessions[i];
+              var merged = Object.assign({}, old, newSession);
+              if (newSession.homework) {
+                merged.homework_status = old.homework_status || 'not_done';
+                merged.homework_note = old.homework_note || '';
+              } else {
+                delete merged.homework; delete merged.homework_status; delete merged.homework_note;
+              }
+              if (!newSession.feedback) delete merged.feedback;
+              if (!newSession.next_preview) delete merged.next_preview;
+              student.sessions[i] = merged; break;
+            }
+          }
+        } else {
+          // 최신 데이터 기준 중복 재검사 — 화면이 낡은 상태여도 같은 회차 이중 저장 방지 (2026-06-16 사고 재발 방지)
+          var dup = student.sessions.some(function(s) { return s.number === newSession.number; });
+          if (dup) {
+            var e = new Error(newSession.number + '회차가 이미 저장되어 있습니다. 페이지를 새로고침해서 기존 기록을 확인해주세요.');
+            e.isDuplicate = true;
+            throw e;
+          }
+          student.sessions.push(newSession);
+        }
+      }
+
+      ghCommit(token, commitMsg, function(latest) {
+        var student = findStudent(latest, studentId);
+        if (!student) throw new Error('학생 데이터 없음');
+        applySession(student);
+        DATA = latest;
+        SELECTED_STUDENT = student;
+      })
+      .then(function() {
+        showResult(true, '수업 기록이 추가되었습니다!<br><br>1~2분 후 페이지에 자동 반영됩니다.');
+      })
+      .catch(function(err) {
+        // 중복 회차는 저장하면 안 되는 경우라 복사 모드 대신 안내만
+        if (err.isDuplicate) {
+          showResult(false, escapeHtml(err.message));
+          return;
+        }
+        // 최신 데이터 fetch 단계에서 실패하면 새 기록이 반영 전이므로 로컬에라도 넣어준다
+        if (SELECTED_STUDENT.sessions.indexOf(newSession) < 0) {
+          applySession(SELECTED_STUDENT);
+        }
+        showCopyMode(JSON.stringify(DATA, null, 2), err.message);
+      });
+    }
+
+    // ── 복사 모드 (자동 커밋 실패 또는 토큰 미설정 시 폴백) ──
+    function showCopyMode(jsonStr, failReason) {
+      var reasonHtml = failReason
+        ? '<div class="result-msg" style="color:var(--danger);font-weight:700">자동 저장 실패: ' + escapeHtml(failReason) + '</div>'
+        : '';
+      var html = '<div class="result-title">수업 기록 생성 완료</div>'
+        + reasonHtml
+        + '<div class="result-msg">아래 JSON을 복사해서 GitHub에 붙여넣기 해주세요.<br>'
+        + '<span style="font-size:11px;color:var(--light-text)">주의: 이 내용은 지금 이 화면 기준입니다. 다른 기기에서 저장한 최신 기록이 있다면 덮어쓰지 말고 토큰을 다시 설정한 뒤 저장하세요.</span></div>'
+        + '<textarea class="result-json" id="jsonOutput" readonly>' + escapeHtml(jsonStr) + '</textarea>'
+        + '<button class="btn btn-primary" onclick="copyJson()">JSON 전체 복사</button>'
+        + '<a href="https://github.com/' + REPO + '/edit/main/data.json" target="_blank">'
+        + '<button class="btn btn-secondary" style="margin-top:8px">GitHub에서 편집하기</button></a>'
+        + '<button class="btn btn-secondary" onclick="closeResult()" style="margin-top:8px">닫기</button>';
+
+      document.getElementById('resultBox').innerHTML = html;
+      document.getElementById('resultOverlay').classList.add('show');
+      resetForm();
+    }
+
+    // ── 결과 모달 ──
+    function showResult(success, msg) {
+      var icon = success ? '&#10003;' : '&#10007;';
+      var color = success ? 'var(--success)' : 'var(--danger)';
+      var html = '<div class="result-title" style="color:' + color + '">'
+        + '<span style="font-size:36px">' + icon + '</span></div>'
+        + '<div class="result-msg">' + msg + '</div>';
+
+      if (success) {
+        html += '<a href="index.html?parent"><button class="btn btn-primary">학부모 페이지 확인</button></a>'
+          + '<button class="btn btn-secondary" onclick="closeResult()" style="margin-top:8px">계속 입력</button>';
+      } else {
+        html += '<button class="btn btn-secondary" onclick="closeResult()" style="margin-top:8px">닫기</button>';
+        // 실패 시 저장 버튼 잠금 해제 (입력 내용은 유지)
+        var btn = document.getElementById('submitBtn');
+        btn.disabled = false;
+        btn.textContent = '수업 기록 추가';
+      }
+
+      document.getElementById('resultBox').innerHTML = html;
+      document.getElementById('resultOverlay').classList.add('show');
+      if (success) resetForm();
+    }
+
+    function closeResult() {
+      document.getElementById('resultOverlay').classList.remove('show');
+    }
+
+    function resetForm() {
+      var btn = document.getElementById('submitBtn');
+      btn.disabled = false;
+      btn.textContent = '수업 기록 추가';
+      document.getElementById('studentSelect').value = '';
+      document.getElementById('sessionListCard').style.display = 'none';
+      document.getElementById('scheduleCard').style.display = 'none';
+      document.getElementById('prevHwCard').style.display = 'none';
+      document.getElementById('sessionForm').style.display = 'none';
+      SELECTED_STUDENT = null;
+
+      // GitHub API에서 최신 데이터 로드 (CDN 캐시 지연 방지)
+      var token = localStorage.getItem('math_github_token');
+
+      function reloadFromPages() {
+        fetch('data.json?v=' + Date.now())
+          .then(function(r) { return r.json(); })
+          .then(function(d) { DATA = d; populateStudents(d); });
+      }
+
+      if (token) {
+        ghFetchLatest(token)
+          .then(function(res) { DATA = res.data; populateStudents(DATA); })
+          .catch(reloadFromPages);
+      } else {
+        reloadFromPages();
+      }
+    }
+
+    // ── 토큰 관리 ──
+    function toggleToken() {
+      var body = document.getElementById('tokenBody');
+      body.classList.toggle('open');
+    }
+
+    function saveToken() {
+      var val = document.getElementById('tokenInput').value.trim();
+      if (!val) { alert('토큰을 입력해주세요.'); return; }
+      localStorage.setItem('math_github_token', val);
+      document.getElementById('tokenInput').value = '';
+      updateTokenStatus();
+      alert('토큰이 저장되었습니다. 이제 수업 기록 추가 시 자동으로 커밋됩니다.');
+    }
+
+    // 다른 기기로 옮기기 위해 저장된 토큰 꺼내기 (복사 실패 시 창에 띄워 수동 복사)
+    function copyToken() {
+      var token = localStorage.getItem('math_github_token');
+      if (!token) { alert('이 기기에는 저장된 토큰이 없습니다.'); return; }
+      function showManual() {
+        prompt('아래 토큰을 길게 눌러 전체 복사하세요.', token);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(token).then(function() {
+          alert('토큰이 복사되었습니다.\n카톡 "나와의 채팅" 등에 붙여넣어 보관하세요.');
+        }, showManual);
+      } else {
+        showManual();
+      }
+    }
+
+    function clearToken() {
+      if (!confirm('이 기기에서 토큰을 삭제할까요?\n삭제하면 이 기기에서는 기록 저장이 안 됩니다.')) return;
+      localStorage.removeItem('math_github_token');
+      updateTokenStatus();
+    }
+
+    function updateTokenStatus() {
+      var el = document.getElementById('tokenStatus');
+      if (localStorage.getItem('math_github_token')) {
+        el.textContent = '설정됨';
+        el.className = 'token-status set';
+      } else {
+        el.textContent = '미설정';
+        el.className = 'token-status unset';
+      }
+    }
+
+    // ── 유틸 ──
+    function copyJson() {
+      var el = document.getElementById('jsonOutput');
+      el.select();
+      el.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(el.value).then(function() {
+        alert('복사되었습니다! GitHub 편집 페이지에 붙여넣기 해주세요.');
+      }).catch(function() {
+        // fallback
+        document.execCommand('copy');
+        alert('복사되었습니다!');
+      });
+    }
+
+    function utf8ToBase64(str) {
+      return btoa(unescape(encodeURIComponent(str)));
+    }
+
+    function base64ToUtf8(b64) {
+      return decodeURIComponent(escape(atob(b64.replace(/\n/g, ''))));
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function escapeAttr(s) {
+      return s.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+  </script>
+</body>
+</html>

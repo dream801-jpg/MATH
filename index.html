@@ -3,499 +3,244 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MATH - 수학 과외</title>
+  <meta name="theme-color" content="#222831">
+  <title>MATH - 수학 과외 알림장</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23222831'/%3E%3Cpath d='M8 23V9l8 9 8-9v14' fill='none' stroke='%23FFD369' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- 손글씨 글꼴은 서명 한 줄("— 선생님")에만 쓰므로 그 글자만 받아 온다 -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap&text=%E2%80%94%20%EC%84%A0%EC%83%9D%EB%8B%98">
   <style>
-    :root {
-      --bg: #f0f2f5;
-      --card: #ffffff;
-      --dark: #222831;
-      --gray: #393E46;
-      --light-text: #6b7280;
-      --border: #e5e7eb;
-      --accent1: #FFD369;
-      --accent2: #77B5FE;
-      --success: #16a34a;
-      --warning: #d97706;
-      --danger: #dc2626;
-      --orange: #ea580c;
-    }
+    :root{--ink:#222831;--gray:#393E46;--bg:#EEEEEE;--paper:#FFFFFF;--hl:#FFD369;--done:#2E7D32;--partial:#9A5B00;--wrong:#C2410C;--notdone:#393E46;--font:"Pretendard Variable",Pretendard,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;--pen:"Nanum Pen Script","Malgun Gothic",cursive;--r-page:12px;--r-ctl:8px}
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    html { -webkit-text-size-adjust: 100%; }
     body {
-      font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', -apple-system, sans-serif;
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.65;
+      word-break: keep-all;
+      overflow-wrap: break-word;
       background: var(--bg);
-      color: var(--dark);
+      color: var(--ink);
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
       -webkit-tap-highlight-color: transparent;
     }
-
-    /* ── 헤더 ── */
-    .header {
-      background: var(--dark);
-      padding: 24px 20px 18px;
-      text-align: center;
-    }
-    .header h1 {
-      color: var(--accent1);
-      font-size: 26px;
-      letter-spacing: 4px;
-      font-weight: 800;
-    }
-    .header p {
-      color: #9ca3af;
-      font-size: 12px;
-      margin-top: 4px;
+    ::selection { background: var(--hl); color: var(--ink); }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    .num { font-variant-numeric: tabular-nums; }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
     }
 
-    /* ── 탭 네비게이션 ── */
-    .tab-nav {
-      display: flex;
-      background: var(--gray);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    /* ── 머리 띠 ── */
+    .bar { background: var(--ink); }
+    .bar :focus-visible { outline-color: var(--hl); }
+    .bar-in {
+      max-width: 560px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 8px 12px; padding: 10px 16px;
+      min-height: 66px;
     }
-    .tab-btn {
-      flex: 1;
-      padding: 13px 4px;
-      text-align: center;
-      color: #9ca3af;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      background: transparent;
-      transition: all 0.2s;
-      border-bottom: 3px solid transparent;
-      white-space: nowrap;
-    }
-    .tab-btn.active {
-      color: white;
-      border-bottom-color: var(--accent1);
-    }
+    .brand { display: flex; align-items: baseline; gap: 8px; }
+    .wordmark { color: var(--hl); font-size: 20px; font-weight: 800; line-height: 1; }
+    .who { color: var(--bg); font-size: 13px; font-weight: 600; }
 
-    /* ── 공통 ── */
-    .section-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--light-text);
-      letter-spacing: 1px;
-      padding: 20px 20px 8px;
+    .seg {
+      display: flex; flex-wrap: wrap; gap: 3px;
+      background: var(--gray); border-radius: 10px; padding: 3px;
     }
-    .card {
-      background: var(--card);
-      border-radius: 14px;
-      margin: 0 16px 12px;
-      padding: 18px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    .seg button {
+      min-width: 76px; min-height: 44px; padding: 0 12px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      border-radius: var(--r-ctl);
+      color: var(--bg); font-size: 15px; font-weight: 600;
+      transition: background-color .15s ease-out, color .15s ease-out;
     }
-    .tab-content { display: none; padding-bottom: 20px; }
-    .tab-content.active { display: block; }
+    .seg button:hover { color: var(--paper); }
+    .seg button[aria-pressed="true"] { background: var(--paper); color: var(--ink); font-weight: 700; }
+    .seg .dot { width: 9px; height: 9px; border-radius: 50%; box-shadow: 0 0 0 1px rgba(34,40,49,.55); flex-shrink: 0; }
 
-    /* ══════════════════════════════════════
-       공유 진도 카드
-       ══════════════════════════════════════ */
-    .shared-progress {
-      position: relative;
-    }
-    .shared-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-    }
-    .shared-label {
-      font-size: 16px;
-      font-weight: 700;
-    }
-    .shared-months {
-      background: var(--dark);
-      color: var(--accent1);
-      font-size: 12px;
-      font-weight: 700;
-      padding: 4px 12px;
-      border-radius: 12px;
-    }
-    .progress-bar-wrap {
-      background: var(--bg);
-      border-radius: 8px;
-      height: 12px;
-      overflow: hidden;
-    }
-    .progress-bar-fill {
-      height: 100%;
-      border-radius: 8px;
-      transition: width 0.6s ease;
-      background: linear-gradient(90deg, var(--accent1), var(--accent2));
-    }
-    .progress-hours {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 6px;
-      font-size: 13px;
-    }
-    .progress-hours .hours-text {
-      font-weight: 700;
-    }
-    .progress-hours .pct-text {
-      color: var(--light-text);
-    }
-    .student-counts {
-      display: flex;
-      gap: 12px;
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid var(--border);
-    }
-    .student-count-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-    }
-    .student-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
+    /* ── 본문 틀 ── */
+    main { max-width: 560px; margin: 0 auto; padding: 16px 16px 8px; }
+    .sec-title { font-size: 17px; font-weight: 700; line-height: 1.4; margin: 32px 4px 10px; }
+    .quiet { color: var(--gray); }
 
-    /* ══════════════════════════════════════
-       스케줄 미니 카드
-       ══════════════════════════════════════ */
-    .schedule-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      padding: 0 16px;
+    /* ── 알림장 한 쪽 ── */
+    .tab {
+      display: inline-block; margin-left: 14px;
+      padding: 5px 14px 4px;
+      border-radius: var(--r-ctl) var(--r-ctl) 0 0;
+      background: var(--paper);
+      font-size: 13px; font-weight: 700; line-height: 1.5;
     }
-    .schedule-card {
-      background: var(--card);
-      border-radius: 14px;
-      padding: 16px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-      border-top: 3px solid var(--border);
+    .tab.is-today { background: var(--hl); }
+    .page { background: var(--paper); border-radius: var(--r-page); padding: 4px 20px 6px; }
+    .page-head {
+      display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 12px;
+      padding: 14px 0 10px;
+      border-bottom: 2px solid var(--ink);
     }
-    .schedule-card .sch-name {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 2px;
-    }
-    .schedule-card .sch-grade {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 10px;
-      display: inline-block;
-      margin-bottom: 8px;
-    }
-    .schedule-card .sch-day {
-      font-size: 13px;
-      color: var(--light-text);
-    }
-    .schedule-card .sch-next {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--dark);
-      margin-top: 6px;
-    }
+    .page-date { font-size: 20px; font-weight: 800; line-height: 1.35; }
+    .page-no { font-size: 13px; font-weight: 600; color: var(--gray); }
 
-    /* ══════════════════════════════════════
-       시험 D-day
-       ══════════════════════════════════════ */
-    .exam-cards {
-      display: flex;
-      gap: 10px;
-      padding: 0 16px;
-      overflow-x: auto;
+    .row {
+      display: grid; grid-template-columns: 84px minmax(0, 1fr); column-gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--bg);
     }
-    .exam-chip {
-      flex-shrink: 0;
-      background: var(--dark);
-      color: white;
-      border-radius: 12px;
-      padding: 12px 18px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .exam-dday {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--accent1);
-    }
-    .exam-info {
-      font-size: 12px;
-      line-height: 1.4;
-    }
-    .exam-info .exam-name {
-      font-weight: 600;
-    }
-
-    /* ══════════════════════════════════════
-       캘린더
-       ══════════════════════════════════════ */
-    .cal-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    .cal-nav button {
-      background: var(--bg);
-      border: none;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      font-size: 16px;
-      cursor: pointer;
-      color: var(--dark);
-      font-weight: 700;
-    }
-    .cal-nav button:active { background: var(--border); }
-    .cal-month { font-size: 16px; font-weight: 700; }
-    .cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 2px;
-      text-align: center;
-    }
-    .cal-header {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--light-text);
-      padding: 6px 0;
-    }
-    .cal-header:first-child { color: #ef4444; }
-    .cal-header:last-child { color: #3b82f6; }
-    .cal-cell {
-      aspect-ratio: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border-radius: 10px;
-      font-size: 13px;
-      min-height: 44px;
-    }
-    .cal-cell.today {
-      background: var(--dark);
-      color: white;
-      font-weight: 700;
-    }
-    .cal-cell.sunday { color: #ef4444; }
-    .cal-cell.saturday { color: #3b82f6; }
-    .cal-dots { display: flex; gap: 3px; margin-top: 2px; height: 5px; }
-    .cal-dot { width: 5px; height: 5px; border-radius: 50%; }
-    .cal-dot.future { opacity: 0.3; }
-    .cal-cell.next-session {
-      position: relative;
-    }
-    .cal-next-tags {
-      display: flex;
-      gap: 2px;
-      justify-content: center;
-      margin-top: 1px;
-      height: 10px;
-    }
-    .cal-next-tag {
-      font-size: 7px;
-      font-weight: 700;
-      padding: 1px 4px;
-      border-radius: 3px;
-      color: white;
-      white-space: nowrap;
-      line-height: 10px;
-    }
-    .cal-legend {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      margin-top: 14px;
-      font-size: 11px;
-      color: var(--light-text);
-    }
-    .cal-legend-item { display: flex; align-items: center; gap: 5px; }
-    .cal-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
-
-    /* ══════════════════════════════════════
-       수업 기록 카드
-       ══════════════════════════════════════ */
-    .session-card { border-left: 4px solid var(--border); }
-    .session-card.latest { border-left-color: var(--accent1); }
-    .session-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      user-select: none;
-    }
-    .session-header:active { opacity: 0.7; }
-    .session-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex: 1;
-      min-width: 0;
-    }
-    .session-num {
-      background: var(--dark);
-      color: var(--accent1);
-      font-size: 12px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 6px;
-      flex-shrink: 0;
-    }
-    .session-meta { min-width: 0; }
-    .session-topic {
-      font-size: 15px;
-      font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .session-date {
-      font-size: 12px;
-      color: var(--light-text);
-      margin-top: 1px;
-    }
-    .session-arrow {
-      font-size: 12px;
-      color: var(--light-text);
-      transition: transform 0.2s;
-      flex-shrink: 0;
-      margin-left: 8px;
-    }
-    .session-card.open .session-arrow { transform: rotate(180deg); }
-    .session-detail {
-      display: none;
-      margin-top: 14px;
-      padding-top: 14px;
-      border-top: 1px solid var(--border);
-    }
-    .session-card.open .session-detail { display: block; }
-
-    .detail-section { margin-bottom: 14px; }
-    .detail-section:last-child { margin-bottom: 0; }
-    .detail-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--light-text);
-      letter-spacing: 0.5px;
-      margin-bottom: 4px;
-    }
-    .detail-text { font-size: 14px; line-height: 1.6; white-space: pre-line; }
-
-    /* 숙제 */
-    .homework-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .homework-badge {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 10px;
-      flex-shrink: 0;
-    }
-    .homework-badge.done { background: #dcfce7; color: var(--success); }
-    .homework-badge.partial { background: #fef3c7; color: var(--warning); }
-    .homework-badge.wrong { background: #ffedd5; color: var(--orange); }
-    .homework-badge.not_done { background: #f3f4f6; color: #6b7280; }
-    .homework-note {
-      margin-top: 6px;
-      padding: 8px 12px;
-      background: #f8f9fa;
-      border-radius: 8px;
-      font-size: 13px;
-      color: var(--gray);
-      border-left: 3px solid var(--border);
-    }
-    .homework-note.partial { border-left-color: var(--warning); }
-    .homework-note.wrong { border-left-color: var(--orange); }
-
-    /* 피드백 (학부모 전용) */
-    .feedback-box {
-      background: #f8f9fa;
-      border-radius: 8px;
-      padding: 12px 14px;
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--gray);
-      border-left: 3px solid var(--accent1);
+    .row:last-child { border-bottom: 0; }
+    .row dt { font-size: 13px; font-weight: 600; color: var(--gray); line-height: 1.5; padding-top: 2px; }
+    .row dd { min-width: 0; }
+    .topic { display: block; font-weight: 700; }
+    .text { white-space: pre-line; }
+    .sub { display: block; margin-top: 2px; font-size: 15px; color: var(--gray); white-space: pre-line; }
+    .mark {
+      background: var(--hl); padding: 1px 3px; border-radius: 3px;
+      -webkit-box-decoration-break: clone; box-decoration-break: clone;
       white-space: pre-line;
     }
 
-    /* 이해도 */
-    .understanding { display: flex; align-items: center; gap: 3px; }
-    .star { font-size: 16px; color: var(--border); }
-    .star.filled { color: var(--accent1); }
-
-    /* 다음 예고 */
-    .next-preview-box {
-      background: var(--bg);
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      min-height: 26px; padding: 0 10px;
+      border: 1px solid currentColor; border-radius: 13px;
+      font-size: 13px; font-weight: 700; line-height: 1; white-space: nowrap;
+      background: var(--paper);
     }
-    .next-preview-box .arrow-icon { color: var(--accent1); font-weight: 700; }
+    .pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+    .pill.done { color: var(--done); }
+    .pill.partial { color: var(--partial); }
+    .pill.wrong { color: var(--wrong); }
+    .pill.not_done { color: var(--notdone); }
+    .hw-line { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+    .hw-what { font-size: 13px; color: var(--gray); }
 
-    /* 학부모 전용 */
-    .parent-only { display: none; }
-    body.parent-mode .parent-only { display: block; }
-    .parent-banner {
-      display: none;
-      background: var(--accent1);
-      color: var(--dark);
-      text-align: center;
-      padding: 6px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-    body.parent-mode .parent-banner { display: block; }
+    .sign { display: block; margin-top: 4px; text-align: right; font-family: var(--pen); font-size: 22px; line-height: 1.3; color: var(--ink); }
 
-    /* ── 푸터 ── */
-    .footer {
-      text-align: center;
-      padding: 24px 20px;
-      font-size: 11px;
-      color: #9ca3af;
+    .meter { display: flex; align-items: center; gap: 5px; }
+    .meter i { width: 22px; height: 10px; border-radius: 3px; background: var(--bg); }
+    .meter i.on { background: var(--gray); }
+    .meter b { margin-left: 8px; font-size: 15px; font-weight: 700; }
+
+    /* ── 다음 수업 · 시험 ── */
+    .plan { background: var(--paper); border-radius: var(--r-page); padding: 2px 20px; margin-top: 12px; }
+    .plan .row dt { padding-top: 3px; }
+    .plan h2 { font-size: 13px; font-weight: 600; color: var(--gray); line-height: 1.5; }
+    .when { display: block; font-size: 17px; font-weight: 700; line-height: 1.45; }
+    .when-time { display: block; font-size: 15px; font-weight: 600; }
+    .when-sub { display: block; font-size: 13px; color: var(--gray); margin-top: 1px; }
+    .exam { display: flex; align-items: baseline; gap: 10px; }
+    .exam + .exam { margin-top: 6px; }
+    .dday { min-width: 46px; font-size: 15px; font-weight: 800; }
+
+    /* ── 지난 알림장 목록 ── */
+    .book { background: var(--paper); border-radius: var(--r-page); overflow: hidden; }
+    .entry + .entry { border-top: 1px solid var(--bg); }
+    .entry-btn {
+      width: 100%; min-height: 64px; padding: 12px 16px 12px 20px;
+      display: grid; grid-template-columns: minmax(0, 1fr) auto 20px; align-items: center; column-gap: 10px;
+      text-align: left;
     }
-    .footer span { color: var(--accent1); font-weight: 600; }
+    .entry-btn:hover { background: var(--bg); }
+    .entry-btn:focus-visible { outline-offset: -3px; }
+    .entry-meta { display: block; font-size: 13px; color: var(--gray); line-height: 1.5; }
+    .entry-topic { display: block; font-size: 15px; font-weight: 700; line-height: 1.45; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .entry-none { font-size: 13px; color: var(--gray); white-space: nowrap; }
+    .chev { width: 20px; height: 20px; transition: transform .2s ease-out; }
+    .entry-btn[aria-expanded="true"] .chev { transform: rotate(180deg); }
+    .entry-btn[aria-expanded="true"] .entry-topic { white-space: normal; }
+    .entry-body { padding: 0 20px 10px; }
+    .entry-body[hidden] { display: none; }
+    .entry-body dl { border-top: 2px solid var(--ink); }
+    .entry-body:not([hidden]) { animation: open .22s cubic-bezier(.16, 1, .3, 1); }
+    @keyframes open { from { opacity: .4; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+    /* ── 수업 시간 · 달력 ── */
+    .ledger { background: var(--paper); border-radius: var(--r-page); padding: 18px 20px 20px; }
+    .ledger-line { font-size: 17px; font-weight: 700; }
+    .ledger-sub { font-size: 13px; color: var(--gray); margin-top: 2px; }
+    .track { height: 8px; border-radius: 4px; background: var(--bg); margin-top: 10px; overflow: hidden; }
+    .track span { display: block; height: 100%; border-radius: 4px; background: var(--gray); }
+
+    .cal { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--bg); }
+    .cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .cal-nav h3 { font-size: 17px; font-weight: 700; }
+    .cal-nav button {
+      width: 44px; height: 44px; border-radius: var(--r-ctl);
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid var(--bg);
+    }
+    .cal-nav button:hover { background: var(--bg); }
+    .cal-nav svg { width: 20px; height: 20px; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; text-align: center; }
+    .cal-head { font-size: 13px; font-weight: 600; color: var(--gray); padding: 4px 0; }
+    .cal-cell {
+      min-height: 48px; padding: 5px 0 4px; border-radius: var(--r-ctl);
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      font-size: 13px; line-height: 1.4;
+    }
+    .cal-cell.today { background: var(--ink); color: var(--paper); font-weight: 800; }
+    .cal-cell.today .cal-dot { box-shadow: 0 0 0 1.5px var(--paper); }
+    .cal-cell.exam .cal-d { box-shadow: 0 0 0 1.5px var(--ink); border-radius: 6px; padding: 0 4px; }
+    .cal-dots { display: flex; gap: 3px; justify-content: center; min-height: 9px; }
+    .cal-dot { width: 9px; height: 9px; border-radius: 50%; box-shadow: 0 0 0 1px var(--gray); }
+    .cal-dot.next { background: var(--paper) !important; box-shadow: inset 0 0 0 2px var(--gray); }
+    .cal-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 12px; font-size: 13px; color: var(--gray); }
+    .cal-legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .lg-exam { width: 14px; height: 12px; border-radius: 4px; box-shadow: 0 0 0 1.5px var(--ink); }
+
+    /* ── 상태 안내 ── */
+    .state { background: var(--paper); border-radius: var(--r-page); padding: 32px 20px; text-align: center; }
+    .state p + p { margin-top: 4px; }
+    .btn {
+      margin-top: 16px; min-height: 44px; padding: 0 20px; border-radius: var(--r-ctl);
+      background: var(--ink); color: var(--paper); font-weight: 700;
+    }
+    .btn:hover { background: var(--gray); }
+
+    .footer { max-width: 560px; margin: 0 auto; padding: 28px 20px 36px; text-align: center; font-size: 13px; color: var(--gray); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <h1>MATH</h1>
-    <p>수학 과외 수업 기록</p>
-  </div>
+  <header class="bar">
+    <div class="bar-in">
+      <div class="brand">
+        <h1 class="wordmark">MATH</h1>
+        <span class="who" id="who"></span>
+      </div>
+      <div class="seg" id="seg" role="group" aria-label="학생 고르기"></div>
+    </div>
+  </header>
 
-  <div class="parent-banner">학부모 전용 페이지</div>
-  <div class="tab-nav" id="tabNav"></div>
-  <div id="app"></div>
+  <main id="app">
+    <div class="state"><p class="quiet">수업 기록을 불러오는 중입니다.</p></div>
+  </main>
 
-  <div class="footer">
-    Managed by <span>Yoon Dream</span>
-  </div>
+  <footer class="footer">관리: 윤드림</footer>
 
   <script>
     var IS_PARENT = location.search.indexOf('parent') >= 0;
-    if (IS_PARENT) document.body.classList.add('parent-mode');
 
     var DAY_NAMES = ['일','월','화','수','목','금','토'];
-    var DAY_MAP = {'일':0,'월':1,'화':2,'수':3,'목':4,'금':5,'토':6};
     var TODAY = new Date();
+    var TODAY_MID = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate());
     var TODAY_STR = fmtISO(TODAY);
     var calYear = TODAY.getFullYear();
     var calMonth = TODAY.getMonth();
     var DATA = null;
+    var CUR = null;            // 지금 보고 있는 학생
+    var STORE_KEY = 'math_view_student';
 
     var HW_LABELS = {
       done:     { text: '완료',     cls: 'done' },
@@ -504,318 +249,395 @@
       not_done: { text: '미완료',   cls: 'not_done' }
     };
 
-    fetch('data.json?v=' + Date.now())
-      .then(function(r) { return r.json(); })
-      .then(function(d) { DATA = d; init(d); })
-      .catch(function() {
-        document.getElementById('app').innerHTML =
-          '<div style="text-align:center;padding:60px 20px;color:#6b7280">데이터를 불러올 수 없습니다.</div>';
-      });
+    var ICON_CHEV_DOWN = '<svg class="chev" viewBox="0 0 20 20" fill="none" stroke="#393E46" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg>';
+    var ICON_PREV = '<svg viewBox="0 0 20 20" fill="none" stroke="#222831" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5"/></svg>';
+    var ICON_NEXT = '<svg viewBox="0 0 20 20" fill="none" stroke="#222831" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5"/></svg>';
+
+    if (IS_PARENT) document.getElementById('who').textContent = '학부모용';
+
+    load();
+
+    function load() {
+      var app = document.getElementById('app');
+      app.innerHTML = '<div class="state"><p class="quiet">수업 기록을 불러오는 중입니다.</p></div>';
+      fetch('data.json?v=' + Date.now(), { cache: 'no-store' })
+        .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function(d) { DATA = d; init(d); })
+        .catch(function() {
+          app.innerHTML = '<div class="state">'
+            + '<p><strong>수업 기록을 불러오지 못했습니다.</strong></p>'
+            + '<p class="quiet">인터넷 연결을 확인한 뒤 다시 불러와 주세요.</p>'
+            + '<button type="button" class="btn" data-act="reload">다시 불러오기</button></div>';
+        });
+    }
 
     function init(data) {
-      buildTabs(data);
-      buildContent(data);
-      switchTab('dashboard');
-    }
-
-    // ── 탭 ──
-    function buildTabs(data) {
-      var nav = document.getElementById('tabNav');
-      nav.appendChild(mkBtn('대시보드', 'dashboard'));
-      data.students.forEach(function(s) { nav.appendChild(mkBtn(s.name, s.id)); });
-    }
-    function mkBtn(label, id) {
-      var btn = document.createElement('button');
-      btn.className = 'tab-btn';
-      btn.textContent = label;
-      btn.dataset.id = id;
-      btn.onclick = function() { switchTab(id); };
-      return btn;
-    }
-    function switchTab(id) {
-      var btns = document.querySelectorAll('.tab-btn');
-      var tabs = document.querySelectorAll('.tab-content');
-      for (var i = 0; i < btns.length; i++) {
-        btns[i].classList.toggle('active', btns[i].dataset.id === id);
+      var students = data.students || [];
+      if (!students.length) {
+        document.getElementById('app').innerHTML = '<div class="state"><p class="quiet">등록된 학생이 없습니다.</p></div>';
+        return;
       }
-      for (var i = 0; i < tabs.length; i++) {
-        tabs[i].classList.toggle('active', tabs[i].id === 'tab-' + id);
-      }
+      var saved = null;
+      try { saved = localStorage.getItem(STORE_KEY); } catch (e) {}
+      CUR = students[0];
+      for (var i = 0; i < students.length; i++) if (students[i].id === saved) CUR = students[i];
+      buildSwitch(students);
+      render();
     }
 
-    // ── 콘텐츠 ──
-    function buildContent(data) {
-      var app = document.getElementById('app');
-      var dash = document.createElement('div');
-      dash.className = 'tab-content';
-      dash.id = 'tab-dashboard';
-      dash.innerHTML = renderDashboard(data);
-      app.appendChild(dash);
-
-      data.students.forEach(function(s) {
-        var div = document.createElement('div');
-        div.className = 'tab-content';
-        div.id = 'tab-' + s.id;
-        div.innerHTML = renderStudentTab(s);
-        app.appendChild(div);
-      });
-    }
-
-    // ══════════════════════════════════════
-    //  대시보드
-    // ══════════════════════════════════════
-    function renderDashboard(data) {
+    // ── 학생 전환 ──
+    function buildSwitch(students) {
+      var seg = document.getElementById('seg');
       var html = '';
-      var plan = data.plan;
-
-      // 전체 세션 수 합산 (base_hours = 기록 시작 전에 채운 시간)
-      var totalHours = plan.base_hours || 0;
-      data.students.forEach(function(s) {
-        s.sessions.forEach(function(ss) { totalHours += (ss.hours || 1); });
+      students.forEach(function(s) {
+        html += '<button type="button" data-student="' + esc(s.id) + '" aria-pressed="' + (s === CUR) + '">'
+          + '<span class="dot" style="background:' + safeColor(s.color) + '" aria-hidden="true"></span>'
+          + esc(s.name) + '</button>';
       });
-      var cycleHours = totalHours % plan.total_hours;
-      // 개월차 = 달력이 아니라 24시간을 채운 횟수 기준 (10번 채웠으면 11개월차)
-      var cycleNum = Math.floor(totalHours / plan.total_hours) + 1;
-      var pct = Math.min((cycleHours / plan.total_hours) * 100, 100);
+      seg.innerHTML = html;
+    }
 
-      // 공유 진도 카드
-      html += '<div class="section-title">진도 현황</div>';
-      html += '<div class="card shared-progress">'
-        + '<div class="shared-top">'
-        + '<span class="shared-label">진도</span>'
-        + '<span class="shared-months">' + cycleNum + '개월차</span>'
-        + '</div>'
-        + '<div class="progress-bar-wrap">'
-        + '<div class="progress-bar-fill" style="width:' + pct + '%"></div>'
-        + '</div>'
-        + '<div class="progress-hours">'
-        + '<span class="hours-text">' + cycleHours + ' / ' + plan.total_hours + '시간</span>'
-        + '<span class="pct-text">' + Math.round(pct) + '%</span>'
-        + '</div>'
-        + '<div class="student-counts">';
+    document.getElementById('seg').addEventListener('click', function(ev) {
+      var b = ev.target.closest('button[data-student]');
+      if (!b) return;
+      var id = b.getAttribute('data-student');
+      DATA.students.forEach(function(s) { if (s.id === id) CUR = s; });
+      try { localStorage.setItem(STORE_KEY, id); } catch (e) {}
+      var all = this.querySelectorAll('button[data-student]');
+      for (var i = 0; i < all.length; i++) all[i].setAttribute('aria-pressed', all[i] === b ? 'true' : 'false');
+      render();
+    });
 
-      data.students.forEach(function(s) {
-        var nextInfo = s.next_session ? ' | 다음: ' + fmtShort(new Date(s.next_session)) : '';
-        html += '<div class="student-count-item">'
-          + '<div class="student-dot" style="background:' + s.color + '"></div>'
-          + '<span>' + s.name + ' <strong>' + s.sessions.length + '</strong>회' + nextInfo + '</span>'
-          + '</div>';
-      });
+    // ── 클릭 (지난 알림장 펼침 · 달력 넘김 · 다시 불러오기) ──
+    document.getElementById('app').addEventListener('click', function(ev) {
+      var t = ev.target.closest('[data-act]');
+      if (!t) return;
+      var act = t.getAttribute('data-act');
+      if (act === 'toggle') {
+        var open = t.getAttribute('aria-expanded') === 'true';
+        t.setAttribute('aria-expanded', open ? 'false' : 'true');
+        document.getElementById(t.getAttribute('aria-controls')).hidden = open;
+      } else if (act === 'cal-prev') {
+        calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; }
+        redrawCalendar('cal-prev');
+      } else if (act === 'cal-next') {
+        calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; }
+        redrawCalendar('cal-next');
+      } else if (act === 'reload') {
+        load();
+      }
+    });
 
-      html += '</div></div>';
+    function redrawCalendar(focusAct) {
+      document.getElementById('calendar').innerHTML = renderCalendar(DATA);
+      var b = document.querySelector('[data-act="' + focusAct + '"]');
+      if (b) b.focus();
+    }
 
-      // 시험 D-day
-      var exams = [];
-      data.students.forEach(function(s) {
-        (s.exams || []).forEach(function(e) {
-          // 지난 시험은 표시하지 않음 (시험 당일까지는 표시)
-          if (getDday(e.date) < 0) return;
-          exams.push({ name: e.name, date: e.date, student: s.name, color: s.color });
-        });
-      });
-      if (exams.length > 0) {
-        html += '<div class="section-title">시험 일정</div>';
-        html += '<div class="exam-cards">';
+    // ══════════════════════════════════════
+    //  화면 그리기
+    // ══════════════════════════════════════
+    function render() {
+      var s = CUR;
+      var sorted = (s.sessions || []).slice().sort(function(a, b) { return b.number - a.number; });
+      var html = '';
+
+      if (sorted.length === 0) {
+        html += '<div class="state"><p class="quiet">아직 수업 기록이 없습니다.</p></div>';
+      } else {
+        var latest = sorted[0];
+        var isToday = latest.date === TODAY_STR;
+        html += '<section aria-labelledby="todayTab">'
+          + '<h2 class="tab' + (isToday ? ' is-today' : '') + '" id="todayTab">' + (isToday ? '오늘 알림장' : '최근 알림장') + '</h2>'
+          + '<article class="page">'
+          + '<div class="page-head">'
+          + '<h3 class="page-date num">' + fmtFull(latest.date) + '</h3>'
+          + '<span class="page-no num">' + sessionNo(latest) + '</span>'
+          + '</div>'
+          + pageRows(latest, sorted[1], true)
+          + '</article></section>';
+      }
+
+      html += renderPlan(s, sorted);
+
+      if (sorted.length > 1) {
+        html += '<section aria-labelledby="bookTitle">'
+          + '<h2 class="sec-title" id="bookTitle">지난 알림장</h2>'
+          + '<div class="book">';
+        for (var i = 1; i < sorted.length; i++) html += renderEntry(sorted[i], sorted[i + 1]);
+        html += '</div></section>';
+      }
+
+      html += renderLedger(DATA);
+      document.getElementById('app').innerHTML = html;
+    }
+
+    // 한 쪽의 칸들 (오늘 배운 것 → 숙제 → 지난 숙제 → 선생님 한마디 → 이해도 → 다음 시간 예습)
+    function pageRows(ss, prev, isLatest) {
+      var h = '<dl>';
+
+      h += row('오늘 배운 것',
+        (ss.topic ? '<strong class="topic">' + esc(ss.topic) + '</strong>' : '')
+        + (ss.content ? '<span class="' + (ss.topic ? 'sub' : 'text') + '">' + esc(ss.content) + '</span>' : '')
+        || '<span class="quiet">기록 없음</span>');
+
+      // 숙제: 이번 시간에 내 준 것
+      if (hasHomework(ss)) {
+        h += row('숙제', '<span class="mark">' + esc(ss.homework) + '</span>');
+      } else {
+        h += row('숙제', '<span class="quiet">' + (ss.date === TODAY_STR ? '오늘은 숙제가 없습니다' : (isLatest ? '이날은 숙제가 없었습니다' : '숙제 없음')) + '</span>');
+      }
+
+      // 지난 숙제: 바로 앞 회차 숙제를 이번 시간에 확인한 결과 (관리 화면이 앞 회차에 상태를 적는다)
+      if (prev) {
+        if (hasHomework(prev)) {
+          var lb = HW_LABELS[prev.homework_status] || HW_LABELS.not_done;
+          h += row('지난 숙제',
+            '<span class="hw-line"><span class="pill ' + lb.cls + '">' + lb.text + '</span>'
+            + '<span class="hw-what">' + esc(prev.number) + '회차 숙제: ' + esc(prev.homework) + '</span></span>'
+            + (prev.homework_note ? '<span class="sub">' + esc(prev.homework_note) + '</span>' : ''));
+        } else {
+          h += row('지난 숙제', '<span class="quiet">지난 시간에는 숙제가 없었습니다</span>');
+        }
+      }
+
+      // 선생님 한마디 · 이해도: 학부모용 링크(?parent)에서만
+      if (IS_PARENT && ss.feedback) {
+        h += row('선생님 한마디', '<span class="text">' + esc(String(ss.feedback).trim()) + '</span>'
+          + '<span class="sign">— 선생님</span>');
+      }
+      if (IS_PARENT && ss.understanding) {
+        var n = Math.max(0, Math.min(5, Math.round(ss.understanding)));
+        var bars = '';
+        for (var i = 1; i <= 5; i++) bars += '<i' + (i <= n ? ' class="on"' : '') + '></i>';
+        h += row('이해도', '<span class="meter" role="img" aria-label="이해도 5점 중 ' + n + '점">'
+          + bars + '<b class="num" aria-hidden="true">' + n + '/5</b></span>');
+      }
+
+      if (ss.next_preview) {
+        h += row('다음 시간 예습', '<span class="text">' + esc(ss.next_preview) + '</span>');
+      }
+      return h + '</dl>';
+    }
+
+    function row(label, content) {
+      return '<div class="row"><dt>' + label + '</dt><dd>' + content + '</dd></div>';
+    }
+
+    // 지난 알림장 한 줄 (누르면 그 자리에서 펼침)
+    function renderEntry(ss, prev) {
+      var id = 'p-' + CUR.id + '-' + ss.number;
+      var right;
+      if (hasHomework(ss)) {
+        var lb = HW_LABELS[ss.homework_status] || HW_LABELS.not_done;
+        right = '<span class="pill ' + lb.cls + '">숙제 ' + lb.text + '</span>';
+      } else {
+        right = '<span class="entry-none">숙제 없음</span>';
+      }
+      return '<div class="entry">'
+        + '<button type="button" class="entry-btn" data-act="toggle" aria-expanded="false" aria-controls="' + esc(id) + '">'
+        + '<span><span class="entry-meta num">' + esc(ss.number) + '회차 · ' + fmtFull(ss.date) + '</span>'
+        + '<span class="entry-topic">' + esc(ss.topic || '단원 기록 없음') + '</span></span>'
+        + right + ICON_CHEV_DOWN
+        + '</button>'
+        + '<div class="entry-body" id="' + esc(id) + '" hidden>' + pageRows(ss, prev, false) + '</div>'
+        + '</div>';
+    }
+
+    // 다음 수업 · 시험 일정
+    function renderPlan(s, sorted) {
+      var nx = nextLesson(s, sorted);
+      var nextHtml;
+      if (nx) {
+        var gap = Math.round((nx.date - TODAY_MID) / 86400000);
+        var rel = gap === 0 ? '오늘' : gap === 1 ? '내일' : gap === 2 ? '모레' : gap + '일 뒤';
+        var time = s.schedule && s.schedule.time ? '<span class="when-time num">' + esc(s.schedule.time) + '</span>' : '';
+        nextHtml = '<span class="when num">' + fmtFull(fmtISO(nx.date)) + '</span>' + time
+          + '<span class="when-sub">' + rel + (nx.fromSchedule ? ' · 정기 수업 요일 기준' : '') + '</span>';
+      } else {
+        nextHtml = '<span class="quiet">다음 수업 날짜가 아직 정해지지 않았습니다</span>';
+      }
+
+      var exams = (s.exams || []).filter(function(e) { return e.date && getDday(e.date) >= 0; })
+        .sort(function(a, b) { return a.date < b.date ? -1 : 1; });
+      var examHtml = '';
+      if (exams.length) {
         exams.forEach(function(e) {
           var d = getDday(e.date);
-          var txt = d === 0 ? 'D-Day' : 'D-' + d;
-          html += '<div class="exam-chip">'
-            + '<span class="exam-dday">' + txt + '</span>'
-            + '<div class="exam-info">'
-            + '<div class="exam-name">' + e.name + '</div>'
-            + '<div>' + e.student + ' | ' + fmtShort(new Date(e.date)) + '</div>'
-            + '</div></div>';
+          examHtml += '<div class="exam"><span class="dday num">' + (d === 0 ? '오늘' : 'D-' + d) + '</span>'
+            + '<span>' + esc(e.name) + ' <span class="quiet num">' + fmtFull(e.date) + '</span></span></div>';
         });
-        html += '</div>';
+      } else {
+        examHtml = '<span class="quiet">예정된 시험이 없습니다</span>';
       }
 
-      // 캘린더
-      html += '<div class="section-title">수업 캘린더</div>';
-      html += '<div class="card" id="calendarCard">' + renderCalendar(data) + '</div>';
+      return '<div class="plan">'
+        + '<section class="row" aria-labelledby="nextTitle"><h2 id="nextTitle">다음 수업</h2><div>' + nextHtml + '</div></section>'
+        + '<section class="row" aria-labelledby="examTitle"><h2 id="examTitle">시험 일정</h2><div>' + examHtml + '</div></section>'
+        + '</div>';
+    }
 
-      return html;
+    // 수업 시간 (개월차) + 달력
+    function renderLedger(data) {
+      var plan = data.plan || {};
+      var per = plan.total_hours || 24;
+      // 전체 수업 시간 합산 (base_hours = 기록 시작 전에 채운 시간)
+      var totalHours = plan.base_hours || 0;
+      data.students.forEach(function(s) {
+        (s.sessions || []).forEach(function(ss) { totalHours += (ss.hours || 1); });
+      });
+      var cycleHours = round1(totalHours % per);
+      // 개월차 = 달력이 아니라 24시간을 채운 횟수 기준 (10번 채웠으면 11개월차)
+      var cycleNum = Math.floor(totalHours / per) + 1;
+      var pct = Math.min((cycleHours / per) * 100, 100);
+      var names = data.students.map(function(s) { return esc(s.name); }).join('·');
+
+      return '<section aria-labelledby="ledgerTitle">'
+        + '<h2 class="sec-title" id="ledgerTitle">수업 시간</h2>'
+        + '<div class="ledger">'
+        + '<p class="ledger-line num">' + cycleNum + '개월차 · 이번 달 ' + cycleHours + '/' + per + '시간</p>'
+        + '<p class="ledger-sub">' + (data.students.length > 1 ? names + ' 수업 시간을 합쳐 ' : '수업 시간 ') + per + '시간마다 한 달로 셉니다</p>'
+        + '<div class="track" role="img" aria-label="이번 달 ' + per + '시간 중 ' + cycleHours + '시간"><span style="width:' + pct.toFixed(1) + '%"></span></div>'
+        + '<div class="cal" id="calendar">' + renderCalendar(data) + '</div>'
+        + '</div></section>';
     }
 
     // ══════════════════════════════════════
-    //  캘린더
+    //  달력
     // ══════════════════════════════════════
     function renderCalendar(data) {
       var y = calYear, m = calMonth;
       var firstDay = new Date(y, m, 1).getDay();
       var days = new Date(y, m + 1, 0).getDate();
 
+      // 학생별 다음 수업 날짜 (달력 표시용)
+      var nextMap = {};
+      data.students.forEach(function(s) {
+        var sorted = (s.sessions || []).slice().sort(function(a, b) { return b.number - a.number; });
+        var nx = nextLesson(s, sorted);
+        if (nx) nextMap[s.id] = fmtISO(nx.date);
+      });
+
       var html = '<div class="cal-nav">'
-        + '<button onclick="calPrev()">&#8249;</button>'
-        + '<span class="cal-month">' + y + '년 ' + (m + 1) + '월</span>'
-        + '<button onclick="calNext()">&#8250;</button></div>';
+        + '<button type="button" data-act="cal-prev" aria-label="이전 달">' + ICON_PREV + '</button>'
+        + '<h3 class="num" aria-live="polite">' + y + '년 ' + (m + 1) + '월</h3>'
+        + '<button type="button" data-act="cal-next" aria-label="다음 달">' + ICON_NEXT + '</button></div>';
 
       html += '<div class="cal-grid">';
-      DAY_NAMES.forEach(function(d) { html += '<div class="cal-header">' + d + '</div>'; });
-      for (var i = 0; i < firstDay; i++) html += '<div class="cal-cell"></div>';
+      DAY_NAMES.forEach(function(d) { html += '<div class="cal-head" aria-hidden="true">' + d + '</div>'; });
+      for (var i = 0; i < firstDay; i++) html += '<div class="cal-cell" aria-hidden="true"></div>';
 
       for (var d = 1; d <= days; d++) {
         var ds = y + '-' + pad(m + 1) + '-' + pad(d);
-        var dow = new Date(y, m, d).getDay();
         var cls = 'cal-cell';
-        if (ds === TODAY_STR) cls += ' today';
-        else if (dow === 0) cls += ' sunday';
-        else if (dow === 6) cls += ' saturday';
+        var dots = '', said = [];
+        if (ds === TODAY_STR) { cls += ' today'; said.push('오늘'); }
 
-        var dots = '';
-        var tags = '';
         data.students.forEach(function(s) {
           var has = false;
-          for (var j = 0; j < s.sessions.length; j++) {
+          for (var j = 0; j < (s.sessions || []).length; j++) {
             if (s.sessions[j].date === ds) { has = true; break; }
           }
-          var isNext = s.next_session && s.next_session === ds;
           if (has) {
-            dots += '<div class="cal-dot" style="background:' + s.color + '"></div>';
+            dots += '<span class="cal-dot" style="background:' + safeColor(s.color) + '"></span>';
+            said.push(esc(s.name) + ' 수업');
+          } else if (nextMap[s.id] === ds) {
+            dots += '<span class="cal-dot next"></span>';
+            said.push(esc(s.name) + ' 다음 수업');
           }
-          if (isNext) {
-            tags += '<span class="cal-next-tag" style="background:' + s.color + '">' + s.name.charAt(s.name.length - 1) + '</span>';
-          }
-          // 시험 날짜 체크
           (s.exams || []).forEach(function(e) {
-            if (e.date === ds) {
-              tags += '<span class="cal-next-tag" style="background:var(--danger)">시험</span>';
-            }
+            if (e.date === ds) { if (cls.indexOf(' exam') < 0) cls += ' exam'; said.push(esc(s.name) + ' ' + esc(e.name)); }
           });
         });
 
-        html += '<div class="' + cls + '"><span>' + d + '</span>'
-          + (dots ? '<div class="cal-dots">' + dots + '</div>' : '')
-          + (tags ? '<div class="cal-next-tags">' + tags + '</div>' : '')
+        html += '<div class="' + cls + '">'
+          + '<span class="cal-d num" aria-hidden="true">' + d + '</span>'
+          + '<span class="sr-only">' + (m + 1) + '월 ' + d + '일' + (said.length ? ', ' + said.join(', ') : '') + '</span>'
+          + '<span class="cal-dots" aria-hidden="true">' + dots + '</span>'
           + '</div>';
       }
       html += '</div>';
 
-      html += '<div class="cal-legend">';
+      html += '<div class="cal-legend" aria-hidden="true">';
       data.students.forEach(function(s) {
-        html += '<div class="cal-legend-item">'
-          + '<div class="cal-legend-dot" style="background:' + s.color + '"></div>'
-          + '<span>' + s.name + '</span></div>';
+        html += '<span><span class="cal-dot" style="background:' + safeColor(s.color) + '"></span>' + esc(s.name) + ' 수업</span>';
       });
-      html += '</div>';
+      html += '<span><span class="cal-dot next"></span>다음 수업</span>'
+        + '<span><span class="lg-exam"></span>시험일</span></div>';
       return html;
     }
 
-    function calPrev() { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } document.getElementById('calendarCard').innerHTML = renderCalendar(DATA); }
-    function calNext() { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } document.getElementById('calendarCard').innerHTML = renderCalendar(DATA); }
-
     // ══════════════════════════════════════
-    //  학생 탭
+    //  계산 도우미
     // ══════════════════════════════════════
-    function renderStudentTab(student) {
-      var html = '<div class="section-title">' + student.name + ' 수업 기록</div>';
-      var sorted = student.sessions.slice().sort(function(a, b) { return b.number - a.number; });
 
-      if (sorted.length === 0) {
-        html += '<div class="card" style="text-align:center;color:#6b7280;padding:40px">아직 수업 기록이 없습니다.</div>';
-        return html;
+    // 다음 수업: next_session이 오늘 이후면 그 날, 지났으면 정기 요일(schedule.days)로 계산.
+    // 지난 날짜는 절대 '다음'으로 보여주지 않는다.
+    function nextLesson(s, sorted) {
+      var latestDate = sorted.length ? sorted[0].date : '';
+      if (s.next_session) {
+        var d = parseISO(s.next_session);
+        if (d && d >= TODAY_MID && !(s.next_session === TODAY_STR && latestDate === TODAY_STR)) {
+          return { date: d, fromSchedule: false };
+        }
       }
-
-      sorted.forEach(function(s, i) {
-        var isLatest = i === 0;
-        html += '<div class="card session-card' + (isLatest ? ' latest open' : '') + '" '
-          + 'style="border-left-color:' + (isLatest ? student.color : 'var(--border)') + '">';
-
-        // 헤더
-        html += '<div class="session-header" onclick="toggleCard(this)">'
-          + '<div class="session-left">'
-          + '<span class="session-num">' + s.number + '회차</span>'
-          + '<div class="session-meta">'
-          + '<div class="session-topic">' + s.topic + '</div>'
-          + '<div class="session-date">' + fmtFull(s.date) + '</div>'
-          + '</div></div>'
-          + '<span class="session-arrow">&#9662;</span></div>';
-
-        // 디테일
-        html += '<div class="session-detail">';
-
-        // 수업 내용
-        html += '<div class="detail-section">'
-          + '<div class="detail-label">수업 내용</div>'
-          + '<div class="detail-text">' + s.content + '</div></div>';
-
-        // 피드백 (학부모 전용)
-        if (s.feedback) {
-          html += '<div class="detail-section parent-only">'
-            + '<div class="detail-label">선생님 피드백</div>'
-            + '<div class="feedback-box">' + s.feedback + '</div></div>';
-        }
-
-        // 숙제
-        if (s.homework) {
-          var st = s.homework_status || 'not_done';
-          var label = HW_LABELS[st] || HW_LABELS.not_done;
-
-          html += '<div class="detail-section">'
-            + '<div class="detail-label">숙제</div>'
-            + '<div class="homework-header">'
-            + '<div class="detail-text">' + s.homework + '</div>'
-            + '<span class="homework-badge ' + label.cls + '">' + label.text + '</span>'
-            + '</div>';
-
-          if (s.homework_note) {
-            html += '<div class="homework-note ' + label.cls + '">' + s.homework_note + '</div>';
-          }
-          html += '</div>';
-        }
-
-        // 이해도 (학부모 전용)
-        if (s.understanding) {
-          html += '<div class="detail-section parent-only">'
-            + '<div class="detail-label">이해도</div>'
-            + '<div class="understanding">' + renderStars(s.understanding) + '</div></div>';
-        }
-
-        // 다음 수업 예고
-        if (s.next_preview) {
-          html += '<div class="detail-section">'
-            + '<div class="detail-label">다음 수업 예고</div>'
-            + '<div class="next-preview-box">'
-            + '<span class="arrow-icon">&#10148;</span>'
-            + '<span>' + s.next_preview + '</span></div></div>';
-        }
-
-        html += '</div></div>';
-      });
-
-      return html;
+      var days = (s.schedule && s.schedule.days) || [];
+      if (!days.length) return null;
+      var start = 1;
+      // 오늘이 수업 요일이고, 오늘 기록이 아직 없고, 수업 끝 시각 전이면 오늘도 후보
+      if (days.indexOf(DAY_NAMES[TODAY.getDay()]) >= 0 && latestDate !== TODAY_STR) {
+        var end = endMinutes(s.schedule.time);
+        var nowMin = TODAY.getHours() * 60 + TODAY.getMinutes();
+        if (end === null || nowMin < end) start = 0;
+      }
+      return getNextScheduled(days, start);
     }
 
-    // ══════════════════════════════════════
-    //  유틸리티
-    // ══════════════════════════════════════
-    function toggleCard(h) { h.parentElement.classList.toggle('open'); }
-
-    function renderStars(n) {
-      var h = '';
-      for (var i = 1; i <= 5; i++) h += '<span class="star' + (i <= n ? ' filled' : '') + '">&#9733;</span>';
-      return h;
-    }
-
-    function pad(n) { return n < 10 ? '0' + n : '' + n; }
-    function fmtISO(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
-    function fmtFull(s) { var d = new Date(s); return (d.getMonth()+1) + '월 ' + d.getDate() + '일 (' + DAY_NAMES[d.getDay()] + ')'; }
-    function fmtShort(d) { if (typeof d === 'string') d = new Date(d); return (d.getMonth()+1) + '/' + d.getDate() + '(' + DAY_NAMES[d.getDay()] + ')'; }
-
-    function getDday(s) {
-      var t = new Date(s), n = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate());
-      return Math.ceil((t - n) / 86400000);
-    }
-
-    function getNextScheduled(days) {
-      var d = new Date(TODAY);
-      for (var i = 1; i <= 7; i++) {
-        d.setDate(d.getDate() + 1);
-        var name = DAY_NAMES[d.getDay()];
-        for (var j = 0; j < days.length; j++) {
-          if (days[j] === name) return new Date(d);
-        }
+    function getNextScheduled(days, start) {
+      for (var i = start; i <= start + 7; i++) {
+        var d = new Date(TODAY_MID.getFullYear(), TODAY_MID.getMonth(), TODAY_MID.getDate() + i);
+        if (days.indexOf(DAY_NAMES[d.getDay()]) >= 0) return { date: d, fromSchedule: true };
       }
       return null;
+    }
+
+    function endMinutes(t) {
+      var m = String(t || '').match(/(\d{1,2}):(\d{2})/g);
+      if (!m) return null;
+      var last = m[m.length - 1].split(':');
+      return (+last[0]) * 60 + (+last[1]);
+    }
+
+    function hasHomework(ss) {
+      var h = (ss.homework || '').trim();
+      return !!h && h !== '없음';
+    }
+
+    function sessionNo(ss) {
+      return esc(ss.number) + '회차' + (ss.hours ? ' · ' + esc(ss.hours) + '시간' : '');
+    }
+
+    function esc(v) {
+      return String(v == null ? '' : v)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+    function safeColor(c) { return /^#[0-9a-fA-F]{3,8}$/.test(c || '') ? c : '#393E46'; }
+    function round1(x) { return Math.round(x * 10) / 10; }
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+    function fmtISO(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+    function parseISO(s) {
+      var m = String(s || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
+      return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null;
+    }
+    function fmtFull(s) {
+      var d = parseISO(s);
+      if (!d) return esc(s);
+      return (d.getMonth() + 1) + '월 ' + d.getDate() + '일 (' + DAY_NAMES[d.getDay()] + ')';
+    }
+    function getDday(s) {
+      var t = parseISO(s);
+      return t ? Math.round((t - TODAY_MID) / 86400000) : -1;
     }
   </script>
 </body>
