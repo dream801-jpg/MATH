@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>중3 2학기 2차 논술형평가 대비 4회 — 삼각비 · 원과 현</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters:[
+    {left:'$$', right:'$$', display:true},
+    {left:'$',  right:'$',  display:false}
+  ], throwOnError:false});"></script>
+<style>
+  @page { size: A4 portrait; margin: 10mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+    font-size: 10.8pt;
+    line-height: 1.6;
+    color: #111;
+    background: #fff;
+  }
+  :root { --theme: #8b0000; --theme-bg: #fbe9e7; }
+
+  .cover {
+    text-align: center;
+    padding: 3mm 0 3mm;
+    border-bottom: 2px solid var(--theme);
+    margin-bottom: 4mm;
+  }
+  .cover h1 { font-size: 15pt; margin: 0 0 2mm; letter-spacing: 0.5pt; }
+  .cover .badge {
+    display: inline-block; background: var(--theme); color: #fff;
+    padding: 0.5mm 4mm; border-radius: 3px; font-size: 10.5pt; font-weight: bold;
+  }
+  .cover .sub { font-size: 10pt; color: #444; margin-top: 2mm; }
+
+  .info-box {
+    border: 1px solid #666; padding: 2.5mm 5mm; margin: 0 0 3mm;
+    font-size: 9.5pt; background: #fafafa;
+  }
+  .info-box b { color: var(--theme); }
+  .info-box ul { margin: 1mm 0 0 5mm; padding: 0; }
+
+  .name-line { display: flex; justify-content: space-between; margin: 3mm 0 4mm; font-size: 10.5pt; }
+  .name-line span { border-bottom: 1px solid #333; min-width: 55mm; padding: 0 4mm; }
+
+  .problem {
+    break-inside: avoid; margin: 0 0 4mm; padding: 4mm 5mm;
+    border: 1.2px solid #333; border-left: 5px solid var(--theme); background: #fcfcfc;
+  }
+  .area-tag {
+    display: inline-block; color: var(--theme); font-weight: bold; font-size: 10pt;
+    margin-bottom: 1mm;
+  }
+  .q-head {
+    font-weight: bold; color: var(--theme); font-size: 12pt;
+    margin-bottom: 2mm; border-bottom: 1px dashed #aaa; padding-bottom: 1.5mm;
+  }
+  .points { float: right; font-weight: normal; color: #888; font-size: 10pt; }
+  .q-body { margin: 2mm 0 2mm; font-size: 11pt; }
+  .given {
+    border-bottom: 1.5px solid var(--theme); padding: 0 1mm; font-weight: 600;
+  }
+  .given.tall { display: inline-block; padding-bottom: 0.5mm; }
+  .sub-q { margin: 3mm 0 1mm; font-weight: 600; }
+  .ans-area {
+    min-height: 40mm; border: 1px dashed #bbb;
+    background: repeating-linear-gradient(transparent, transparent 7mm, #eee 7mm, #eee 7.3mm);
+    margin: 1.5mm 0 2mm; border-radius: 2px;
+  }
+  .fig { text-align: center; margin: 2mm 0 2mm; }
+  .fig .cap { font-size: 9.5pt; color: #555; }
+  table.trig {
+    border-collapse: collapse; margin: 2mm auto; font-size: 10.5pt;
+  }
+  table.trig th, table.trig td { border: 1px solid #555; padding: 1mm 4mm; text-align: center; }
+  table.trig th { background: #f0f0f0; }
+
+  .page-break { break-after: page; page-break-after: always; }
+
+  /* ===== 정답지 ===== */
+  .ans-cover { text-align: center; margin: 2mm 0 4mm; padding: 3mm 0; border-bottom: 2px solid var(--theme); }
+  .ans-cover h2 { font-size: 15pt; margin: 0 0 1mm; color: var(--theme); }
+  .ans-cover .sub { color: #666; font-size: 10pt; }
+
+  .solution {
+    break-inside: avoid; margin: 0 0 3mm; padding: 3mm 4.5mm; line-height: 1.5;
+    border-left: 4px solid #2196f3; background: #f8fbff;
+  }
+  .solution h3 {
+    margin: 0 0 2mm; color: var(--theme); font-size: 12pt;
+    border-bottom: 1px solid #aaa; padding-bottom: 1.5mm;
+  }
+  .sol-step { margin: 1mm 0; padding-left: 3mm; line-height: 1.7; }
+  .sol-step b { color: var(--theme); }
+  .sol-final {
+    background: #fff3cd; padding: 0.5mm 3mm; border-radius: 3px;
+    font-weight: bold; color: #8a6100;
+  }
+  .model {
+    border: 1px solid #9bb7dd; background: #fff; padding: 2mm 4mm; margin: 2mm 0;
+  }
+  .model .tag { font-size: 9.5pt; color: var(--theme); font-weight: bold; }
+  table.rubric { border-collapse: collapse; width: 100%; margin: 2mm 0 0; font-size: 9.8pt; }
+  table.rubric th, table.rubric td { border: 1px solid #9a9a9a; padding: 0.5mm 2.5mm; vertical-align: top; }
+  table.rubric th { background: #eef3fa; }
+  table.rubric td.pt { text-align: center; white-space: nowrap; width: 13mm; }
+  .grading-tip {
+    margin: 2mm 0 0; padding: 2mm 4mm; background: #e8f5e9;
+    border-left: 3px solid #4caf50; font-size: 9.8pt;
+  }
+  .grading-tip b { color: #2e7d32; }
+  .nw { white-space: nowrap; }
+  .footer {
+    text-align: center; color: #888; font-size: 8.5pt; margin-top: 0; line-height: 1.3;
+    border-top: 1px solid #ccc; padding-top: 1mm;
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= 표지 ================= -->
+<div class="cover">
+  <h1>2026학년도 3학년 2학기 2차 논술형평가 대비</h1>
+  <div><span class="badge">4회 · 실전 리허설</span></div>
+  <div class="sub">삼각비 · 원과 현 &nbsp;|&nbsp; 본 시험 2026. 10. 13.(화) 수학시간</div>
+</div>
+
+<div class="info-box">
+  <b>[리허설 방법]</b> 타이머 <b>35분</b>을 맞추고 검정 볼펜으로 한 번에 풉니다. 계산기 없이 풀고, 고칠 곳은 두 줄 긋고 씁니다.<br>
+  <b>권장 시간 배분:</b> 1번 6분 · 2번 5분 · 3번 8분 · 4번 6분 · 5번 8분 · 검토 2분<br>
+  <span style="color:#666;">※ 밑줄 친 부분과 소문항의 구체적 내용은 실제 시험에서 바뀔 수 있습니다. 막히면 다음 문제로 넘어가세요.</span>
+</div>
+
+<div class="name-line">
+  학년·반·번호: <span>&nbsp;</span> 이름: <span>&nbsp;</span>
+</div>
+
+<!-- ================= 문제 1 ================= -->
+<div class="problem">
+  <span class="area-tag">☞ 삼각비의 개념</span>
+  <div class="q-head">1. <span class="points">[5점]</span></div>
+  <div class="q-body">
+    $\angle B = 90^\circ$ 인 직각삼각형 ABC에서 <span class="given">$5\sin A - 3 = 0$</span> 일 때 다음 물음에 답하시오.
+  </div>
+  <div class="sub-q">1-1) 직각삼각형 ABC를 그리고, 직각과 각 변의 길이를 표시하시오. (단, 세 변의 길이는 가장 간단한 자연수의 비가 되도록 직각삼각형에 나타내시오.)</div>
+  <div class="ans-area" style="min-height: 82mm;"></div>
+  <div class="sub-q">1-2) $\cos C$ 의 값과 $\tan C$ 의 값을 각각 구하시오.</div>
+  <div class="ans-area" style="min-height: 50mm;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ================= 문제 2 ================= -->
+<div class="problem">
+  <span class="area-tag">☞ 특수각의 삼각비의 값 계산</span>
+  <div class="q-head">2. <span class="points">[5점]</span></div>
+  <div class="q-body">
+    삼각형의 세 내각의 크기의 비가 <span class="given">$3 : 4 : 5$</span> 일 때, 작은 각부터 순서대로 $\angle A$, $\angle B$, $\angle C$ 라 하자. 다음 식의 값을 구하고 그 과정을 서술하시오.
+  </div>
+  <div class="fig" style="font-size: 13pt; margin: 4mm 0;">
+    <span class="given tall">$\dfrac{\sin B}{\cos A} - \tan A \times \cos B$</span>
+  </div>
+  <div class="ans-area" style="min-height: 200mm;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ================= 문제 3 ================= -->
+<div class="problem">
+  <span class="area-tag">☞ 예각의 삼각비의 값</span>
+  <div class="q-head">3. <span class="points">[5점]</span></div>
+  <div class="q-body">
+    직사각형 ABCD가 중심이 원점 O이고 반지름의 길이가 1인 원에 내접한다. $x$축과 선분 OA가 이루는 각의 크기를 $a$라고 할 때, <span class="given tall">$\tan a = \dfrac{3}{4}$</span> 이다. 다음을 구하시오.
+    <br><span style="font-size:10pt; color:#444;">(단, 직사각형 ABCD의 각 변은 좌표축에 평행하고, 점 E(1, 0)에서 원에 접하는 직선과 반직선 OA가 만나는 점을 T라 한다.)</span>
+  </div>
+  <div class="fig">
+    <svg width="290" height="290" viewBox="0 0 300 300" font-family="'Times New Roman', serif" font-size="16">
+      <defs>
+        <marker id="ar3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 z" fill="#333"/>
+        </marker>
+      </defs>
+      <line x1="15" y1="150" x2="292" y2="150" stroke="#333" stroke-width="1.2" marker-end="url(#ar3)"/>
+      <line x1="150" y1="290" x2="150" y2="10" stroke="#333" stroke-width="1.2" marker-end="url(#ar3)"/>
+      <text x="284" y="168" font-style="italic">x</text>
+      <text x="158" y="18" font-style="italic">y</text>
+      <circle cx="150" cy="150" r="110" fill="none" stroke="#222" stroke-width="1.4"/>
+      <polygon points="238,84 62,84 62,216 238,216" fill="none" stroke="#1a4d8f" stroke-width="1.8"/>
+      <line x1="260" y1="40" x2="260" y2="240" stroke="#666" stroke-width="1.2" stroke-dasharray="5,3"/>
+      <line x1="150" y1="150" x2="260" y2="67.5" stroke="#222" stroke-width="1.4"/>
+      <line x1="150" y1="150" x2="238" y2="216" stroke="#222" stroke-width="1.1"/>
+      <line x1="238" y1="84" x2="260" y2="150" stroke="#222" stroke-width="1.1"/>
+      <polyline points="252,150 252,142 260,142" fill="none" stroke="#333" stroke-width="1"/>
+      <path d="M178,150 A28,28 0 0,0 172.4,133.2" fill="none" stroke="#c00" stroke-width="1.3"/>
+      <text x="183" y="146" font-style="italic" fill="#c00" font-size="15">a</text>
+      <circle cx="238" cy="84" r="2.5" fill="#222"/>
+      <circle cx="260" cy="67.5" r="2.5" fill="#222"/>
+      <circle cx="260" cy="150" r="2.5" fill="#222"/>
+      <text x="214" y="78">A</text>
+      <text x="45" y="78">B</text>
+      <text x="44" y="234">C</text>
+      <text x="243" y="234">D</text>
+      <text x="266" y="64">T</text>
+      <text x="265" y="168">E</text>
+      <text x="134" y="168">O</text>
+    </svg>
+  </div>
+  <div class="sub-q">3-1) $\sin a$ 의 값과 $\cos a$ 의 값을 각각 구하시오.</div>
+  <div class="ans-area" style="min-height: 40mm;"></div>
+  <div class="sub-q">3-2) 삼각형 OAD의 넓이를 구하시오.</div>
+  <div class="ans-area" style="min-height: 28mm;"></div>
+  <div class="sub-q">3-3) 삼각형 AET의 넓이를 구하시오.</div>
+  <div class="ans-area" style="min-height: 25mm;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ================= 문제 4 ================= -->
+<div class="problem">
+  <span class="area-tag">☞ 원과 현</span>
+  <div class="q-head">4. <span class="points">[5점]</span></div>
+  <div class="q-body">
+    원 O에서 <span class="given">현 AB와 선분 OM이 점 M에서 수직으로 만나고, $\overline{OA} = 8\,\text{cm}$, $\angle AOM = 60^\circ$</span> 이다. 다음 물음에 답하시오.
+  </div>
+  <div class="fig">
+    <svg width="280" height="240" viewBox="0 0 300 250" font-family="'Times New Roman', serif" font-size="16">
+      <circle cx="150" cy="115" r="100" fill="none" stroke="#222" stroke-width="1.4"/>
+      <line x1="63.4" y1="165" x2="236.6" y2="165" stroke="#1a4d8f" stroke-width="1.8"/>
+      <line x1="150" y1="115" x2="63.4" y2="165" stroke="#222" stroke-width="1.3"/>
+      <line x1="150" y1="115" x2="150" y2="165" stroke="#222" stroke-width="1.3"/>
+      <polyline points="150,157 158,157 158,165" fill="none" stroke="#333" stroke-width="1"/>
+      <path d="M150,137 A22,22 0 0,1 130.9,126" fill="none" stroke="#c00" stroke-width="1.3"/>
+      <text x="119" y="151" font-size="13" fill="#c00">60°</text>
+      <circle cx="150" cy="115" r="2.5" fill="#222"/>
+      <text x="144" y="106">O</text>
+      <text x="44" y="180">A</text>
+      <text x="240" y="180">B</text>
+      <text x="143" y="184">M</text>
+      <text x="76" y="132" font-size="14" font-family="'Malgun Gothic', sans-serif">8 cm</text>
+    </svg>
+  </div>
+  <div class="sub-q">4-1) <span class="given">$\overline{AM}$ 과 $\overline{BM}$ 의 길이</span> 와 관련하여 사용되는 원과 현의 성질을 한 문장으로 쓰시오.</div>
+  <div class="ans-area" style="min-height: 40mm;"></div>
+  <div class="sub-q">4-2) 현 AB의 길이를 구하시오.</div>
+  <div class="ans-area" style="min-height: 82mm;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ================= 문제 5 ================= -->
+<div class="problem">
+  <span class="area-tag">☞ 삼각비의 활용</span>
+  <div class="q-head">5. <span class="points">[5점]</span></div>
+  <div class="q-body">
+    그림과 같이 수면으로부터 높이가 <span class="given">$25\,\text{m}$</span> 인 등대에서 처음 배를 내려다본 $\angle ABD$ 의 크기는 <span class="given">$55^\circ$</span> 이었고, 20초 후에 같은 배를 내려다본 $\angle ABC$ 의 크기는 <span class="given">$20^\circ$</span> 이었다. 배의 이동거리를 반올림하여 소수 첫째 자리까지 구하고 그 과정을 서술하시오.
+    <br><span style="font-size:10pt; color:#444;">(단, B는 등대 꼭대기, H는 등대가 수면과 만나는 점이고 점 A는 점 B를 지나고 수면에 평행한 직선 위에서 배가 있는 쪽의 점이다. 등대의 폭과 배의 크기는 생각하지 않는다.)</span>
+  </div>
+  <div class="fig">
+    <svg width="430" height="180" viewBox="0 0 430 180" font-family="'Times New Roman', serif" font-size="16">
+      <rect x="15" y="140" width="405" height="32" fill="#e3f0fb"/>
+      <line x1="15" y1="140" x2="420" y2="140" stroke="#2a6fb0" stroke-width="1.5"/>
+      <polygon points="66,140 74,140 73,36 67,36" fill="#eeeeee" stroke="#999" stroke-width="0.8"/>
+      <polygon points="64,36 76,36 70,24" fill="#c62828"/>
+      <line x1="70" y1="30" x2="70" y2="140" stroke="#222" stroke-width="1.6"/>
+      <line x1="70" y1="30" x2="405" y2="30" stroke="#666" stroke-width="1.1"/>
+      <line x1="70" y1="30" x2="147" y2="140" stroke="#222" stroke-width="1.2" stroke-dasharray="6,3"/>
+      <line x1="70" y1="30" x2="372.2" y2="140" stroke="#222" stroke-width="1.2" stroke-dasharray="6,3"/>
+      <path d="M110,30 A40,40 0 0,1 92.9,62.8" fill="none" stroke="#c00" stroke-width="1.4"/>
+      <path d="M165,30 A95,95 0 0,1 159.3,62.5" fill="none" stroke="#1a4d8f" stroke-width="1.4"/>
+      <text x="108" y="74" font-size="13" fill="#c00">55°</text>
+      <text x="172" y="50" font-size="13" fill="#1a4d8f">20°</text>
+      <polyline points="70,130 80,130 80,140" fill="none" stroke="#333" stroke-width="1"/>
+      <polygon points="137,133 157,133 153,140 141,140" fill="#555"/>
+      <polygon points="362.2,133 382.2,133 378.2,140 366.2,140" fill="#555"/>
+      <text x="174" y="130" font-size="12" text-anchor="middle" font-family="'Malgun Gothic', sans-serif">처음</text>
+      <text x="398" y="126" font-size="12" text-anchor="middle" font-family="'Malgun Gothic', sans-serif">20초 후</text>
+      <text x="48" y="34">B</text>
+      <text x="410" y="35">A</text>
+      <text x="62" y="160">H</text>
+      <text x="141" y="160">D</text>
+      <text x="366" y="160">C</text>
+      <text x="22" y="90" font-size="14" font-family="'Malgun Gothic', sans-serif">25 m</text>
+    </svg>
+  </div>
+  <table class="trig">
+    <tr><th>각도</th><th>$\sin$</th><th>$\cos$</th><th>$\tan$</th></tr>
+    <tr><td>$20^\circ$</td><td>0.3420</td><td>0.9397</td><td>0.3640</td></tr>
+    <tr><td>$35^\circ$</td><td>0.5736</td><td>0.8192</td><td>0.7002</td></tr>
+    <tr><td>$55^\circ$</td><td>0.8192</td><td>0.5736</td><td>1.4281</td></tr>
+    <tr><td>$70^\circ$</td><td>0.9397</td><td>0.3420</td><td>2.7475</td></tr>
+  </table>
+  <div class="ans-area" style="min-height: 100mm;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ================= 정답 및 풀이 ================= -->
+<div class="ans-cover">
+  <h2>정답 및 풀이 · 채점 기준 (4회 · 실전 리허설)</h2>
+  <div class="sub">채점 후 감점된 문항은 해당 회차(1~3회)의 같은 번호를 다시 풀어 보세요. 걸린 시간도 문항별로 적어 두면 좋습니다.</div>
+</div>
+
+<!-- 풀이 1 -->
+<div class="solution">
+  <h3>1. 삼각비의 개념 &nbsp;<span class="sol-final">1-1) AB : BC : CA = 4 : 3 : 5 &nbsp;/&nbsp; 1-2) $\cos C = \dfrac{3}{5}$, $\tan C = \dfrac{4}{3}$</span></h3>
+  <div class="sol-step"><b>① 조건 정리</b> — $5\sin A - 3 = 0$ 에서 $\sin A = \dfrac{3}{5}$</div>
+  <div class="sol-step"><b>② 두 변 정하기</b> — $\angle B = 90^\circ$ 이므로 빗변은 $\overline{AC}$ 이고, $\sin A = \dfrac{\overline{BC}}{\overline{AC}} = \dfrac{3}{5}$ 이므로 $\overline{BC} = 3k$, $\overline{AC} = 5k$ ($k > 0$)</div>
+  <div class="sol-step"><b>③ 나머지 변</b> — 피타고라스 정리에 의해 $\overline{AB} = \sqrt{(5k)^2 - (3k)^2} = 4k$ → $k = 1$ 로 하면 $\overline{AB} = 4$, $\overline{BC} = 3$, $\overline{CA} = 5$</div>
+  <div class="fig">
+    <svg width="200" height="170" viewBox="0 0 200 170" font-family="'Times New Roman', serif" font-size="16">
+      <polygon points="40,140 130,140 40,20" fill="none" stroke="#222" stroke-width="1.6"/>
+      <polyline points="40,130 50,130 50,140" fill="none" stroke="#c00" stroke-width="1.3"/>
+      <text x="24" y="158">B</text>
+      <text x="135" y="158">C</text>
+      <text x="26" y="18">A</text>
+      <text x="80" y="160">3</text>
+      <text x="22" y="84">4</text>
+      <text x="92" y="74">5</text>
+    </svg>
+    <div class="cap">답안 그림 예시 — ∠B에 직각 표시, 세 변 4, 3, 5</div>
+  </div>
+  <div class="sol-step"><b>④ 1-2)</b> — ∠C에서 보면 이웃한 변은 $\overline{BC}$, 마주 보는 변은 $\overline{AB}$ 이므로<br>
+    $\cos C = \dfrac{\overline{BC}}{\overline{AC}} = \dfrac{3}{5}$, &nbsp; $\tan C = \dfrac{\overline{AB}}{\overline{BC}} = \dfrac{4}{3}$</div>
+  <table class="rubric">
+    <tr><th>채점 요소</th><th>배점</th></tr>
+    <tr><td>식을 정리해 $\sin A = \dfrac{3}{5}$, BC : AC = 3 : 5를 세움</td><td class="pt">1</td></tr>
+    <tr><td>피타고라스 정리로 AB = 4를 구하는 과정</td><td class="pt">1</td></tr>
+    <tr><td>그림에 직각 표시(∠B)와 세 변 4, 3, 5를 모두 표시</td><td class="pt">1</td></tr>
+    <tr><td>$\cos C = \dfrac{3}{5}$ / $\tan C = \dfrac{4}{3}$ (각 1점)</td><td class="pt">2</td></tr>
+  </table>
+  <div class="grading-tip"><b>⚡ 점검:</b> 조건이 식 꼴로 나와도 먼저 "$\sin A = $ ○" 꼴로 정리하면 1회와 같은 문제가 됩니다. $\sin A = \cos C$ 인지 확인하면 검산이 됩니다.</div>
+</div>
+
+<!-- 풀이 2 -->
+<div class="solution">
+  <h3>2. 특수각의 삼각비 &nbsp;<span class="sol-final">$\dfrac{\sqrt{6} - 1}{2}$</span></h3>
+  <div class="sol-step"><b>① 각의 크기</b> — 삼각형의 세 내각의 합은 $180^\circ$ 이므로 (비의 합 $3+4+5 = 12$)<br>
+    $\angle A = 180^\circ \times \dfrac{3}{12} = 45^\circ$, &nbsp; $\angle B = 180^\circ \times \dfrac{4}{12} = 60^\circ$, &nbsp; $\angle C = 180^\circ \times \dfrac{5}{12} = 75^\circ$ (식에 쓰이지 않음)</div>
+  <div class="sol-step"><b>② 값 대입</b> — $\sin 60^\circ = \dfrac{\sqrt{3}}{2}$, $\cos 45^\circ = \dfrac{\sqrt{2}}{2}$, $\tan 45^\circ = 1$, $\cos 60^\circ = \dfrac{1}{2}$</div>
+  <div class="sol-step"><b>③ 계산</b> — $\dfrac{\sqrt{3}}{2} \div \dfrac{\sqrt{2}}{2} - 1 \times \dfrac{1}{2} = \dfrac{\sqrt{3}}{\sqrt{2}} - \dfrac{1}{2} = \dfrac{\sqrt{6}}{2} - \dfrac{1}{2} = \dfrac{\sqrt{6} - 1}{2}$</div>
+  <table class="rubric">
+    <tr><th>채점 요소</th><th>배점</th></tr>
+    <tr><td>내각의 합 180°를 근거로 ∠A = 45°, ∠B = 60°를 구함</td><td class="pt">2</td></tr>
+    <tr><td>네 개의 삼각비 값을 정확히 대입 (하나라도 틀리면 1점)</td><td class="pt">2</td></tr>
+    <tr><td>분모를 유리화하여 $\dfrac{\sqrt{6} - 1}{2}$</td><td class="pt">1</td></tr>
+  </table>
+  <div class="grading-tip"><b>⚡ 점검:</b> $\dfrac{\sqrt{3}}{\sqrt{2}} = \dfrac{\sqrt{3} \times \sqrt{2}}{\sqrt{2} \times \sqrt{2}} = \dfrac{\sqrt{6}}{2}$ 의 유리화 과정을 한 줄 써 주세요. 75°는 특수각이 아니므로 식에 없음을 확인하는 것도 좋습니다.</div>
+</div>
+
+<!-- 풀이 3 -->
+<div class="solution">
+  <h3>3. 예각의 삼각비의 값 &nbsp;<span class="sol-final">3-1) $\sin a = \dfrac{3}{5}$, $\cos a = \dfrac{4}{5}$ &nbsp;/&nbsp; 3-2) $\dfrac{12}{25}$ &nbsp;/&nbsp; 3-3) $\dfrac{3}{40}$</span></h3>
+  <div class="sol-step"><b>① 3-1)</b> — 점 A에서 $x$축에 내린 수선의 발을 H라 하면 직각삼각형 OHA에서 $\tan a = \dfrac{\overline{AH}}{\overline{OH}} = \dfrac{3}{4}$ 이므로 $\overline{OH} = 4k$, $\overline{AH} = 3k$ 로 놓는다.<br>
+    $\overline{OA} = \sqrt{(4k)^2 + (3k)^2} = 5k = 1$ 이므로 $k = \dfrac{1}{5}$ → $\overline{OH} = \dfrac{4}{5}$, $\overline{AH} = \dfrac{3}{5}$<br>
+    $\sin a = \dfrac{\overline{AH}}{\overline{OA}} = \dfrac{3}{5}$, &nbsp; $\cos a = \dfrac{\overline{OH}}{\overline{OA}} = \dfrac{4}{5}$</div>
+  <div class="sol-step"><b>② 3-2)</b> — 직사각형의 각 변이 좌표축에 평행하므로 직사각형은 $x$축에 대하여 대칭이고, <span class="nw">A$\left(\dfrac{4}{5}, \dfrac{3}{5}\right)$</span>, <span class="nw">D$\left(\dfrac{4}{5}, -\dfrac{3}{5}\right)$</span> 이므로 $\overline{AD} = \dfrac{6}{5}$ 이고, O에서 $\overline{AD}$ 까지의 거리는 $\dfrac{4}{5}$<br>
+    넓이 $= \dfrac{1}{2} \times \dfrac{6}{5} \times \dfrac{4}{5} = \dfrac{12}{25}$</div>
+  <div class="sol-step"><b>③ 3-3)</b> — $\overline{OE} = 1$ 이므로 $\overline{ET} = \tan a = \dfrac{3}{4}$, A에서 직선 $x = 1$ 까지의 거리는 $1 - \dfrac{4}{5} = \dfrac{1}{5}$<br>
+    넓이 $= \dfrac{1}{2} \times \dfrac{3}{4} \times \dfrac{1}{5} = \dfrac{3}{40}$</div>
+  <table class="rubric">
+    <tr><th>채점 요소</th><th>배점</th></tr>
+    <tr><td>3-1) OA = 1을 이용해 $\sin a$, $\cos a$ (각 1점)</td><td class="pt">2</td></tr>
+    <tr><td>3-2) AD = $\dfrac{6}{5}$, 높이 $\dfrac{4}{5}$ 를 밝히고 넓이 $\dfrac{12}{25}$</td><td class="pt">2</td></tr>
+    <tr><td>3-3) ET = tan a, 높이 $\dfrac{1}{5}$ 로 넓이 $\dfrac{3}{40}$</td><td class="pt">1</td></tr>
+  </table>
+  <div class="grading-tip"><b>⚡ 점검:</b> tan가 주어지면 "$\overline{OA} = 1$"이 되도록 비례상수 $k$를 정하는 것이 핵심입니다. 3-3)은 2회 3-3)과 같은 방법(세로 선분 ET를 밑변으로)입니다.</div>
+</div>
+
+<!-- 풀이 4 -->
+<div class="solution">
+  <h3>4. 원과 현 &nbsp;<span class="sol-final">4-2) $\overline{AB} = 8\sqrt{3}\,\text{cm}$</span></h3>
+  <div class="model">
+    <span class="tag">4-1) 모범 문장</span><br>
+    원의 중심에서 현에 내린 수선은 그 현을 이등분한다. (따라서 $\overline{AM} = \overline{BM}$)
+  </div>
+  <div class="sol-step"><b>① 직각삼각형</b> — $\overline{OM} \perp \overline{AB}$ 이므로 △OAM은 $\angle OMA = 90^\circ$ 인 직각삼각형이고, $\angle AOM = 60^\circ$ 의 대변이 $\overline{AM}$ 이다.</div>
+  <div class="sol-step"><b>② 삼각비</b> — $\sin 60^\circ = \dfrac{\overline{AM}}{\overline{OA}}$ 이므로 $\overline{AM} = 8 \sin 60^\circ = 8 \times \dfrac{\sqrt{3}}{2} = 4\sqrt{3}\,(\text{cm})$</div>
+  <div class="sol-step"><b>③ 현의 길이</b> — 4-1)에 의해 $\overline{AB} = 2\overline{AM} = 8\sqrt{3}\,(\text{cm})$</div>
+  <table class="rubric">
+    <tr><th>채점 요소</th><th>배점</th></tr>
+    <tr><td>4-1) "중심에서 현에 내린 수선은 현을 이등분" 문장</td><td class="pt">2</td></tr>
+    <tr><td>4-2) △OAM에서 $\sin 60^\circ$ 로 AM = $4\sqrt{3}$ cm</td><td class="pt">2</td></tr>
+    <tr><td>4-2) 4-1)을 근거로 AB = $8\sqrt{3}$ cm (단위 포함)</td><td class="pt">1</td></tr>
+  </table>
+  <div class="grading-tip"><b>⚡ 점검:</b> 길이가 하나(OA)와 각만 주어지면 피타고라스 대신 <b>삼각비</b>를 씁니다. OM = $8\cos 60^\circ = 4$ 를 먼저 구한 뒤 피타고라스로 AM을 구해도 맞습니다.</div>
+</div>
+
+<!-- 풀이 5 -->
+<div class="solution">
+  <h3>5. 삼각비의 활용 &nbsp;<span class="sol-final">약 $51.2\,\text{m}$</span></h3>
+  <div class="sol-step"><b>① 각 옮기기</b> — ∠ABD, ∠ABC는 수평선 BA에서 잰 각이다. $\overline{BA} \parallel \overline{HC}$ 이므로 엇각으로 $\angle BDH = 55^\circ$, $\angle BCH = 20^\circ$<br>
+    △BHD에서 $\angle HBD = 90^\circ - 55^\circ = 35^\circ$, △BHC에서 $\angle HBC = 90^\circ - 20^\circ = 70^\circ$</div>
+  <div class="sol-step"><b>② 처음 위치</b> — $\overline{HD} = 25 \tan 35^\circ = 25 \times 0.7002 = 17.505\,(\text{m})$</div>
+  <div class="sol-step"><b>③ 20초 후 위치</b> — $\overline{HC} = 25 \tan 70^\circ = 25 \times 2.7475 = 68.6875\,(\text{m})$</div>
+  <div class="sol-step"><b>④ 이동거리</b> — 배는 등대에서 멀어졌으므로 $\overline{DC} = 68.6875 - 17.505 = 51.1825\,(\text{m})$ → 반올림하여 <b>51.2 m</b></div>
+  <table class="rubric">
+    <tr><th>채점 요소</th><th>배점</th></tr>
+    <tr><td>엇각과 내각의 합으로 ∠HBD = 35°, ∠HBC = 70°를 구함</td><td class="pt">1</td></tr>
+    <tr><td>HD = 25 tan 35° = 17.505 m</td><td class="pt">1</td></tr>
+    <tr><td>HC = 25 tan 70° = 68.6875 m</td><td class="pt">1</td></tr>
+    <tr><td>멀어졌으므로 DC = HC − HD 임을 밝힘</td><td class="pt">1</td></tr>
+    <tr><td>반올림하여 51.2 m (단위 포함)</td><td class="pt">1</td></tr>
+  </table>
+  <div class="grading-tip"><b>⚡ 실전 체크리스트:</b> ① 각이 연직선(등대)에서 잰 것인지, 수평선에서 잰 것인지 확인 ② 배가 다가오는지 멀어지는지 확인 ③ 표에서 tan를 고르고 곱셈이 되게 각을 정함 ④ 마지막에 한 번만 반올림하고 단위 m를 붙임</div>
+</div>
+
+<div class="footer">2026 중3 2학기 2차 논술형평가 대비 · 4회(실전 리허설) · 실제 시험의 조건(시험당일 제공)은 이 문제지와 다를 수 있습니다.</div>
+
+</body>
+</html>
